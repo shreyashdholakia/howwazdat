@@ -13,7 +13,11 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
         <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/profile.css">
         <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="bower_component/toastr/toastr.css">
+
+         
         <!-- endbuild -->
 </head>
   <body ng-app="angularPassportApp">
@@ -28,7 +32,20 @@
 
     <!-- Add your site or application content here -->
     <div ng-include="" src="'partials/navbar.html'"></div>
-    <div class="container" ng-view=""></div>
+    <div class="profile-container" ng-view=""></div>
+        <!-- <modal title="Confirm Delete" visible="confirmModal">
+      <div class="modal-body">
+        <p>Do you want to delete player?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" 
+        data-ng-click="modalOptions.close()">No</button>
+        <button class="btn btn-primary" 
+        data-ng-click="deletePlayer()">Yes</button>
+      </div>
+    </modal> -->
+
+
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -40,8 +57,9 @@
        ga('create', 'UA-XXXXX-X');
        ga('send', 'pageview');
     </script>
-
+    
     <script src="bower_components/angular/angular.js"></script>
+
 
         <!-- build:js(app) scripts/modules.js -->
         <script src="bower_components/angular-resource/angular-resource.js"></script>
@@ -54,11 +72,17 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
+        <script src="bower_components/jquery/jquery.js"></script>
+        <script src="scripts/bootstrap.min.js"></script>
+        <script src="bower_components/toastr/toastr.min.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/login.js"></script>
         <script src="scripts/controllers/navbar.js"></script>
         <script src="scripts/controllers/signup.js"></script>
         <script src="scripts/controllers/blogs.js"></script>
+        <script src="scripts/controllers/profileCtrl.js"></script>
+        <script src="scripts/controllers/teamCtrl.js"></script>
+        <script src="scripts/controllers/tournamentCtrl.js"></script>
         <script src="scripts/directives/uniqueUsername.js"></script>
         <script src="scripts/services/Auth.js"></script>
         <script src="scripts/services/User.js"></script>
@@ -66,6 +90,12 @@
         <script src="scripts/directives/mongooseError.js"></script>
         <script src="scripts/services/Session.js"></script>
         <script src="scripts/services/Blogs.js"></script>
+        <script src="scripts/services/profileService.js"></script>
+        <script src="scripts/services/tournamentService.js"></script>
+        <script src="scripts/services/teamService.js"></script>
+        <script src="scripts/common/alertService.js"></script>
+        <script src="scripts/directives/modalDirective.js"></script>
+
         <!-- endbuild -->
 </body>
 </html>

@@ -1,0 +1,239 @@
+
+<div class="container">
+  <div class="row" ng-show="!tournamentPage">
+    <div class="col-sm-10"><h1>Create a new tournament </h1></div>
+    <div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="http://www.gravatar.com/avatar/28fd20ccec6865e2d5f0e1f4446eb7bf?s=100"></a></div>
+  </div>
+  <hr>
+  <div class="row" ng-show="!tournamentPage">
+    <form class="form" id="registrationForm">
+      <div class="form-group">
+
+        <div class="col-xs-6">
+          <label for="first_name"><h4>Tournament Name</h4></label>
+          <input type="text" class="form-control" name="first_name" ng-model="tournament.name" id="first_name" placeholder="Tournament Name" title="enter your tournament name if any.">
+        </div>
+      </div>
+      <div class="form-group">
+
+        <div class="col-xs-6">
+          <label for="last_name"><h4>Organizer</h4></label>
+          <input type="text" class="form-control" name="last_name" ng-model="tournament.organizer" id="last_name" placeholder="Organizer" title="enter organizer.">
+        </div>
+      </div>
+      <div class="form-group">
+
+        <div class="col-xs-6">
+          <label for="email"><h4>Email</h4></label>
+          <input type="email" class="form-control" id="location" ng-model="user.email" placeholder="somewhere" title="Email" ng-disabled="isEmail">
+        </div>
+      </div>
+      <div class="form-group">
+
+        <div class="col-xs-6">
+          <label for="city"><h4>City</h4></label>
+          <input type="text" class="form-control" name="city" id="city" ng-model="tournament.city" placeholder="City" title="enter your city if any.">
+        </div>
+      </div>
+      <div class="form-group">
+
+        <div class="col-xs-6">
+          <label for="address"><h4>Address</h4></label>
+          <input type="text" class="form-control" name="address" id="address" ng-model="tournament.address" placeholder="Address" title="enter your address if any.">
+        </div>
+      </div>
+      <div class="form-group">
+       <div class="col-xs-12">
+        <br>
+        <button class="btn btn-default btn-primary pull-right" ng-click="createTournament(tournament)" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
+      </div>
+    </div>
+  </form>
+
+</div><!--/col-9-->
+<div class="row" ng-show="tournamentPage">
+  <div class="col-sm-10"><h1>{{tournamentInfo.tournamentName}}</h1></div>
+  <div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="http://www.gravatar.com/avatar/28fd20ccec6865e2d5f0e1f4446eb7bf?s=100"></a></div>
+</div>
+                
+                <div class="row" ng-show="tournamentPage">
+                <hr>
+                  <div class="col-sm-3"><!--left col-->
+
+                    <ul class="list-group">
+                      <li class="list-group-item text-muted alert-info active text-center">Profile</li>
+                      <li class="list-group-item text-right"><span class="pull-left"><strong>Tournament</strong></span> {{tournamentInfo.tournamentName}}</li>
+                      <li class="list-group-item text-right"><span class="pull-left"><strong>Joined</strong></span> {{tournamentInfo.createdDate | date:'mediumDate'}}</li>
+
+                    </ul> 
+                  </div><!--/col-3-->
+                  <div class="col-sm-9">
+
+                    <ul class="nav nav-tabs" id="myTab">
+                    <li ng-class="{'active':isActiveTab('teams')}"><a href ng-click="setTab('teams')">List of Teams</a></li>
+                      <li ng-class="{'active':isActiveTab('activity')}"><a href ng-click="setTab('activity')">Recent Matches</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                      <div class="tab-pane" ng-class="{'active':isActiveTab('activity')}" id="home">
+                        <div class="table-responsive">
+                          <table class="table table-hover table-striped">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Label 1</th>
+                                <th>Label 2</th>
+                                <th>Label 3</th>
+                                <th>Label </th>
+                                <th>Label </th>
+                                <th>Label </th>
+                              </tr>
+                            </thead>
+                            <tbody id="items">
+                              <tr>
+                                <td>1</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                              </tr>
+                              <tr>
+                                <td>2</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                              </tr>
+                              <tr>
+                                <td>3</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                              </tr>
+                              <tr>
+                                <td>4</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                              </tr>
+                              <tr>
+                                <td>5</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                              </tr>
+                              <tr>
+                                <td>6</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                              </tr>
+                              <tr>
+                                <td>7</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                              </tr>
+                              <tr>
+                                <td>8</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                              </tr>
+                              <tr>
+                                <td>9</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                              </tr>
+                              <tr>
+                                <td>10</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <hr>
+                          <div class="row">
+                            <div class="col-md-4 col-md-offset-4 text-center">
+                              <ul class="pagination" id="myPager"></ul>
+                            </div>
+                          </div>
+                        </div><!--/table-resp-->
+
+                      </div><!--/tab-pane-->
+                      <div class="tab-pane" ng-class="{'active':isActiveTab('teams')}">
+                      <br>
+                        <div class="alert alert-danger" ng-hide="tournamentTeams.length > 0">
+                            <span class="glyphicon glyphicon-info-sign"></span> No Teams added. Please add teams and start playing!!
+                        </div>
+                        <div class="table-responsive">
+                          <table class="table table-hover table-striped">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Team Name</th>
+                                <th>Captain</th>
+                                <th><i class="glyphicon glyphicon-cog"></i></th>
+                              </tr>
+                            </thead>
+                            <tbody id="items" ng-repeat="team in tournamentTeams">
+                              <tr>
+                                <td>{{$index + 1}}</td>
+                                <td><a href="/team/{{team.teamName}}">{{team.teamName}}</a></td>
+                                <td>{{team.captain}}</td>
+                                <td><i class="text-danger glyphicon glyphicon-remove"></i></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <hr>
+                        <form class="form" id="registrationForm" >
+                          <div class="form-group">
+
+                            <div class="col-xs-6">
+                              <input type="text" class="form-control" name="teamName" ng-model="teamName" id="team_name" placeholder="Team" title="enter a team name" ng-model="team" typeahead="team as team.teamName for team in teamList | filter:{teamName:$viewValue} | limitTo:8">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                           <div class="col-xs-3">
+                            <button class="btn btn-default btn-primary" ng-click="addTeamToTournament(teamName)" type="submit"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+
+                  </div><!--/tab-pane-->
+                </div><!--/tab-content-->
+
+              </div><!--/col-9-->
+            </div><!--/row-->
+

@@ -1,22 +1,53 @@
 'use strict';
 
-angular.module('angularPassportApp', [
+var app = angular.module('angularPassportApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
   'ngRoute',
   'http-auth-interceptor',
   'ui.bootstrap'
-])
-  .config(function ($routeProvider, $locationProvider) {
+]);
+
+var options = {};
+options.api = {};
+options.api.base_url = "http://localhost:3000";
+
+
+
+  app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'partials/main.html',
-        controller: 'MainCtrl'
+        templateUrl: 'partials/profile.html',
+        controller: 'ProfileCtrl'
       })
       .when('/blogs', {
         templateUrl: 'partials/blogs/list.html',
         controller: 'BlogsCtrl'
+      })
+      .when('/test', {
+        templateUrl: 'partials/blogs/list.html',
+        controller: 'TeamCtrl'
+      })
+      .when('/createTeam', {
+        templateUrl: 'partials/team/createTeam.html',
+        controller: 'TeamCtrl'
+      })
+      .when('/team/:teamName' , {
+        templateUrl: 'partials/team/team.html',
+        controller: 'TeamCtrl'
+      })
+      .when('/createTournament', {
+        templateUrl: 'partials/tournament/createTournament.html',
+        controller: 'tournamentCtrl'
+      })
+      .when('/tournament/:tournamentName', {
+        templateUrl: 'partials/tournament/createTournament.html',
+        controller: 'tournamentCtrl'
+      })
+      .when('/profile', {
+        templateUrl: 'partials/profile.html',
+        controller: 'ProfileCtrl'
       })
       .when('/blogs/create', {
         templateUrl: 'partials/blogs/create.html',
@@ -50,7 +81,7 @@ angular.module('angularPassportApp', [
     $rootScope.$watch('currentUser', function(currentUser) {
       // if no currentUser and on a page that requires authorization then try to update it
       // will trigger 401s if user does not have a valid session
-      if (!currentUser && (['/', '/login', '/logout', '/signup'].indexOf($location.path()) == -1 )) {
+      if (!currentUser && (['/', '/login', '/logout', '/signup', '/profile'].indexOf($location.path()) == -1 )) {
         Auth.currentUser();
       }
     });

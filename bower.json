@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "dependencies": {
     "angular": "~1.2.1",
+    "bootstrap": "~3.3.5",
     "json3": "~3.2.4",
     "es5-shim": "~2.1.0",
     "jquery": "~1.10.2",
@@ -12,7 +13,9 @@
     "angular-sanitize": "~1.2.0",
     "angular-route": "~1.2.0",
     "angular-http-auth": "*",
-    "angular-bootstrap": "~0.7.0"
+    "angular-bootstrap": "~0.7.0",
+    "fontawesome": "https://github.com/FortAwesome/Font-Awesome.git#~4.2.0",
+    "toastr": "~2.0.3"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",

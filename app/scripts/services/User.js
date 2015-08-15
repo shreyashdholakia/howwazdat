@@ -8,4 +8,6 @@ angular.module('angularPassportApp')
           method:'PUT'
         }
       });
+
+    return 
   });

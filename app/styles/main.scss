@@ -1,6 +1,10 @@
 $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 
 @import 'sass-bootstrap/lib/bootstrap';
+@import 'toastr/toastr.scss';
+@import 'fontawesome/scss/font-awesome.scss';
+
+
 
 .browsehappy {
     margin: 0.2em 0;
@@ -11,7 +15,7 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 
 
 body {
-    background: #fafafa;
+    background: #F0F0F0;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
 }
@@ -100,3 +104,29 @@ body {
 .dropdown-toggle {
   cursor: pointer;
 }
+
+.profile-container {
+      margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
+  background-color: #bce8f1;
+  color:#000033;
+}
+
+.modal {
+display: block;
+}
+.modal-body:before,
+.modal-body:after {
+display: table;
+content: " ";
+}
+.modal-header:before,
+.modal-header:after {
+display: table;
+content: " ";
+}
+
