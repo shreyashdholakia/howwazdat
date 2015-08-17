@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('angularPassportApp')
-.controller('tournamentCtrl', function ($scope, tournamentService, teamService, ProfileService, $location, $routeParams, $rootScope, $http, $cookieStore, alertService) {
+.controller('tournamentCtrl', function ($scope, tournamentService, teamService, ProfileService, $location, $routeParams, $rootScope, $http, $cookieStore, alertService, $modal) {
 
   $scope.isProfileCreated = false;
   $scope.checkProfileCreated = function () {
@@ -107,7 +107,8 @@ angular.module('angularPassportApp')
       $scope.tournamentName = response.data.tournamentName;
       $scope.tournamentTeams = response.data.teams;
       $scope.tournamentPage = true;
-      alertService.displaySaveMessage(" Team Added");
+      $scope.teamToDelete = [];
+      alertService.displaySaveMessage("Success");
     }).error(function(status, data) {
       alertService.displayErrorMessage("Error: Please try again!");
     });
@@ -148,6 +149,30 @@ angular.module('angularPassportApp')
   $scope.isActiveTab = function(tab){
     return $scope.tab === tab;
   };
+
+  $scope.teamToDelete = [];
+
+  $scope.open = function (team) {
+    $scope.teamToDelete = team;
+    alertService.clearLastToast();
+      $scope.modalInstance = $modal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: 'delete.html',
+        scope:$scope
+      });
+  };
+
+  $scope.close = function () {
+    $scope.modalInstance.dismiss('cancel');
+
+  };
+
+  $scope.deleteTeam = function () {
+    $scope.modalInstance.dismiss('cancel');
+    var index = $scope.tournamentTeams.indexOf($scope.teamToDelete);
+    $scope.tournamentTeams.splice(index, 1); 
+    $scope.saveTeams($scope.tournamentTeams);
+  }
 
 });
 

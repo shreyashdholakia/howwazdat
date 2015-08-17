@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('angularPassportApp')
-.controller('TeamCtrl', function ($scope, teamService, $location, $routeParams, $rootScope, $http, $cookieStore, $modal, ConfirmationService) {
+.controller('TeamCtrl', function ($scope, teamService, $location, $routeParams, $rootScope, $http, $cookieStore, $modal) {
 
 	$scope.player = [];
 	$scope.roles = [{name:'Batsmen'},
@@ -25,13 +25,15 @@ angular.module('angularPassportApp')
 	};
 
 	$scope.deletePlayer = function () {
-
-		console.log($scope.playerToDelete);
 		$scope.playerList.splice($scope.playerToDelete, 1); 
+	};
+
+	$scope.teamUpdate = function() {
+		console.log($scope.playerList);
+
 		teamService.update($scope.teamName, $scope.playerList).success(function(data) {
 			$location.path("/team/" + data.data.teamName);
 			$scope.playerList = data.data.players;
-			console.log($scope.players[0]);
 		}).error(function(status, data) {
 			console.log(status);
 			console.log(data);
@@ -42,7 +44,7 @@ angular.module('angularPassportApp')
 	$scope.playerList = [];
 	$scope.teamDetails = [];
 
-	$scope.addPlayer = function (player) {
+	$scope.addPlayer = function (action) {
 		if($scope.isCaptain) {
 			$scope.captain = 'C';
 		} else {
@@ -53,8 +55,13 @@ angular.module('angularPassportApp')
 			lastName: $scope.lastName,
 			role: $scope.roleSelected.name,
 			captain: $scope.captain
-
 		});
+		if(action === 'U') {
+			$scope.teamUpdate();
+		} else {
+			$scope.addTeam(); //save the added new players
+		}
+
 		$scope.firstName = "";
 		$scope.lastName = "";
 		$scope.isCaptain = false;
@@ -95,31 +102,25 @@ angular.module('angularPassportApp')
 		teamService.create($scope.teamDetails).success(function(data) {
 			$location.path("/team/" + data.data.teamName);
 			$scope.playerList = data.data.players;
-			console.log($scope.players[0]);
 		}).error(function(status, data) {
 			console.log(status);
 			console.log(data);
 		});
 	};
 
-	$scope.open = function (size) {
+	$scope.open = function () {
 
-	    var modalInstance = $modal.open({
+	    $scope.modalInstance = $modal.open({
 	      animation: $scope.animationsEnabled,
 	      templateUrl: 'delete.html',
 	      size: size,
-	      resolve: {
-	        items: function () {
-	          return $scope.items;
-	        }
-	      }
+	      scope:$scope
 	    });
+  };
 
-	    modalInstance.result.then(function (selectedItem) {
-	      $scope.selected = selectedItem;
-	    }, function () {
-	      $log.info('Modal dismissed at: ' + new Date());
-	    });
+  $scope.close = function () {
+  	$scope.modalInstance.dismiss('cancel');
+
   };
 
 });
