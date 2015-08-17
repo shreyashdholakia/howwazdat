@@ -4,291 +4,300 @@
 3 info using node@v0.12.7
 4 verbose node symlink /usr/local/bin/node
 5 verbose readDependencies loading dependencies from /Users/shreyashdholakia/projects/testAuth/package.json
-6 warn package.json angularpassport@0.0.0 No repository field.
-7 warn package.json angularpassport@0.0.0 No license field.
-8 verbose install where, deps [ '/Users/shreyashdholakia/projects/testAuth',
-8 verbose install   [ 'express',
-8 verbose install     'passport',
-8 verbose install     'passport-local',
-8 verbose install     'mongoose',
-8 verbose install     'ejs',
-8 verbose install     'underscore',
-8 verbose install     'connect-mongo',
-8 verbose install     'grunt',
-8 verbose install     'grunt-autoprefixer',
-8 verbose install     'grunt-concurrent',
-8 verbose install     'grunt-contrib-clean',
-8 verbose install     'grunt-contrib-coffee',
-8 verbose install     'grunt-contrib-compass',
-8 verbose install     'grunt-contrib-concat',
-8 verbose install     'grunt-contrib-copy',
-8 verbose install     'grunt-contrib-cssmin',
-8 verbose install     'grunt-contrib-htmlmin',
-8 verbose install     'grunt-contrib-imagemin',
-8 verbose install     'grunt-contrib-jshint',
-8 verbose install     'grunt-contrib-uglify',
-8 verbose install     'grunt-contrib-watch',
-8 verbose install     'grunt-google-cdn',
-8 verbose install     'grunt-ngmin',
-8 verbose install     'grunt-rev',
-8 verbose install     'grunt-svgmin',
-8 verbose install     'grunt-usemin',
-8 verbose install     'jshint-stylish',
-8 verbose install     'load-grunt-tasks',
-8 verbose install     'time-grunt',
-8 verbose install     'grunt-express-server',
-8 verbose install     'grunt-open',
-8 verbose install     'karma-ng-scenario',
-8 verbose install     'grunt-karma',
-8 verbose install     'karma-requirejs',
-8 verbose install     'karma-firefox-launcher',
-8 verbose install     'karma-html2js-preprocessor',
-8 verbose install     'karma-script-launcher',
-8 verbose install     'karma-chrome-launcher',
-8 verbose install     'karma-jasmine',
-8 verbose install     'karma-coffee-preprocessor',
-8 verbose install     'karma-phantomjs-launcher',
-8 verbose install     'karma',
-8 verbose install     'karma-ng-html2js-preprocessor' ] ]
-9 verbose install where, peers [ '/Users/shreyashdholakia/projects/testAuth', [] ]
-10 verbose installManyTop reading for lifecycle /Users/shreyashdholakia/projects/testAuth/package.json
-11 info preinstall angularpassport@0.0.0
-12 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/connect-mongo/package.json
-13 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/ejs/package.json
-14 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/express/package.json
-15 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt/package.json
-16 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-autoprefixer/package.json
-17 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-concurrent/package.json
-18 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-clean/package.json
-19 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-coffee/package.json
-20 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-compass/package.json
-21 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-concat/package.json
-22 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-copy/package.json
-23 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-cssmin/package.json
-24 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-htmlmin/package.json
-25 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-imagemin/package.json
-26 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-jshint/package.json
-27 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-uglify/package.json
-28 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-watch/package.json
-29 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-express-server/package.json
-30 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-google-cdn/package.json
-31 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-karma/package.json
-32 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-ngmin/package.json
-33 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-open/package.json
-34 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-rev/package.json
-35 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-svgmin/package.json
-36 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-usemin/package.json
-37 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/jshint-stylish/package.json
-38 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma/package.json
-39 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-chrome-launcher/package.json
-40 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-coffee-preprocessor/package.json
-41 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-firefox-launcher/package.json
-42 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-html2js-preprocessor/package.json
-43 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-jasmine/package.json
-44 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-ng-html2js-preprocessor/package.json
-45 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-ng-scenario/package.json
-46 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-phantomjs-launcher/package.json
-47 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-requirejs/package.json
-48 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-script-launcher/package.json
-49 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/load-grunt-tasks/package.json
-50 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/mongoose/package.json
-51 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/passport/package.json
-52 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/passport-local/package.json
-53 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/time-grunt/package.json
-54 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/underscore/package.json
-55 info package.json connect-mongo@0.4.2 No license field.
-56 info package.json ejs@0.8.8 No license field.
-57 info package.json grunt@0.4.5 No license field.
-58 info package.json grunt-contrib-htmlmin@0.1.3 No README data
-59 info package.json grunt-contrib-htmlmin@0.1.3 No license field.
-60 info package.json grunt-rev@0.1.0 No license field.
-61 info package.json karma-phantomjs-launcher@0.1.4 No README data
-62 info package.json passport@0.1.18 No license field.
-63 info package.json passport-local@0.1.6 No license field.
-64 info package.json grunt-autoprefixer@0.4.2 No license field.
-65 info package.json grunt-contrib-clean@0.5.0 No license field.
-66 info package.json grunt-contrib-copy@0.4.1 No license field.
-67 info package.json grunt-concurrent@0.4.3 No license field.
-68 info package.json grunt-contrib-concat@0.3.0 No license field.
-69 info package.json grunt-contrib-coffee@0.7.0 No license field.
-70 info package.json grunt-contrib-cssmin@0.7.0 No license field.
-71 info package.json grunt-contrib-jshint@0.7.2 No license field.
-72 info package.json grunt-contrib-imagemin@0.3.0 No license field.
-73 info package.json grunt-contrib-uglify@0.2.7 No license field.
-74 info package.json grunt-contrib-watch@0.5.3 No license field.
-75 info package.json grunt-google-cdn@0.2.2 license should be a valid SPDX license expression
-76 info package.json grunt-contrib-compass@0.6.0 No license field.
-77 info package.json grunt-ngmin@0.0.3 license should be a valid SPDX license expression
-78 info package.json grunt-open@0.2.3 No license field.
-79 info package.json grunt-svgmin@0.2.1 No license field.
-80 info package.json grunt-usemin@2.0.2 license should be a valid SPDX license expression
-81 info package.json mongoose@3.5.16 No license field.
-82 info package.json karma@0.10.10 No license field.
+6 warn package.json angularpassport@0.0.0 No description
+7 warn package.json angularpassport@0.0.0 No repository field.
+8 warn package.json angularpassport@0.0.0 No README data
+9 warn package.json angularpassport@0.0.0 No license field.
+10 verbose install where, deps [ '/Users/shreyashdholakia/projects/testAuth',
+10 verbose install   [ 'express',
+10 verbose install     'passport',
+10 verbose install     'passport-local',
+10 verbose install     'mongoose',
+10 verbose install     'ejs',
+10 verbose install     'underscore',
+10 verbose install     'connect-mongo',
+10 verbose install     'grunt',
+10 verbose install     'grunt-autoprefixer',
+10 verbose install     'grunt-concurrent',
+10 verbose install     'grunt-contrib-clean',
+10 verbose install     'grunt-contrib-coffee',
+10 verbose install     'grunt-contrib-compass',
+10 verbose install     'grunt-contrib-concat',
+10 verbose install     'grunt-contrib-copy',
+10 verbose install     'grunt-contrib-cssmin',
+10 verbose install     'grunt-contrib-htmlmin',
+10 verbose install     'grunt-contrib-imagemin',
+10 verbose install     'grunt-contrib-jshint',
+10 verbose install     'grunt-contrib-uglify',
+10 verbose install     'grunt-contrib-watch',
+10 verbose install     'grunt-google-cdn',
+10 verbose install     'grunt-ngmin',
+10 verbose install     'grunt-rev',
+10 verbose install     'grunt-svgmin',
+10 verbose install     'grunt-usemin',
+10 verbose install     'jshint-stylish',
+10 verbose install     'load-grunt-tasks',
+10 verbose install     'time-grunt',
+10 verbose install     'grunt-express-server',
+10 verbose install     'grunt-open',
+10 verbose install     'karma-ng-scenario',
+10 verbose install     'grunt-karma',
+10 verbose install     'karma-requirejs',
+10 verbose install     'karma-firefox-launcher',
+10 verbose install     'karma-html2js-preprocessor',
+10 verbose install     'karma-script-launcher',
+10 verbose install     'karma-chrome-launcher',
+10 verbose install     'karma-jasmine',
+10 verbose install     'karma-coffee-preprocessor',
+10 verbose install     'karma-phantomjs-launcher',
+10 verbose install     'karma',
+10 verbose install     'karma-ng-html2js-preprocessor' ] ]
+11 verbose install where, peers [ '/Users/shreyashdholakia/projects/testAuth', [] ]
+12 verbose installManyTop reading for lifecycle /Users/shreyashdholakia/projects/testAuth/package.json
+13 info preinstall angularpassport@0.0.0
+14 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/connect-mongo/package.json
+15 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/ejs/package.json
+16 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/express/package.json
+17 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt/package.json
+18 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-autoprefixer/package.json
+19 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-concurrent/package.json
+20 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-clean/package.json
+21 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-coffee/package.json
+22 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-compass/package.json
+23 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-concat/package.json
+24 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-copy/package.json
+25 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-cssmin/package.json
+26 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-htmlmin/package.json
+27 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-imagemin/package.json
+28 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-jshint/package.json
+29 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-uglify/package.json
+30 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-watch/package.json
+31 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-express-server/package.json
+32 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-google-cdn/package.json
+33 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-karma/package.json
+34 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-ngmin/package.json
+35 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-open/package.json
+36 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-rev/package.json
+37 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-svgmin/package.json
+38 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-usemin/package.json
+39 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/jshint-stylish/package.json
+40 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma/package.json
+41 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-chrome-launcher/package.json
+42 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-coffee-preprocessor/package.json
+43 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-firefox-launcher/package.json
+44 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-html2js-preprocessor/package.json
+45 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-jasmine/package.json
+46 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-ng-html2js-preprocessor/package.json
+47 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-ng-scenario/package.json
+48 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-phantomjs-launcher/package.json
+49 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-requirejs/package.json
+50 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-script-launcher/package.json
+51 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/load-grunt-tasks/package.json
+52 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/mongoose/package.json
+53 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/passport/package.json
+54 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/passport-local/package.json
+55 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/time-grunt/package.json
+56 verbose installManyTop reading scoped package data from /Users/shreyashdholakia/projects/testAuth/node_modules/underscore/package.json
+57 info package.json connect-mongo@0.4.2 No license field.
+58 info package.json ejs@0.8.8 No license field.
+59 info package.json grunt@0.4.5 No license field.
+60 info package.json grunt-contrib-htmlmin@0.1.3 No README data
+61 info package.json grunt-contrib-htmlmin@0.1.3 No license field.
+62 info package.json grunt-rev@0.1.0 No license field.
+63 info package.json passport@0.1.18 No license field.
+64 info package.json passport-local@0.1.6 No license field.
+65 info package.json karma-phantomjs-launcher@0.1.4 No README data
+66 info package.json grunt-contrib-coffee@0.7.0 No license field.
+67 info package.json grunt-autoprefixer@0.4.2 No license field.
+68 info package.json grunt-concurrent@0.4.3 No license field.
+69 info package.json grunt-contrib-clean@0.5.0 No license field.
+70 info package.json grunt-contrib-compass@0.6.0 No license field.
+71 info package.json grunt-contrib-cssmin@0.7.0 No license field.
+72 info package.json grunt-contrib-concat@0.3.0 No license field.
+73 info package.json grunt-contrib-imagemin@0.3.0 No license field.
+74 info package.json grunt-contrib-copy@0.4.1 No license field.
+75 info package.json grunt-contrib-jshint@0.7.2 No license field.
+76 info package.json grunt-contrib-uglify@0.2.7 No license field.
+77 info package.json grunt-contrib-watch@0.5.3 No license field.
+78 info package.json grunt-google-cdn@0.2.2 license should be a valid SPDX license expression
+79 info package.json grunt-ngmin@0.0.3 license should be a valid SPDX license expression
+80 info package.json grunt-open@0.2.3 No license field.
+81 info package.json grunt-svgmin@0.2.1 No license field.
+82 info package.json grunt-usemin@2.0.2 license should be a valid SPDX license expression
 83 info package.json grunt-express-server@0.4.19 No license field.
-84 info package.json underscore@1.5.2 No license field.
-85 verbose readDependencies loading dependencies from /Users/shreyashdholakia/projects/testAuth/package.json
-86 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/connect-mongo/package.json
-87 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/ejs/package.json
-88 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/express/package.json
-89 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt/package.json
-90 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-autoprefixer/package.json
-91 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-concurrent/package.json
-92 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-clean/package.json
-93 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-coffee/package.json
-94 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-compass/package.json
-95 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-concat/package.json
-96 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-copy/package.json
-97 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-cssmin/package.json
-98 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-htmlmin/package.json
-99 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-imagemin/package.json
-100 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-jshint/package.json
-101 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-uglify/package.json
-102 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-watch/package.json
-103 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-express-server/package.json
-104 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-google-cdn/package.json
-105 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-karma/package.json
-106 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-ngmin/package.json
-107 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-open/package.json
-108 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-rev/package.json
-109 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-svgmin/package.json
-110 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-usemin/package.json
-111 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/jshint-stylish/package.json
-112 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma/package.json
-113 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-chrome-launcher/package.json
-114 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-coffee-preprocessor/package.json
-115 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-firefox-launcher/package.json
-116 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-html2js-preprocessor/package.json
-117 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-jasmine/package.json
-118 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-ng-html2js-preprocessor/package.json
-119 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-ng-scenario/package.json
-120 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-phantomjs-launcher/package.json
-121 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-requirejs/package.json
-122 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-script-launcher/package.json
-123 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/load-grunt-tasks/package.json
-124 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/mongoose/package.json
-125 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/passport/package.json
-126 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/passport-local/package.json
-127 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/time-grunt/package.json
-128 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/underscore/package.json
-129 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/.bin/autoprefixer/package.json
-130 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/.bin/express/package.json
-131 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/.bin/grunt-open/package.json
-132 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/.bin/karma/package.json
-133 verbose already installed skipping grunt-autoprefixer@~0.4.0 /Users/shreyashdholakia/projects/testAuth
-134 verbose already installed skipping grunt-concurrent@~0.4.1 /Users/shreyashdholakia/projects/testAuth
-135 verbose already installed skipping grunt-contrib-clean@~0.5.0 /Users/shreyashdholakia/projects/testAuth
-136 verbose already installed skipping grunt-contrib-coffee@~0.7.0 /Users/shreyashdholakia/projects/testAuth
-137 verbose already installed skipping grunt-contrib-compass@~0.6.0 /Users/shreyashdholakia/projects/testAuth
-138 verbose already installed skipping grunt-contrib-concat@~0.3.0 /Users/shreyashdholakia/projects/testAuth
-139 verbose already installed skipping grunt-contrib-copy@~0.4.1 /Users/shreyashdholakia/projects/testAuth
-140 verbose already installed skipping grunt-contrib-cssmin@~0.7.0 /Users/shreyashdholakia/projects/testAuth
-141 verbose already installed skipping grunt-contrib-htmlmin@~0.1.3 /Users/shreyashdholakia/projects/testAuth
-142 verbose already installed skipping grunt-contrib-imagemin@~0.3.0 /Users/shreyashdholakia/projects/testAuth
-143 verbose already installed skipping grunt-contrib-jshint@~0.7.1 /Users/shreyashdholakia/projects/testAuth
-144 verbose already installed skipping grunt-contrib-uglify@~0.2.0 /Users/shreyashdholakia/projects/testAuth
-145 verbose already installed skipping grunt-contrib-watch@~0.5.2 /Users/shreyashdholakia/projects/testAuth
-146 verbose already installed skipping grunt-google-cdn@~0.2.0 /Users/shreyashdholakia/projects/testAuth
-147 verbose already installed skipping grunt-ngmin@~0.0.2 /Users/shreyashdholakia/projects/testAuth
-148 verbose already installed skipping grunt-rev@~0.1.0 /Users/shreyashdholakia/projects/testAuth
-149 verbose already installed skipping grunt-svgmin@~0.2.0 /Users/shreyashdholakia/projects/testAuth
-150 verbose already installed skipping grunt-usemin@~2.0.0 /Users/shreyashdholakia/projects/testAuth
-151 verbose already installed skipping jshint-stylish@~0.1.3 /Users/shreyashdholakia/projects/testAuth
-152 verbose already installed skipping load-grunt-tasks@~0.2.0 /Users/shreyashdholakia/projects/testAuth
-153 verbose already installed skipping time-grunt@~0.2.1 /Users/shreyashdholakia/projects/testAuth
-154 verbose already installed skipping grunt-express-server@~0.4.5 /Users/shreyashdholakia/projects/testAuth
-155 verbose already installed skipping grunt-open@~0.2.0 /Users/shreyashdholakia/projects/testAuth
-156 verbose already installed skipping karma-ng-scenario@~0.1.0 /Users/shreyashdholakia/projects/testAuth
-157 verbose already installed skipping grunt-karma@~0.6.2 /Users/shreyashdholakia/projects/testAuth
-158 verbose already installed skipping karma-requirejs@~0.1.0 /Users/shreyashdholakia/projects/testAuth
-159 verbose already installed skipping karma-firefox-launcher@~0.1.0 /Users/shreyashdholakia/projects/testAuth
-160 verbose already installed skipping karma-html2js-preprocessor@~0.1.0 /Users/shreyashdholakia/projects/testAuth
-161 verbose already installed skipping karma-script-launcher@~0.1.0 /Users/shreyashdholakia/projects/testAuth
-162 verbose already installed skipping karma-chrome-launcher@~0.1.0 /Users/shreyashdholakia/projects/testAuth
-163 verbose already installed skipping karma-jasmine@~0.1.3 /Users/shreyashdholakia/projects/testAuth
-164 verbose already installed skipping karma-coffee-preprocessor@~0.1.0 /Users/shreyashdholakia/projects/testAuth
-165 verbose already installed skipping karma-phantomjs-launcher@~0.1.0 /Users/shreyashdholakia/projects/testAuth
-166 verbose already installed skipping karma@~0.10.4 /Users/shreyashdholakia/projects/testAuth
-167 verbose already installed skipping karma-ng-html2js-preprocessor@~0.1.0 /Users/shreyashdholakia/projects/testAuth
-168 verbose already installed skipping express@~3.4.3 /Users/shreyashdholakia/projects/testAuth
-169 verbose already installed skipping passport@~0.1.15 /Users/shreyashdholakia/projects/testAuth
-170 verbose already installed skipping passport-local@~0.1.6 /Users/shreyashdholakia/projects/testAuth
-171 verbose already installed skipping mongoose@~3.5.5 /Users/shreyashdholakia/projects/testAuth
-172 verbose already installed skipping ejs@~0.8.4 /Users/shreyashdholakia/projects/testAuth
-173 verbose already installed skipping underscore@~1.5.2 /Users/shreyashdholakia/projects/testAuth
-174 verbose already installed skipping connect-mongo@~0.4.0 /Users/shreyashdholakia/projects/testAuth
-175 verbose already installed skipping grunt@~0.4.1 /Users/shreyashdholakia/projects/testAuth
-176 silly install resolved []
-177 info build /Users/shreyashdholakia/projects/testAuth
-178 info linkStuff angularpassport@0.0.0
-179 silly linkStuff angularpassport@0.0.0 has /Users/shreyashdholakia/projects as its parent node_modules
-180 verbose linkBins angularpassport@0.0.0
-181 verbose linkMans angularpassport@0.0.0
-182 verbose rebuildBundles angularpassport@0.0.0
-183 verbose rebuildBundles [ '.bin',
-183 verbose rebuildBundles   'connect-mongo',
-183 verbose rebuildBundles   'ejs',
-183 verbose rebuildBundles   'express',
-183 verbose rebuildBundles   'grunt',
-183 verbose rebuildBundles   'grunt-autoprefixer',
-183 verbose rebuildBundles   'grunt-concurrent',
-183 verbose rebuildBundles   'grunt-contrib-clean',
-183 verbose rebuildBundles   'grunt-contrib-coffee',
-183 verbose rebuildBundles   'grunt-contrib-compass',
-183 verbose rebuildBundles   'grunt-contrib-concat',
-183 verbose rebuildBundles   'grunt-contrib-copy',
-183 verbose rebuildBundles   'grunt-contrib-cssmin',
-183 verbose rebuildBundles   'grunt-contrib-htmlmin',
-183 verbose rebuildBundles   'grunt-contrib-imagemin',
-183 verbose rebuildBundles   'grunt-contrib-jshint',
-183 verbose rebuildBundles   'grunt-contrib-uglify',
-183 verbose rebuildBundles   'grunt-contrib-watch',
-183 verbose rebuildBundles   'grunt-express-server',
-183 verbose rebuildBundles   'grunt-google-cdn',
-183 verbose rebuildBundles   'grunt-karma',
-183 verbose rebuildBundles   'grunt-ngmin',
-183 verbose rebuildBundles   'grunt-open',
-183 verbose rebuildBundles   'grunt-rev',
-183 verbose rebuildBundles   'grunt-svgmin',
-183 verbose rebuildBundles   'grunt-usemin',
-183 verbose rebuildBundles   'jshint-stylish',
-183 verbose rebuildBundles   'karma',
-183 verbose rebuildBundles   'karma-chrome-launcher',
-183 verbose rebuildBundles   'karma-coffee-preprocessor',
-183 verbose rebuildBundles   'karma-firefox-launcher',
-183 verbose rebuildBundles   'karma-html2js-preprocessor',
-183 verbose rebuildBundles   'karma-jasmine',
-183 verbose rebuildBundles   'karma-ng-html2js-preprocessor',
-183 verbose rebuildBundles   'karma-ng-scenario',
-183 verbose rebuildBundles   'karma-phantomjs-launcher',
-183 verbose rebuildBundles   'karma-requirejs',
-183 verbose rebuildBundles   'karma-script-launcher',
-183 verbose rebuildBundles   'load-grunt-tasks',
-183 verbose rebuildBundles   'mongoose',
-183 verbose rebuildBundles   'passport',
-183 verbose rebuildBundles   'passport-local',
-183 verbose rebuildBundles   'time-grunt',
-183 verbose rebuildBundles   'underscore' ]
-184 info install angularpassport@0.0.0
-185 info postinstall angularpassport@0.0.0
-186 info prepublish angularpassport@0.0.0
-187 verbose validateInstall loading /Users/shreyashdholakia/projects/testAuth/package.json for validation
-188 verbose stack Error: The package karma-requirejs does not satisfy its siblings' peerDependencies requirements!
-188 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:125:32
-188 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:267:7
-188 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:142:5
-188 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
-188 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
-188 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
-188 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
-188 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
-188 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
-188 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
-189 verbose cwd /Users/shreyashdholakia/projects/testAuth
-190 error Darwin 14.4.0
-191 error argv "node" "/usr/local/bin/npm" "install"
-192 error node v0.12.7
-193 error npm  v2.12.1
-194 error code EPEERINVALID
-195 error peerinvalid The package karma-requirejs does not satisfy its siblings' peerDependencies requirements!
-195 error peerinvalid Peer karma@0.10.10 wants karma-requirejs@~0.2.0
-196 verbose exit [ 1, true ]
+84 info package.json mongoose@3.5.16 No license field.
+85 info package.json underscore@1.5.2 No license field.
+86 verbose readDependencies loading dependencies from /Users/shreyashdholakia/projects/testAuth/package.json
+87 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/connect-mongo/package.json
+88 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/ejs/package.json
+89 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/express/package.json
+90 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt/package.json
+91 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-autoprefixer/package.json
+92 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-concurrent/package.json
+93 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-clean/package.json
+94 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-coffee/package.json
+95 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-compass/package.json
+96 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-concat/package.json
+97 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-copy/package.json
+98 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-cssmin/package.json
+99 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-htmlmin/package.json
+100 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-imagemin/package.json
+101 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-jshint/package.json
+102 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-uglify/package.json
+103 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-contrib-watch/package.json
+104 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-express-server/package.json
+105 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-google-cdn/package.json
+106 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-karma/package.json
+107 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-ngmin/package.json
+108 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-open/package.json
+109 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-rev/package.json
+110 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-svgmin/package.json
+111 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/grunt-usemin/package.json
+112 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/jshint-stylish/package.json
+113 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma/package.json
+114 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-chrome-launcher/package.json
+115 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-coffee-preprocessor/package.json
+116 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-firefox-launcher/package.json
+117 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-html2js-preprocessor/package.json
+118 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-jasmine/package.json
+119 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-ng-html2js-preprocessor/package.json
+120 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-ng-scenario/package.json
+121 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-phantomjs-launcher/package.json
+122 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-requirejs/package.json
+123 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/karma-script-launcher/package.json
+124 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/load-grunt-tasks/package.json
+125 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/mongoose/package.json
+126 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/passport/package.json
+127 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/passport-local/package.json
+128 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/time-grunt/package.json
+129 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/underscore/package.json
+130 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/.bin/autoprefixer/package.json
+131 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/.bin/express/package.json
+132 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/.bin/grunt-open/package.json
+133 verbose targetResolver reading package data from /Users/shreyashdholakia/projects/testAuth/node_modules/.bin/karma/package.json
+134 verbose already installed skipping connect-mongo@~0.4.0 /Users/shreyashdholakia/projects/testAuth
+135 verbose already installed skipping grunt@~0.4.1 /Users/shreyashdholakia/projects/testAuth
+136 verbose already installed skipping grunt-autoprefixer@~0.4.0 /Users/shreyashdholakia/projects/testAuth
+137 verbose already installed skipping grunt-concurrent@~0.4.1 /Users/shreyashdholakia/projects/testAuth
+138 verbose already installed skipping grunt-contrib-clean@~0.5.0 /Users/shreyashdholakia/projects/testAuth
+139 verbose already installed skipping grunt-contrib-coffee@~0.7.0 /Users/shreyashdholakia/projects/testAuth
+140 verbose already installed skipping grunt-contrib-compass@~0.6.0 /Users/shreyashdholakia/projects/testAuth
+141 verbose already installed skipping grunt-contrib-concat@~0.3.0 /Users/shreyashdholakia/projects/testAuth
+142 verbose already installed skipping grunt-contrib-copy@~0.4.1 /Users/shreyashdholakia/projects/testAuth
+143 verbose already installed skipping grunt-contrib-cssmin@~0.7.0 /Users/shreyashdholakia/projects/testAuth
+144 verbose already installed skipping grunt-contrib-htmlmin@~0.1.3 /Users/shreyashdholakia/projects/testAuth
+145 verbose already installed skipping grunt-contrib-imagemin@~0.3.0 /Users/shreyashdholakia/projects/testAuth
+146 verbose already installed skipping grunt-contrib-jshint@~0.7.1 /Users/shreyashdholakia/projects/testAuth
+147 verbose already installed skipping grunt-contrib-uglify@~0.2.0 /Users/shreyashdholakia/projects/testAuth
+148 verbose already installed skipping grunt-contrib-watch@~0.5.2 /Users/shreyashdholakia/projects/testAuth
+149 verbose already installed skipping grunt-google-cdn@~0.2.0 /Users/shreyashdholakia/projects/testAuth
+150 verbose already installed skipping grunt-ngmin@~0.0.2 /Users/shreyashdholakia/projects/testAuth
+151 verbose already installed skipping grunt-rev@~0.1.0 /Users/shreyashdholakia/projects/testAuth
+152 verbose already installed skipping grunt-svgmin@~0.2.0 /Users/shreyashdholakia/projects/testAuth
+153 verbose already installed skipping grunt-usemin@~2.0.0 /Users/shreyashdholakia/projects/testAuth
+154 verbose already installed skipping jshint-stylish@~0.1.3 /Users/shreyashdholakia/projects/testAuth
+155 verbose already installed skipping load-grunt-tasks@~0.2.0 /Users/shreyashdholakia/projects/testAuth
+156 verbose already installed skipping time-grunt@~0.2.1 /Users/shreyashdholakia/projects/testAuth
+157 verbose already installed skipping grunt-express-server@~0.4.5 /Users/shreyashdholakia/projects/testAuth
+158 verbose already installed skipping grunt-open@~0.2.0 /Users/shreyashdholakia/projects/testAuth
+159 verbose already installed skipping karma-ng-scenario@~0.1.0 /Users/shreyashdholakia/projects/testAuth
+160 verbose already installed skipping grunt-karma@~0.6.2 /Users/shreyashdholakia/projects/testAuth
+161 verbose already installed skipping karma-requirejs@~0.1.0 /Users/shreyashdholakia/projects/testAuth
+162 verbose already installed skipping karma-firefox-launcher@~0.1.0 /Users/shreyashdholakia/projects/testAuth
+163 verbose already installed skipping karma-html2js-preprocessor@~0.1.0 /Users/shreyashdholakia/projects/testAuth
+164 verbose already installed skipping karma-script-launcher@~0.1.0 /Users/shreyashdholakia/projects/testAuth
+165 verbose already installed skipping karma-chrome-launcher@~0.1.0 /Users/shreyashdholakia/projects/testAuth
+166 verbose already installed skipping karma-jasmine@~0.1.3 /Users/shreyashdholakia/projects/testAuth
+167 verbose already installed skipping karma-coffee-preprocessor@~0.1.0 /Users/shreyashdholakia/projects/testAuth
+168 verbose already installed skipping karma-phantomjs-launcher@~0.1.0 /Users/shreyashdholakia/projects/testAuth
+169 verbose already installed skipping karma@~0.12 /Users/shreyashdholakia/projects/testAuth
+170 verbose already installed skipping karma-ng-html2js-preprocessor@~0.1.0 /Users/shreyashdholakia/projects/testAuth
+171 verbose already installed skipping express@~3.4.3 /Users/shreyashdholakia/projects/testAuth
+172 verbose already installed skipping passport@~0.1.15 /Users/shreyashdholakia/projects/testAuth
+173 verbose already installed skipping passport-local@~0.1.6 /Users/shreyashdholakia/projects/testAuth
+174 verbose already installed skipping mongoose@~3.5.5 /Users/shreyashdholakia/projects/testAuth
+175 verbose already installed skipping ejs@~0.8.4 /Users/shreyashdholakia/projects/testAuth
+176 verbose already installed skipping underscore@~1.5.2 /Users/shreyashdholakia/projects/testAuth
+177 silly install resolved []
+178 info build /Users/shreyashdholakia/projects/testAuth
+179 info linkStuff angularpassport@0.0.0
+180 silly linkStuff angularpassport@0.0.0 has /Users/shreyashdholakia/projects as its parent node_modules
+181 verbose linkBins angularpassport@0.0.0
+182 verbose linkMans angularpassport@0.0.0
+183 verbose rebuildBundles angularpassport@0.0.0
+184 verbose rebuildBundles [ '.bin',
+184 verbose rebuildBundles   'connect-mongo',
+184 verbose rebuildBundles   'ejs',
+184 verbose rebuildBundles   'express',
+184 verbose rebuildBundles   'grunt',
+184 verbose rebuildBundles   'grunt-autoprefixer',
+184 verbose rebuildBundles   'grunt-concurrent',
+184 verbose rebuildBundles   'grunt-contrib-clean',
+184 verbose rebuildBundles   'grunt-contrib-coffee',
+184 verbose rebuildBundles   'grunt-contrib-compass',
+184 verbose rebuildBundles   'grunt-contrib-concat',
+184 verbose rebuildBundles   'grunt-contrib-copy',
+184 verbose rebuildBundles   'grunt-contrib-cssmin',
+184 verbose rebuildBundles   'grunt-contrib-htmlmin',
+184 verbose rebuildBundles   'grunt-contrib-imagemin',
+184 verbose rebuildBundles   'grunt-contrib-jshint',
+184 verbose rebuildBundles   'grunt-contrib-uglify',
+184 verbose rebuildBundles   'grunt-contrib-watch',
+184 verbose rebuildBundles   'grunt-express-server',
+184 verbose rebuildBundles   'grunt-google-cdn',
+184 verbose rebuildBundles   'grunt-karma',
+184 verbose rebuildBundles   'grunt-ngmin',
+184 verbose rebuildBundles   'grunt-open',
+184 verbose rebuildBundles   'grunt-rev',
+184 verbose rebuildBundles   'grunt-svgmin',
+184 verbose rebuildBundles   'grunt-usemin',
+184 verbose rebuildBundles   'jshint-stylish',
+184 verbose rebuildBundles   'karma',
+184 verbose rebuildBundles   'karma-chrome-launcher',
+184 verbose rebuildBundles   'karma-coffee-preprocessor',
+184 verbose rebuildBundles   'karma-firefox-launcher',
+184 verbose rebuildBundles   'karma-html2js-preprocessor',
+184 verbose rebuildBundles   'karma-jasmine',
+184 verbose rebuildBundles   'karma-ng-html2js-preprocessor',
+184 verbose rebuildBundles   'karma-ng-scenario',
+184 verbose rebuildBundles   'karma-phantomjs-launcher',
+184 verbose rebuildBundles   'karma-requirejs',
+184 verbose rebuildBundles   'karma-script-launcher',
+184 verbose rebuildBundles   'load-grunt-tasks',
+184 verbose rebuildBundles   'mongoose',
+184 verbose rebuildBundles   'passport',
+184 verbose rebuildBundles   'passport-local',
+184 verbose rebuildBundles   'time-grunt',
+184 verbose rebuildBundles   'underscore' ]
+185 info install angularpassport@0.0.0
+186 info postinstall angularpassport@0.0.0
+187 info prepublish angularpassport@0.0.0
+188 verbose validateInstall loading /Users/shreyashdholakia/projects/testAuth/package.json for validation
+189 verbose stack Error: The package karma does not satisfy its siblings' peerDependencies requirements!
+189 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:125:32
+189 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:267:7
+189 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:142:5
+189 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+189 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+189 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+189 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+189 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+189 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+189 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+190 verbose cwd /Users/shreyashdholakia/projects/testAuth
+191 error Darwin 14.4.0
+192 error argv "node" "/usr/local/bin/npm" "install"
+193 error node v0.12.7
+194 error npm  v2.12.1
+195 error code EPEERINVALID
+196 error peerinvalid The package karma does not satisfy its siblings' peerDependencies requirements!
+196 error peerinvalid Peer karma-html2js-preprocessor@0.1.0 wants karma@>=0.9
+196 error peerinvalid Peer karma-ng-html2js-preprocessor@0.1.2 wants karma@>=0.9
+196 error peerinvalid Peer karma-script-launcher@0.1.0 wants karma@>=0.9
+196 error peerinvalid Peer karma-jasmine@0.1.6 wants karma@>=0.9
+196 error peerinvalid Peer karma-ng-scenario@0.1.0 wants karma@>=0.9
+196 error peerinvalid Peer karma-requirejs@0.1.0 wants karma@>=0.9
+196 error peerinvalid Peer grunt-karma@0.6.2 wants karma@~0.10.0
+196 error peerinvalid Peer karma-coffee-preprocessor@0.1.3 wants karma@>=0.9
+196 error peerinvalid Peer karma-phantomjs-launcher@0.1.4 wants karma@>=0.9
+197 verbose exit [ 1, true ]

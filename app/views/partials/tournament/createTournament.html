@@ -211,7 +211,7 @@
                                 <td>{{$index + 1}}</td>
                                 <td><a href="/team/{{team.teamName}}">{{team.teamName}}</a></td>
                                 <td>{{team.captain}}</td>
-                                <td><i class="text-danger glyphicon glyphicon-remove"></i></td>
+                                <td><i class="text-danger glyphicon glyphicon-remove" ng-click="open(team)"></i></td>
                               </tr>
                             </tbody>
                           </table>
@@ -236,4 +236,17 @@
 
               </div><!--/col-9-->
             </div><!--/row-->
+
+            <script type="text/ng-template" id="delete.html">
+              <div class="modal-header">
+                  <h3 class="modal-title">Delete <i class="glyphicon glyphicon-trash"></i></h3>
+              </div>
+              <div class="modal-body">
+                  Remove'<strong>{{teamToDelete.teamName}}</strong>' from the tournament?
+              </div>
+              <div class="modal-footer">
+                  <button class="btn btn-primary" type="button" ng-click="deleteTeam()">OK</button>
+                  <button class="btn btn-warning" type="button" ng-click="close()">Cancel</button>
+              </div>
+          </script>
 

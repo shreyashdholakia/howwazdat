@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('angularPassportApp')
-.controller('TeamCtrl', function ($scope, teamService, $location, $routeParams, $rootScope, $http, $cookieStore, $modal) {
+.controller('TeamCtrl', function ($scope, teamService, $location, $routeParams, $rootScope, $http, $cookieStore, $modal, alertService) {
 
 	$scope.player = [];
 	$scope.roles = [{name:'Batsmen'},
@@ -25,13 +25,19 @@ angular.module('angularPassportApp')
 	};
 
 	$scope.deletePlayer = function () {
+		$scope.modalInstance.dismiss('cancel');
+		var index = $scope.playerList.indexOf($scope.playerToDelete);
+		$scope.playerList.splice(index, 1); 
+		$scope.teamUpdate();
+	};
 
-		console.log($scope.playerToDelete);
-		$scope.playerList.splice($scope.playerToDelete, 1); 
+	$scope.teamUpdate = function() {
+		console.log($scope.playerList);
+        alertService.clearLastToast();
 		teamService.update($scope.teamName, $scope.playerList).success(function(data) {
 			$location.path("/team/" + data.data.teamName);
 			$scope.playerList = data.data.players;
-			console.log($scope.players[0]);
+			alertService.displaySaveMessage("Success");
 		}).error(function(status, data) {
 			console.log(status);
 			console.log(data);
@@ -42,7 +48,7 @@ angular.module('angularPassportApp')
 	$scope.playerList = [];
 	$scope.teamDetails = [];
 
-	$scope.addPlayer = function (player) {
+	$scope.addPlayer = function (action) {
 		if($scope.isCaptain) {
 			$scope.captain = 'C';
 		} else {
@@ -53,8 +59,13 @@ angular.module('angularPassportApp')
 			lastName: $scope.lastName,
 			role: $scope.roleSelected.name,
 			captain: $scope.captain
-
 		});
+		if(action === 'U') {
+			$scope.teamUpdate();
+		} else {
+			$scope.addTeam(); //save the added new players
+		}
+
 		$scope.firstName = "";
 		$scope.lastName = "";
 		$scope.isCaptain = false;
@@ -95,31 +106,23 @@ angular.module('angularPassportApp')
 		teamService.create($scope.teamDetails).success(function(data) {
 			$location.path("/team/" + data.data.teamName);
 			$scope.playerList = data.data.players;
-			console.log($scope.players[0]);
 		}).error(function(status, data) {
 			console.log(status);
 			console.log(data);
 		});
 	};
 
-	$scope.open = function (size) {
-
-	    var modalInstance = $modal.open({
+	$scope.open = function (player) {
+		$scope.playerToDelete = player;
+	    $scope.modalInstance = $modal.open({
 	      animation: $scope.animationsEnabled,
 	      templateUrl: 'delete.html',
-	      size: size,
-	      resolve: {
-	        items: function () {
-	          return $scope.items;
-	        }
-	      }
+	      scope:$scope
 	    });
+  };
 
-	    modalInstance.result.then(function (selectedItem) {
-	      $scope.selected = selectedItem;
-	    }, function () {
-	      $log.info('Modal dismissed at: ' + new Date());
-	    });
+  $scope.close = function () {
+  	$scope.modalInstance.dismiss('cancel');
   };
 
 });
