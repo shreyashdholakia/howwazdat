@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('angularPassportApp')
-.controller('TeamCtrl', function ($scope, teamService, $location, $routeParams, $rootScope, $http, $cookieStore, $modal) {
+.controller('TeamCtrl', function ($scope, teamService, $location, $routeParams, $rootScope, $http, $cookieStore, $modal, alertService) {
 
 	$scope.player = [];
 	$scope.roles = [{name:'Batsmen'},
@@ -25,15 +25,19 @@ angular.module('angularPassportApp')
 	};
 
 	$scope.deletePlayer = function () {
-		$scope.playerList.splice($scope.playerToDelete, 1); 
+		$scope.modalInstance.dismiss('cancel');
+		var index = $scope.playerList.indexOf($scope.playerToDelete);
+		$scope.playerList.splice(index, 1); 
+		$scope.teamUpdate();
 	};
 
 	$scope.teamUpdate = function() {
 		console.log($scope.playerList);
-
+        alertService.clearLastToast();
 		teamService.update($scope.teamName, $scope.playerList).success(function(data) {
 			$location.path("/team/" + data.data.teamName);
 			$scope.playerList = data.data.players;
+			alertService.displaySaveMessage("Success");
 		}).error(function(status, data) {
 			console.log(status);
 			console.log(data);
@@ -108,19 +112,17 @@ angular.module('angularPassportApp')
 		});
 	};
 
-	$scope.open = function () {
-
+	$scope.open = function (player) {
+		$scope.playerToDelete = player;
 	    $scope.modalInstance = $modal.open({
 	      animation: $scope.animationsEnabled,
 	      templateUrl: 'delete.html',
-	      size: size,
 	      scope:$scope
 	    });
   };
 
   $scope.close = function () {
   	$scope.modalInstance.dismiss('cancel');
-
   };
 
 });
