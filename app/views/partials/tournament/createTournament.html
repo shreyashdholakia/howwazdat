@@ -6,46 +6,47 @@
   </div>
   <hr>
   <div class="row" ng-show="!tournamentPage">
-    <form class="form" id="registrationForm">
+    <form class="form" id="registrationForm" novalidate name="tournamentForm">
       <div class="form-group">
 
         <div class="col-xs-6">
           <label for="first_name"><h4>Tournament Name</h4></label>
-          <input type="text" class="form-control" name="first_name" ng-model="tournament.name" id="first_name" placeholder="Tournament Name" title="enter your tournament name if any.">
+          <input type="text" class="form-control" name="name" ng-model="tournament.name" id="name" placeholder="Tournament Name" title="enter your tournament name if any." required>
+            <p ng-show="tournamentForm.name.$invalid && !tournamentForm.name.$pristine" class="help-block">Tournament name is required.</p>
         </div>
       </div>
       <div class="form-group">
 
         <div class="col-xs-6">
           <label for="last_name"><h4>Organizer</h4></label>
-          <input type="text" class="form-control" name="last_name" ng-model="tournament.organizer" id="last_name" placeholder="Organizer" title="enter organizer.">
+          <input type="text" class="form-control" name="last_name" ng-model="tournament.organizer" id="last_name" placeholder="Organizer" title="enter organizer." required>
         </div>
       </div>
       <div class="form-group">
 
         <div class="col-xs-6">
           <label for="email"><h4>Email</h4></label>
-          <input type="email" class="form-control" id="location" ng-model="user.email" placeholder="somewhere" title="Email" ng-disabled="isEmail">
+          <input type="email" class="form-control" id="location" ng-model="user.email" placeholder="somewhere" title="Email" ng-disabled="isEmail" required>
         </div>
       </div>
       <div class="form-group">
 
         <div class="col-xs-6">
           <label for="city"><h4>City</h4></label>
-          <input type="text" class="form-control" name="city" id="city" ng-model="tournament.city" placeholder="City" title="enter your city if any.">
+          <input type="text" class="form-control" name="city" id="city" ng-model="tournament.city" placeholder="City" title="enter your city if any." required>
         </div>
       </div>
       <div class="form-group">
 
         <div class="col-xs-6">
           <label for="address"><h4>Address</h4></label>
-          <input type="text" class="form-control" name="address" id="address" ng-model="tournament.address" placeholder="Address" title="enter your address if any.">
+          <input type="text" class="form-control" name="address" id="address" ng-model="tournament.address" details="chosenPlaceDetails" googleplace placeholder="Address" title="enter your address if any." required>
         </div>
       </div>
       <div class="form-group">
        <div class="col-xs-12">
         <br>
-        <button class="btn btn-default btn-primary pull-right" ng-click="createTournament(tournament)" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
+        <button class="btn btn-default btn-primary pull-right" ng-click="createTournament(tournament)" type="submit" ng-disabled="tournamentForm.$invalid"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
       </div>
     </div>
   </form>
@@ -211,7 +212,7 @@
                                 <td>{{$index + 1}}</td>
                                 <td><a href="/team/{{team.teamName}}">{{team.teamName}}</a></td>
                                 <td>{{team.captain}}</td>
-                                <td><i class="text-danger glyphicon glyphicon-remove" ng-click="open(team)"></i></td>
+                                <td><i class="text-danger glyphicon glyphicon-remove"></i></td>
                               </tr>
                             </tbody>
                           </table>
@@ -236,17 +237,4 @@
 
               </div><!--/col-9-->
             </div><!--/row-->
-
-            <script type="text/ng-template" id="delete.html">
-              <div class="modal-header">
-                  <h3 class="modal-title">Delete <i class="glyphicon glyphicon-trash"></i></h3>
-              </div>
-              <div class="modal-body">
-                  Remove'<strong>{{teamToDelete.teamName}}</strong>' from the tournament?
-              </div>
-              <div class="modal-footer">
-                  <button class="btn btn-primary" type="button" ng-click="deleteTeam()">OK</button>
-                  <button class="btn btn-warning" type="button" ng-click="close()">Cancel</button>
-              </div>
-          </script>
 
