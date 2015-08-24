@@ -13,11 +13,10 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
         <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/fullcalendar.css">
         <link rel="stylesheet" href="styles/profile.css">
         <link rel="stylesheet" href="styles/main.css">
         <link rel="stylesheet" href="bower_component/toastr/toastr.css">
-
-         
         <!-- endbuild -->
 </head>
   <body ng-app="angularPassportApp">
@@ -33,19 +32,6 @@
     <!-- Add your site or application content here -->
     <div ng-include="" src="'partials/navbar.html'"></div>
     <div class="profile-container" ng-view=""></div>
-        <!-- <modal title="Confirm Delete" visible="confirmModal">
-      <div class="modal-body">
-        <p>Do you want to delete player?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn" 
-        data-ng-click="modalOptions.close()">No</button>
-        <button class="btn btn-primary" 
-        data-ng-click="deletePlayer()">Yes</button>
-      </div>
-    </modal> -->
-
-
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -57,8 +43,9 @@
        ga('create', 'UA-XXXXX-X');
        ga('send', 'pageview');
     </script>
-    
-    <script src="bower_components/angular/angular.js"></script>
+            <script src="scripts/common/googleLocation.js"></script>
+
+    <script src="bower_components/angular/angular.min.js"></script>
 
 
         <!-- build:js(app) scripts/modules.js -->
@@ -72,7 +59,12 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
-        <script src="bower_components/jquery/jquery.js"></script>
+        
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+        <script type="text/javascript" src="bower_components/angular-ui-calendar/src/calendar.js"></script>
+        <script type="text/javascript" src="bower_components/fullcalendar/dist/fullcalendar.js"></script>
+        <script type="text/javascript" src="bower_components/fullcalendar/dist/gcal.js"></script>
         <script src="scripts/bootstrap.min.js"></script>
         <script src="bower_components/toastr/toastr.min.js"></script>
         <script src="scripts/controllers/main.js"></script>
@@ -95,6 +87,8 @@
         <script src="scripts/services/teamService.js"></script>
         <script src="scripts/common/alertService.js"></script>
         <script src="scripts/directives/modalDirective.js"></script>
+        <script src="scripts/directives/locationDirective.js"></script>
+        <script src="scripts/services/calendarService.js"></script>
 
         <!-- endbuild -->
 </body>

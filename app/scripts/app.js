@@ -6,7 +6,8 @@ var app = angular.module('angularPassportApp', [
   'ngSanitize',
   'ngRoute',
   'http-auth-interceptor',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'ui.calendar'
 ]);
 
 var options = {};

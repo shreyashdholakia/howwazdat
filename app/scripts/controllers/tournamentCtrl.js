@@ -1,9 +1,131 @@
 'use strict';
 
 angular.module('angularPassportApp')
-.controller('tournamentCtrl', function ($scope, tournamentService, teamService, ProfileService, $location, $routeParams, $rootScope, $http, $cookieStore, alertService, $modal) {
+.controller('tournamentCtrl', function ($scope, tournamentService, teamService, ProfileService, $location, $routeParams, $rootScope, $http, $cookieStore, alertService, $modal, calendarService, uiCalendarConfig, $filter) {
 
   $scope.isProfileCreated = false;
+  $scope.eventSources = [];
+  $scope.umpires = [{name:'Self'},
+  {name:'Neutral'}];
+  $scope.umpireType = $scope.umpires[0];
+
+  $scope.today = function() {
+    $scope.matchDate = new Date();
+  };
+  $scope.today();
+
+  $scope.matchStartTime = new Date();
+  $scope.matchEndTime = new Date();
+  $scope.ismeridian = true;
+  $scope.hstep = 1;
+  $scope.mstep = 15;
+
+  $scope.matchTypes = [
+  {type:'T20'},
+  {type:'ODI'},
+  {type: 'Test'}
+  ];
+
+  $scope.matchType = $scope.matchTypes[0];
+
+
+
+  $scope.eventSource = {
+            url: "http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic",
+            className: 'gcal-event',           // an option!
+            currentTimezone: 'America/Chicago' // an option!
+    };
+
+    var date = new Date();
+    var d = date.getDate();
+    var m = date.getMonth();
+    var y = date.getFullYear();
+
+    $scope.events = [];
+
+    $scope.eventSources = [$scope.events];
+
+
+    $scope.addEvent = function(tournamentMatches) {
+        tournamentMatches.forEach( function (matchInfo)    // check if the team is already added
+      {
+        var match = matchInfo.homeTeam + ' ' +  'Vs' + ' ' +matchInfo.visitingTeam;
+        var date = $filter('date')(matchInfo.matchDate, "dd/MM/yyyy");
+        $scope.events.push({
+          title: match,
+          start: matchInfo.matchDate
+        })
+      });
+        console.log($scope.eventSources);
+        console.log(new Date(y, m, 28));
+        console.log(date);
+    };
+
+
+  
+/* alert on eventClick */
+    $scope.alertOnEventClick = function( date, jsEvent, view){
+        $scope.alertMessage = (date.title + ' was clicked ');
+    };
+    /* alert on Drop */
+     $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
+       $scope.alertMessage = ('Event Droped to make dayDelta ' + delta);
+    };
+    /* alert on Resize */
+    $scope.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
+       $scope.alertMessage = ('Event Resized to make dayDelta ' + delta);
+    };
+    /* add and removes an event source of choice */
+    $scope.addRemoveEventSource = function(sources,source) {
+      var canAdd = 0;
+      angular.forEach(sources,function(value, key){
+        if(sources[key] === source){
+          sources.splice(key,1);
+          canAdd = 1;
+        }
+      });
+      if(canAdd === 0){
+        sources.push(source);
+      }
+    };
+
+
+    /* remove event */
+    $scope.remove = function(index) {
+      $scope.events.splice(index,1);
+    };
+    /* Change View */
+    $scope.changeView = function(view,calendar) {
+      uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
+    };
+    /* Change View */
+    $scope.renderCalender = function(calendar) {
+      if(uiCalendarConfig.calendars[calendar]){
+        uiCalendarConfig.calendars[calendar].fullCalendar('render');
+      }
+    };
+     /* Render Tooltip */
+    $scope.eventRender = function( event, element, view ) { 
+        element.attr({'tooltip': event.title,
+                     'tooltip-append-to-body': true});
+        $compile(element)($scope);
+    };
+    /* config object */
+    $scope.uiConfig = {
+      calendar:{
+        height: 450,
+        editable: true,
+        header:{
+          left: 'title',
+          center: '',
+          right: 'today prev,next'
+        },
+        eventClick: $scope.alertOnEventClick,
+        eventDrop: $scope.alertOnDrop,
+        eventResize: $scope.alertOnResize
+      }
+    };
+
   $scope.checkProfileCreated = function () {
     ProfileService.findProfile($rootScope.currentUser.username).success(function(response) {
       $scope.profileExists = response.exists;
@@ -43,8 +165,13 @@ angular.module('angularPassportApp')
         if(response.data.teams) {
           $scope.tournamentTeams = response.data.teams;
         }
+        if(response.data.matches) {
+           $scope.tournamentMatches = response.data.matches;
+           $scope.addEvent($scope.tournamentMatches);
+        }
         
         $scope.tournamentInfo = response.data;
+        loadGoogleMap($scope.tournamentInfo);
         } else {
          $location.path("/createTournament");
         }
@@ -126,24 +253,29 @@ angular.module('angularPassportApp')
       organizer: $scope.tournament.organizer,
       owner: $scope.user.email,
       createdDate: joiningDate,
-      city: $scope.tournament.city,
-      address: $scope.tournament.address
+      address: $scope.tournament.address,
+      addressLatitude: $scope.chosenPlaceDetails.geometry.location.G,
+      addressLongitude: $scope.chosenPlaceDetails.geometry.location.K
     });
 
     tournamentService.create($scope.tournamentDetails).success(function(data) {
       $location.path("/tournament/" + data.data.tournamentName);
       $scope.tournamentName = data.data.tournamentName;
       $scope.tournamentPage = true;
+      $scope.tournamentInfo = response.data;
+      loadGoogleMap($scope.tournamentInfo);
     }).error(function(status, data) {
       console.log(data);
     });
   };
 
-  $scope.tab = "teams";
+  $scope.tab = "calendar";
   $scope.isEmail = true;
 
   $scope.setTab = function(newTab){
     $scope.tab = newTab;
+    $('#calendar').fullCalendar('render');
+
   };
 
   $scope.isActiveTab = function(tab){
@@ -172,7 +304,97 @@ angular.module('angularPassportApp')
     var index = $scope.tournamentTeams.indexOf($scope.teamToDelete);
     $scope.tournamentTeams.splice(index, 1); 
     $scope.saveTeams($scope.tournamentTeams);
+  };
+  
+   function initMap(info) {
+      var myLatLng = {lat: Number(info.addressLatitude), lng: Number(info.addressLongitude)};
+
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        center: myLatLng
+      });
+
+      var contentString = '<div id="gmap-content">'+
+                                    '<div id="gmap-siteNotice">'+
+                                    '</div>'+
+                                    '<h2 id="gmap-firstHeading" class="gmap-firstHeading">' + info.tournamentName + '</h2>'+
+                                    '<div id="gmap-bodyContent">'+
+                                        '<p><b>Address</b>:<br>' +
+                                            info.address
+                                             +'<br> <br>'+
+                                            '<strong><a href="http://maps.google.com/maps?saddr="' + info.address + '" title="Get Driving Directions" target="_blank">Get Directions</a></strong><br>'+
+                                        '</p>'+
+                                        '<div class="clear clearfix"></div>'+
+                                    '</div>'+
+                                    '</div>';
+
+      var infowindow = new google.maps.InfoWindow({
+        content: contentString
+      });
+
+      var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        title: 'Hello World!'
+      });
+
+       marker.addListener('click', function() {
+        infowindow.open(map, marker);
+      });
   }
+
+    function loadGoogleMap(tournamentInfo) { 
+    google.maps.event.addDomListener(document.getElementById("map"), 'load', initMap(tournamentInfo));
+  }
+
+  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+  $scope.format = $scope.formats[0];
+
+  $scope.dateOptions = {
+    'year-format': "'yy'",
+    'starting-day': 1
+  };
+
+  // Create Cricket Match
+
+  $scope.matchDetails = [];
+  $scope.submitMatch = function () {
+    console.log($scope.visitingTeam.teamName);
+
+      if($scope.homeTeam.teamName && $scope.visitingTeam.teamName) {
+        if($scope.homeTeam.teamName === $scope.visitingTeam.teamName) {
+          alertService.displayErrorMessage("Same Team cannot play against each other. Please select two different teams");
+        } else {
+          $scope.matchDetails.push({
+                 homeTeam: $scope.homeTeam.teamName,
+                 visitingTeam: $scope.visitingTeam.teamName,
+                 matchDate: $scope.matchDate,
+                 startTime: $scope.matchStartTime,
+                 endTime: $scope.matchEndTime,
+                 umpire: $scope.umpireType.name,
+                 matchType: $scope.matchType.type
+            });  
+
+          tournamentService.createMatch($scope.tournamentInfo.tournamentName, $scope.matchDetails).success(function(data) {
+            $location.path("/tournament/" + data.data.tournamentName);
+            $scope.tournamentName = data.data.tournamentName;
+            $scope.tournamentPage = true;
+            $scope.tournamentInfo = data.data;
+            $scope.tournamentMatches = data.data.matches;
+            $scope.addEvent($scope.tournamentMatches);
+            loadGoogleMap($scope.tournamentInfo);
+          }).error(function(status, data) {
+            console.log(data);
+          });                 
+              
+        } 
+
+      } else {
+        alertService.displayErrorMessage("Selected Team are not part of the tournament. Please correct the error and try again!");
+      }
+      
+};
+
 
 });
 

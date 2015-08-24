@@ -4,10 +4,13 @@
   </div>
   <hr>
   <div class="row">
+    <div class="alert alert-danger" ng-hide="teamName.length > 0">
+          <span class="glyphicon glyphicon-info-sign"></span> Team name is required
+    </div>
     <form class="form" id="registrationForm" novalidate name="teamForm">
       <div class="form-group">
 
-        <div class="col-xs-12" ng-class="{ 'has-error' : teamForm.teamName.$invalid && !teamForm.teamName.$pristine }">
+        <div class="col-xs-12" ng-class="{ 'has-error' : teamName.length <= 0}">
           <label for="first_name"><h4>Team Name</h4></label>
           <input type="text" class="form-control" name="teamName" ng-model="teamName" id="first_name" placeholder="Team name" title="enter your team name" required>
         </div>
