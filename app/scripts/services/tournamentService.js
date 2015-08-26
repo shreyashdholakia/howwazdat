@@ -15,6 +15,9 @@ angular.module('angularPassportApp')
 		},
 		addTeams: function(teams, tournamentName) {
 			return $http.put(options.api.base_url  + '/api/tournament/' + tournamentName, {'teams': teams});
+		},
+		createMatch: function(tournamentName, matchDetails) {
+			return $http.put(options.api.base_url  + '/api/tournament/match/' + tournamentName, {'matches': matchDetails})
 		}
 	};
 });
