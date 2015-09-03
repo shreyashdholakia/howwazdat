@@ -1,13 +1,16 @@
 'use strict';
 
 angular.module('angularPassportApp')
-.controller('tournamentCtrl', function ($scope, tournamentService, teamService, ProfileService, $location, $routeParams, $rootScope, $http, $cookieStore, alertService, $modal, calendarService, uiCalendarConfig, $filter, $compile) {
+.controller('tournamentCtrl', function ($scope, tournamentService, teamService, ProfileService, $location, $routeParams, $rootScope, $http, $cookieStore, alertService, $modal, uiCalendarConfig, $filter, $compile) {
 
   $scope.isProfileCreated = false;
   $scope.eventSources = [];
   $scope.umpires = [{name:'Self'},
   {name:'Neutral'}];
   $scope.umpireType = $scope.umpires[0];
+
+  $scope.sortType = 'matchDate';
+  $scope.sortReverse = false;
 
   $scope.today = function() {
     $scope.matchDate = new Date();
@@ -61,7 +64,7 @@ angular.module('angularPassportApp')
           $scope.addEvent = function(tournamentMatches) {
         tournamentMatches.forEach( function (matchInfo)    // check if the team is already added
         {
-          var match = matchInfo.homeTeam + ' ' +  'Vs' + ' ' +matchInfo.visitingTeam;
+          var match = matchInfo.homeTeam + ' ' +  'Vs' + ' ' + matchInfo.visitingTeam;
           var date = $filter('date')(matchInfo.matchDate, 'medium');
           $scope.events.push({
             title: match,
@@ -117,7 +120,8 @@ angular.module('angularPassportApp')
     };
     /* Render Tooltip */
     $scope.eventRender = function( event, element, view ) { 
-      var msg = $filter('date')(event.start, 'medium') + ' ' + event.title;
+
+      var msg = new Date(event.start) + ' ' + event.title;
       element.attr({'tooltip': msg,
        'tooltip-append-to-body': true});
       $compile(element)($scope);
@@ -283,7 +287,6 @@ angular.module('angularPassportApp')
   };
 
   $scope.tab = "calendar";
-  $scope.innerTab = 'league';
   $scope.isEmail = true;
 
   $scope.setTab = function(newTab){
@@ -294,16 +297,6 @@ angular.module('angularPassportApp')
 
   $scope.isActiveTab = function(tab){
     return $scope.tab === tab;
-  };
-
-  $scope.isActiveInnerTab = function(tab){
-    return $scope.innerTab === tab;
-  };
-
-  $scope.setInnerTab = function(newTab){
-    $scope.innerTab = newTab;
-    $('#calendar').fullCalendar('render');
-
   };
 
   
@@ -380,6 +373,52 @@ angular.module('angularPassportApp')
     'year-format': "'yy'",
     'starting-day': 1
   };
+
+  $scope.stageFilter = [];
+  $scope.filterSelected = [];
+  $scope.filterTeams = [];
+  $scope.filteredTeams = [];
+    
+    $scope.filterStages = function(stage) {
+        var i = $.inArray(stage, $scope.stageFilter);
+        if (i > -1) {
+            $scope.stageFilter.splice(i, 1);
+            $scope.filterSelected.splice(i, 1);
+        } else {
+            $scope.stageFilter.push(stage)
+            $scope.filterSelected.push({
+              filter: stage
+            })
+        }
+    }
+
+    $scope.stages = function(tournamentMatches) {
+        if ($scope.stageFilter.length > 0) {
+            if ($.inArray(tournamentMatches.roundType, $scope.stageFilter) < 0)
+                return;
+        }
+        
+        return tournamentMatches;
+    }
+
+    $scope.clearFilter = function () {
+      $scope.stageFilter = [];
+
+    }
+
+
+    $scope.teamsFilter = function(team) {
+        var i = $.inArray(team, $scope.filteredTeams);
+        if (i > -1) {
+            $scope.filteredTeams.splice(i, 1);
+            $scope.filterSelected.splice(i, 1);
+        } else {
+            $scope.stageFilter.push(team)
+            $scope.filterTeams.push({
+              filter: team
+            })
+        }
+    }
 
 
   // Create Cricket Match
