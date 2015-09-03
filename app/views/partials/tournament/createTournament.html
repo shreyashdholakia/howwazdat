@@ -49,25 +49,28 @@
   <div class="col-sm-10"><h1>{{tournamentInfo.tournamentName}}</h1></div>
   <div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="http://www.gravatar.com/avatar/28fd20ccec6865e2d5f0e1f4446eb7bf?s=100"></a></div>
 </div>
-<!-- <br>
-<ul class="nav nav-justified">
-    <li><a class="text-center" href="#"><i class="fa fa-tag fa-5x"></i> <br>Tags</a></li>
-    <li><a class="text-center" href="#"><i class="fa fa-bookmark fa-5x"></i> <br>Tasks</a></li>
-    <li><a class="text-center" href="#"><i class="fa fa-camera fa-5x"></i> <br>Photos</a></li>
-    <li><a class="text-center" href="#"><i class="fa fa-map-marker fa-5x"></i> <br>Tour</a></li>
-    <li><a class="text-center" href="#"><i class="fa fa-music fa-5x"></i> <br>Tunes</a></li>
-    <li><a class="text-center" href="#"><i class="fa fa-book fa-5x"></i> <br>Books</a></li>
-    <li><a class="text-center" href="#"><i class="fa fa-film fa-5x"></i> <br>Videos</a></li>
-  </ul> -->
-
-  <div class="form-group">
-      <div class="col-xs-4 pull-right" >
-          <button class="btn btn-default btn-success" ng-click="createMatch = !createMatch" type="submit"><i class="glyphicon glyphicon-plus"></i> Create Match</button>
-      </div>
 <br>
 <div class="row" ng-show="tournamentPage">
-  <hr>
-  </div>
+
+                  <!-- <div class="panel panel-primary">
+                    <div class="panel-heading">Bootstrap 3 - Panel Primary</div>
+                    <div class="panel-body">Panel content goes here..</div>
+                  </div> -->
+                  <div class="col-sm-4"><!--left col-->
+                    <div class="panel panel-primary">
+                      <div class="panel-heading text-center">Tournament Details <i class="fa fa-trophy fa-1x"></i></div>
+                      
+                        <ul class="list-group">
+                          <li class="list-group-item text-right"><span class="pull-left"><strong>Tournament</strong></span> {{tournamentInfo.tournamentName}}</li>
+                          <li class="list-group-item text-right"><span class="pull-left"><i class="fa fa-calendar"></i></span> {{tournamentInfo.createdDate | date:'mediumDate'}}</li>
+                          <li class="list-group-item text-right"><span class="pull-left"><i class="fa fa-map-marker"></i></span> {{tournamentInfo.address}}</li>
+                        </ul> 
+                    </div>
+
+                  <ul class="list-group">
+                    <li id="map"></li>
+                  </ul> 
+                </div><!--/col-3-->
                   <div class="col-sm-8">
 
                     <ul class="nav nav-tabs" id="myTab" ng-hide="createMatch">
@@ -78,86 +81,49 @@
 
                     <div class="tab-content" ng-hide="createMatch">
                       <div class="tab-pane" ng-class="{'active':isActiveTab('activity')}" id="home">
-                      
+                      <br>
+                      <button type="button" class="btn btn-default btn-success" ng-click="createMatch = !createMatch" type="submit"><i class="glyphicon glyphicon-plus"></i> Create Match</button>
+                      <span class="col-md-3">
+                          <input type="text" class="form-control ng-pristine ng-valid" placeholder="Search..." ng-model="searchTeam">
+                      </span>
+                      <div class="row pull-right">
+                        <button type="button" class="btn btn-default" ng-click="clearFilter()">All</button>
+                        <button type="button" class="btn btn-default" ng-class="{'btn-success lead fa fa-check': stageFilter.indexOf('League') > -1}" ng-click="filterStages('League')">League</button>
+                        <button type="button" class="btn btn-default" ng-class="{'btn-success lead fa fa-check': stageFilter.indexOf('PlayOffs') > -1}" ng-click="filterStages('PlayOffs')">PlayOffs</button>
+                        <button type="button" class="btn btn-default" ng-class="{'btn-success lead fa fa-check': stageFilter.indexOf('Final') > -1}" ng-click="filterStages('Final')">Final</button>
+                      </div>
+                      <br>
+                       <div class="table-responsive">
+                        <table class="table table-hover table-striped">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th ng-click="sortType='matchDate'; sortReverse = !sortReverse">Date <i class="fa fa-sort"></i></th>
+                              <th ng-click="sortType='homeTeam'; sortReverse = !sortReverse">Home <i class="fa fa-sort"></i></th>
+                              <th ng-click="sortType='visitingTeam'; sortReverse = !sortReverse">Visiting <i class="fa fa-sort"></i></th>
+                              <th ng-click="sortType='matchDate'; sortReverse = !sortReverse">Winner</th>
+                              <th ng-click="sortType='roundType'; sortReverse = !sortReverse">Stage <i class="fa fa-sort"></i></th>
+                              <th><i class="fa fa-cog"></i></th>
+                            </tr>
+                          </thead>
+                          <tbody id="items" ng-repeat="matches in tournamentMatches | orderBy:sortType:sortReverse | filter:stages | filter: searchTeam">
+                            <tr>
+                              <td>{{$index + 1}}</td>
+                              <td>{{matches.matchDate | date:'MM/dd/yyyy @ h:mma'}}</td>
+                              <td>{{matches.homeTeam}}</td>
+                              <td>{{matches.visitingTeam}}</td>
+                              <td></td>
+                              <td>{{matches.roundType}}</td>
+                              <td><i class="fa fa-list-ol"></i></td>
+                            </tr>
+                          </tbody>
+                        </table>
 
-                      <!-- <div class="tab-pane" ng-class="{'active':isActiveTab('league')}">
-                        <div class="table-responsive">
-                          <table class="table table-hover table-striped">
-                            <thead>
-                              <tr>
-                                <th>#</th>
-                                <th>Date <i class="fa fa-sort"></i></th>
-                                <th>Home</th>
-                                <th>Visiting</th>
-                                <th>Time </th>
-                                <th>Umpire</th>
-                                <th>Game Mode</th>
-                              </tr>
-                            </thead>
-                            <tbody id="items" ng-repeat="matches in tournamentMatches">
-                              <tr>
-                                <td>{{$index + 1}}</td>
-                                <td>{{matches.matchDate | date:'mediumDate'}}</td>
-                                <td>{{matches.homeTeam}}</td>
-                                <td>{{matches.visitingTeam}}</td>
-                                <td>{{matches.startTime | date:'HH:mm a'}}</td>
-                                <td>{{matches.umpire}}</td>
-                                <td>{{matches.matchType}}</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                          
-                          <div class="row center">
-                            <pagination total-items="totalMatches" ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true"></pagination>
-                          </div>
+                        <div class="row center">
+                          <pagination total-items="totalMatches" ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true"></pagination>
                         </div>
-                        </div> -->
-                        <div class="col-md-12">
-                          <div class="tabbable tabs-left">
-                            <ul class="nav nav-tabs">
-                              <li ng-class="{'active':isActiveInnerTab('league')}"><a href ng-click="setInnerTab('league')">League</a></li>
-                              <li ng-class="{'active':isActiveInnerTab('playOffs')}"><a href ng-click="setInnerTab('playOffs')">PlayOffs</a></li>
-                              <li ng-class="{'active':isActiveInnerTab('final')}"><a href ng-click="setInnerTab('final')">Final</a></li>
-                            </ul>
-                            <div class="tab-content col-md-9">
-                             <div class="tab-pane" ng-class="{'active':isActiveInnerTab('league')}" id="a">
-                               <div class="table-responsive">
-                                  <table class="table table-hover table-striped">
-                                    <thead>
-                                      <tr>
-                                        <th>#</th>
-                                        <th>Date <i class="fa fa-sort"></i></th>
-                                        <th>Home</th>
-                                        <th>Visiting</th>
-                                        <th><i class="fa fa-cog"></i></th>
-                                      </tr>
-                                    </thead>
-                                    <tbody id="items" ng-repeat="matches in tournamentMatches">
-                                      <tr>
-                                        <td>{{$index + 1}}</td>
-                                        <td>{{matches.matchDate | date:'MM/dd/yyyy @ h:mma'}}</td>
-                                        <td>{{matches.homeTeam}}</td>
-                                        <td>{{matches.visitingTeam}}</td>
-                                        <td>Scorecard</td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                          
-                                <div class="row center">
-                                  <pagination total-items="totalMatches" ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true"></pagination>
-                                </div>
-                              </div>
-                             </div>
-                             <div class="tab-pane" ng-class="{'active':isActiveInnerTab('playOffs')}" id="b">Secondo sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan. 
-                             Aliquam in felis sit amet augue.</div>
-                             <div class="tab-pane" ng-class="{'active':isActiveInnerTab('final')}" id="c">Thirdamuno, ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate. 
-                             Quisque mauris augue, molestie tincidunt condimentum vitae. </div>
-                            </div>
-                          </div>
-                          <!-- /tabs -->
-                          
-                        </div>
-                      </div><!--/tab-pane-->
+                      </div>
+                    </div><!--/tab-pane-->
                       <div class="tab-pane" ng-class="{'active':isActiveTab('teams')}">
                         <br>
                         <div class="alert alert-danger" ng-hide="tournamentTeams.length > 0">
@@ -282,7 +248,7 @@
                       <div class="form-group pull-right">
                              <div class="col-xs-12">
                              <br><br>
-                              <button class="btn btn-default btn-default" ng-click="createMatch = !createMatch" type="submit"><i class="glyphicon glyphicon-plus"></i> Cancel</button>
+                              <button class="btn btn-default btn-default" ng-click="createMatch = !createMatch" type="submit"><i class="fa fa-reply"></i> Cancel</button>
                             </div>
                       </div>
                       <div class="form-group pull-right">
@@ -295,24 +261,11 @@
                       
                   </form>
                 </div><!--/col-9-->
-                <div class="col-sm-4"><!--left col-->
-                    <div class="panel panel-primary">
-                      <div class="panel-heading text-center">Tournament Details <i class="fa fa-trophy fa-1x"></i></div>
-                      
-                        <ul class="list-group">
-                          <li class="list-group-item text-right"><span class="pull-left"><strong>Tournament</strong></span> {{tournamentInfo.tournamentName}}</li>
-                          <li class="list-group-item text-right"><span class="pull-left"><i class="fa fa-calendar"></i></span> {{tournamentInfo.createdDate | date:'mediumDate'}}</li>
-                          <li class="list-group-item text-right"><span class="pull-left"><i class="fa fa-map-marker"></i></span> {{tournamentInfo.address}}</li>
-                        </ul> 
-                    </div>
+                
 
-                  <ul class="list-group">
-                    <li id="map"></li>
-                  </ul> 
-                </div><!--/col-3-->
 
               </div><!--/row-->
-
+</div>
 
 
 

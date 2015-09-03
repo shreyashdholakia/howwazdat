@@ -1,61 +1,76 @@
 'use strict';
 
 angular.module('angularPassportApp')
-.factory('calendarService', function($rootScope) {
+.factory('calendarService', function($scope, $compile) {
+
+    $scope.alertOnEventClick = function( date, jsEvent, view){
+        $scope.alertMessage = (date.title + ' was clicked ');
+      };
+      /* alert on Drop */
+      $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
+       $scope.alertMessage = ('Event Droped to make dayDelta ' + delta);
+     };
+     /* alert on Resize */
+     $scope.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
+       $scope.alertMessage = ('Event Resized to make dayDelta ' + delta);
+     };
+     /* add and removes an event source of choice */
+     $scope.addRemoveEventSource = function(sources,source) {
+      var canAdd = 0;
+      angular.forEach(sources,function(value, key){
+        if(sources[key] === source){
+          sources.splice(key,1);
+          canAdd = 1;
+        }
+      });
+      if(canAdd === 0){
+        sources.push(source);
+      }
+    };
+
+
+    /* remove event */
+    $scope.remove = function(index) {
+      $scope.events.splice(index,1);
+    };
+    /* Change View */
+    $scope.changeView = function(view,calendar) {
+      uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
+    };
+    /* Change View */
+    $scope.renderCalender = function(calendar) {
+      if(uiCalendarConfig.calendars[calendar]){
+        uiCalendarConfig.calendars[calendar].fullCalendar('render');
+      }
+    };
+    /* Render Tooltip */
+    $scope.eventRender = function( event, element, view ) { 
+      var msg = $filter('date')(event.start, 'medium') + ' ' + event.title;
+      element.attr({'tooltip': msg,
+       'tooltip-append-to-body': true});
+      $compile(element)($scope);
+    };
+
 	return {
 		configureCalUI: function() {
                 return {
-                    calendar: {
-                        height: 610,
-                        editable: false,
-                        background: '#ffffff',
-                        header: {
-                            right: 'month,basicWeek',
-                            center: 'title',
-                            left: 'today prev,next'
+                    calendar:{
+                        height: 450,
+                        header:{
+                          left: 'title',
+                          center: '',
+                          right: 'today prev,next'
                         },
-                        eventRender: function (event, element) {
-                            addHolidayCSS(event, element);
-                            popoverService.showCalendarPopover(event, element);
-                            $rootScope.$apply();
-
-
-                        },
-                        eventClick: function (event, jsEvent) {
-                            popoverService.setDeleteButtonVisibility(isResourceEventAndUserAssociation(event));
-                            var selectedEventJsObj = angular.element(jsEvent.currentTarget);
-                            popoverService.clearAllPopovers();
-                            if (!lastClicked) {
-                                selectedEventJsObj.popover('show');
-                            } else if (eventSelect !== event) {
-                                $(lastClicked.currentTarget).popover('hide');
-                                selectedEventJsObj.popover('show');
-                            } else if (eventSelect.title === event.title) {
-                                if (!(popoverService.isSamePosition(elementPosition, selectedEventJsObj.position())) && $('.popover').length >= 1) {
-                                    $(lastClicked.currentTarget).popover('toggle');
-                                    selectedEventJsObj.popover('toggle');
-                                } else {
-                                    selectedEventJsObj.popover('toggle');
-                                }
-                            }
-                            saveEventUILocations(selectedEventJsObj, jsEvent, event);
-                        },
-                        viewDisplay: function () {
-                            popoverService.clearAllPopovers();
-                        },
-                        dayClick: function () {
-                            popoverService.clearAllPopovers();
-                        },
-                        eventResizeStart: function () {
-                            popoverService.clearAllPopovers();
-                        },
-                        eventDragStart: function () {
-                            popoverService.clearAllPopovers();
-                        }
-
-                    }
+                        eventClick: $scope.alertOnEventClick,
+                        eventDrop: $scope.alertOnDrop,
+                        eventResize: $scope.alertOnResize,
+                        eventRender: $scope.eventRender
+                      }
                 };
                 }
             }
+
+
+
 	});
 
