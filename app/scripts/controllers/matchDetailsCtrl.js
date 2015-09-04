@@ -15,9 +15,14 @@ angular.module('angularPassportApp')
       {name: 'LBW'},
       {name: 'Hit Wicket'},
       {name: 'Run Out'},
+      {name: 'Retired'},
+      {name: 'Handled the ball'},
+      {name: 'Hit the ball twice'},
       {name: 'Not Out'},
-      {name: 'Did not bat'}
-     ];
+      {name: 'Did not bat'},
+      {name: 'Obstructing the field'},
+      {name: 'Timed out'}
+    ];
 
     $scope.playerList = [];
     $scope.visitingTeamPlayerList = [];
@@ -45,28 +50,28 @@ angular.module('angularPassportApp')
       });
     }
 
-    $scope.players= [];
+    $scope.players = [];
 
 
     function getTeamDetails(teamName) {
-      if(teamName) {
-        teamService.teamDetails(teamName).success(function(response) {
+      if (teamName) {
+        teamService.teamDetails(teamName).success(function (response) {
           $scope.players = response.data.players;
           $scope.teamName = response.data.teamName;
           homeTeamPlayers($scope.players);
-        }).error(function(status, data) {
+        }).error(function (status, data) {
           console.log(status);
         });
       }
     }
 
     function getVisitingTeamDetails(teamName) {
-      if(teamName) {
-        teamService.teamDetails(teamName).success(function(response) {
+      if (teamName) {
+        teamService.teamDetails(teamName).success(function (response) {
           $scope.players = response.data.players;
           $scope.teamName = response.data.teamName;
           visitingTeamPlayers($scope.players);
-        }).error(function(status, data) {
+        }).error(function (status, data) {
           console.log(status);
         });
       }
@@ -74,7 +79,7 @@ angular.module('angularPassportApp')
 
     $scope.homeTeamBattingDetails = [];
     $scope.addHomeTeamBatting = function () {
-      $scope.homeTeamBattingDetails.push ({
+      $scope.homeTeamBattingDetails.push({
         player: $scope.homeTeamPlayer.name,
         outNotOut: $scope.howOut.name,
         fielder: $scope.visitingTeamFielder.name,
@@ -89,7 +94,6 @@ angular.module('angularPassportApp')
 
     };
 
-
     function resetAddPlayerForm() {
       $scope.homeTeamPlayer = "";
       $scope.howOut = "";
@@ -100,7 +104,5 @@ angular.module('angularPassportApp')
       $scope.fours = "";
       $scope.sixes = "";
     }
-
-
 
   });
