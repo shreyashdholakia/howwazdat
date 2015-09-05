@@ -24,6 +24,8 @@ angular.module('angularPassportApp')
       {name: 'Timed out'}
     ];
 
+    $scope.howOut = $scope.outs[9];
+
     $scope.playerList = [];
     $scope.visitingTeamPlayerList = [];
 
@@ -77,26 +79,51 @@ angular.module('angularPassportApp')
       }
     }
 
-    $scope.homeTeamBattingDetails = [];
-    $scope.addHomeTeamBatting = function () {
-      $scope.homeTeamBattingDetails.push({
-        player: $scope.homeTeamPlayer.name,
-        outNotOut: $scope.howOut.name,
-        fielder: $scope.visitingTeamFielder.name,
-        bowler: $scope.visitingTeamBowler.name,
-        runs: $scope.runs,
-        balls: $scope.balls,
-        fours: $scope.fours,
-        sixes: $scope.sixes
-      });
+    function calculateStrikeRate(runs, balls) {
+    return ((runs * 100) / balls);
+    }
 
-      resetAddPlayerForm();
+    $scope.homeTeamBattingDetails = [];
+    $scope.visitingTeamFielder = [];
+    $scope.visitingTeamBowler = [];
+    var playerExists = false;
+    $scope.addHomeTeamBatting = function () {
+      var playerExists = false;
+      $scope.homeTeamBattingDetails.forEach(function (playerInfo)    // check if the team is already added
+            {
+              if (playerInfo.player === $scope.homeTeamPlayer.name) {
+                alertService.displayErrorMessage("Player already added..");
+                playerExists = true;
+
+              }
+            });
+
+      if(!playerExists) {
+//        if(!$scope.visitingTeamFielder) {
+//          $scope.visitingTeamFielder.name = ' ';
+//        }
+        $scope.homeTeamBattingDetails.push({
+          player: $scope.homeTeamPlayer.name,
+          outNotOut: $scope.howOut.name || 'Not Out',
+          fielder: $scope.visitingTeamFielder.name || '--',
+          bowler: $scope.visitingTeamBowler.name || '--',
+          runs: $scope.runs || 0,
+          balls: $scope.balls || 0,
+          fours: $scope.fours || 0,
+          sixes: $scope.sixes || 0,
+          strikeRate: calculateStrikeRate($scope.runs, $scope.balls)
+        });
+
+        resetAddPlayerForm();
+      } else {
+        resetAddPlayerForm();
+      }
 
     };
 
     function resetAddPlayerForm() {
       $scope.homeTeamPlayer = "";
-      $scope.howOut = "";
+      $scope.howOut = $scope.outs[9];
       $scope.visitingTeamFielder = "";
       $scope.visitingTeamBowler = "";
       $scope.runs = "";
