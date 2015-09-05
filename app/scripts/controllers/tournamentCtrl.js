@@ -34,7 +34,7 @@ angular.module('angularPassportApp')
     $scope.roundTypes = [
       {type: 'League'},
       {type: 'PlayOffs'},
-      {type: 'Quater Finals'},
+      {type: 'Quarter Finals'},
       {type: 'Semi Finals'},
       {type: 'Final'},
       {type: 'Eliminator'},

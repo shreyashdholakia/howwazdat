@@ -28,7 +28,7 @@ angular.module('angularPassportApp')
     $scope.visitingTeamPlayerList = [];
 
     $scope.homeTeam = getTeamDetails('Sixers');
-    $scope.visitingTeam = getVisitingTeamDetails('Monsanto');
+    $scope.visitingTeam = getVisitingTeamDetails('Mavericks');
 
     function homeTeamPlayers(players) {
       players.forEach(function (player)    // check if the team is already added
