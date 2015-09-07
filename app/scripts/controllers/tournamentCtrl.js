@@ -16,7 +16,7 @@ angular.module('angularPassportApp')
     }
 
     $scope.sortType = 'matchDate';
-    $scope.sortReverse = false;
+    $scope.sortReverse = true;
 
     $scope.today = function () {
       $scope.matchDate = new Date();
@@ -82,8 +82,7 @@ angular.module('angularPassportApp')
 
     /* Render Tooltip */
     $scope.eventRender = function (event, element, view) {
-      var matchDate = new Date(event.start);
-      var msg = matchDate.getHours() + ':' + matchDate.getMinutes() + ' ' + event.title;
+      var msg = event.title;
       element.attr({
         'tooltip': msg,
         'tooltip-append-to-body': true
@@ -381,6 +380,8 @@ angular.module('angularPassportApp')
 
     // Create Cricket Match
     $scope.tournamentMatches = [];
+    $scope.match = [];
+    $scope.matches = [];
 
     $scope.submitMatch = function () {
       $scope.matchDate.setHours($scope.matchStartTime.getHours());
@@ -403,7 +404,24 @@ angular.module('angularPassportApp')
             matchNumber: matchNumber
           });
 
-          tournamentService.createMatch($scope.tournamentInfo.tournamentName, $scope.tournamentMatches).success(function (data) {
+          $scope.match.push({
+                      homeTeam: $scope.homeTeam.teamName,
+                      visitingTeam: $scope.visitingTeam.teamName,
+                      matchDate: $scope.matchDate,
+                      startTime: $scope.matchStartTime,
+                      endTime: $scope.matchEndTime,
+                      umpire: $scope.umpireType.name,
+                      matchType: $scope.matchType.type,
+                      roundType: $scope.roundType.type,
+                      matchNumber: matchNumber
+                    });
+
+           $scope.matches.push(
+              {all:$scope.tournamentMatches,
+               single: $scope.match}
+           );
+
+          tournamentService.createMatch($scope.tournamentInfo.tournamentName, $scope.matches).success(function (data) {
             $location.path("/tournament/" + data.data.tournamentName);
             $scope.tournamentName = data.data.tournamentName;
             $scope.tournamentPage = true;
