@@ -1,15 +1,14 @@
 <div class="container">
   <ol class="breadcrumb">
-    <li><a href="#">Home</a></li>
-    <li><a href="#">Library</a></li>
-    <li class="active">Data</li>
+    <li><a href="/">Home</a></li>
+    <li><a href="/tournament/{{tournamentName}}">{{tournamentName}}</a></li>
   </ol>
   <div class="row">
     <div class="col-md-6">
-      <h1><a href="#" title="Scroll down for your viewing pleasure">Sixers Vs Monsanto</a>
+      <h1><a href="#" title="Scroll down for your viewing pleasure">{{matchDetails.homeTeam}} Vs {{matchDetails.visitingTeam}}</a>
         <br>
 
-        <p class="lead">Match Date: 15th Aug, 2015</p>
+        <p class="lead">Match Date: {{matchDetails.matchDate | date:'medium'}}</p>
 
         <p class="lead">Match # 1234</p>
       </h1>
@@ -22,41 +21,51 @@
   </div>
   <hr>
   <div class="row">
-    <form class="form" id="matchStatusForm" novalidate name="matchDetailsForm">
+    <form class="form" id="matchStatusForm" novalidate name="matchStatusForm">
       <div class="form-group">
-        <div class="col-xs-4">
-          <label for="toss"><h4><i class="fa fa-dot-circle-o"></i> Toss</h4></label>
+        <div class="col-xs-3">
+          <label for="toss"><h4><i class="fa fa-dot-circle-o"></i> Toss*</h4></label>
 
           <div>
-            <select id="umpire" class="form-control" ng-model="umpireType" ng-change="setToss()"
-                    ng-options="umpire.name for umpire in umpires">
+            <select id="umpire" class="form-control" ng-model="toss" ng-change="setToss()"
+                    ng-options="team.name for team in teams" required>
             </select>
           </div>
         </div>
       </div>
       <div class="form-group">
-        <div class="col-xs-4">
-          <label for="winner"><h4><i class="fa fa-star-o"></i> Winner</h4></label>
+        <div class="col-xs-3">
+          <label for="decision"><h4><i class="fa fa-star-o"></i> Decision*</h4></label>
 
           <div>
-            <select id="winningTeam" class="form-control" ng-model="umpireType" ng-change="setWinningTeam()"
-                    ng-options="umpire.name for umpire in umpires">
+            <select id="winningTeam" class="form-control" ng-model="decision" ng-change="setDecision()"
+                    ng-options="decision.name for decision in decisions" required>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-3">
+          <label for="winner"><h4><i class="fa fa-star-o"></i> Winner*</h4></label>
+
+          <div>
+            <select id="winningTeam" class="form-control" ng-model="winningTeam" ng-change="setWinningTeam()"
+                    ng-options="team.name for team in teams" required>
             </select>
           </div>
         </div>
       </div>
       <div class="form-group">
 
-        <div class="col-xs-4">
-          <label for="last_name"><h4>Man Of The Match</h4></label>
-          <input type="text" class="form-control" name="last_name" ng-model="tournament.organizer" id="last_name"
-                 placeholder="Man of the Match" title="enter man of the match" required>
+        <div class="col-xs-3">
+          <label for="last_name"><h4>Man Of The Match*</h4></label>
+          <input type="text" class="form-control" name="playerName" ng-model="mom" id="mom" placeholder="Man of the match" title="home team details" typeahead="player as player.name for player in manOfMatch | filter:{name:$viewValue} | limitTo:8" required>
         </div>
       </div>
       <div class="form-group">
         <div class="col-xs-12">
           <br>
-          <button class="btn btn-default btn-primary pull-right" ng-click="createTournament(tournament)" type="submit"
+          <button class="btn btn-default btn-primary pull-right" ng-click="updateMatch()" type="submit"
                   ng-disabled="matchStatusForm.$invalid"><i class="fa fa-check"></i> Update
           </button>
         </div>
@@ -86,7 +95,7 @@
         <tr>
           <td>{{$index + 1}}</td>
           <td>{{stats.player}}</td>
-          <td>{{stats.outNotOut}} By {{stats.fielder}} Bowler: {{stats.bowler}}</td>
+          <td>{{stats.outNotOut}}</td>
           <td>{{stats.runs}}</td>
           <td>{{stats.balls}}</td>
           <td>{{stats.fours}}</td>

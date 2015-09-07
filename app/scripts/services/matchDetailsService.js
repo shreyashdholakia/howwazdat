@@ -4,8 +4,8 @@ angular.module('angularPassportApp')
   .factory('matchDetailsService', function($http) {
     return {
 
-      create: function(user) {
-        return $http.post(options.api.base_url + '/api/profile', {'user': user});
+      match: function(tournament, matchNumber) {
+        return $http.get(options.api.base_url + '/api/match/' + tournament + '/'+ matchNumber);
       },
 
       update: function(user) {

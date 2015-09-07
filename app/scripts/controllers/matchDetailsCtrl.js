@@ -7,9 +7,48 @@ angular.module('angularPassportApp')
 
     $scope.umpires = [{name: 'Self'},
       {name: 'Neutral'}];
+     $scope.decisions = [{name: 'Batting'},
+      {name: 'Bowling'}];
+
+    $scope.urlParams = $location.search();
+
+    $scope.tournamentName = $routeParams.tournamentName;
+    $scope.matchNumber = $routeParams.matchNumber;
+
+    function getMatchDetails() {
+      matchDetailsService.match($scope.tournamentName, $scope.matchNumber).success(function (response) {
+       $scope.matchDetails = response.data;
+       createTeamDropDown($scope.matchDetails);
+       $scope.homeTeam = getTeamDetails($scope.matchDetails.homeTeam);
+       $scope.visitingTeam = getVisitingTeamDetails($scope.matchDetails.visitingTeam);
+         }).error(function (status, data) {
+          alertService.displayErrorMessage("There was an error! Please try again.");
+       });
+    }
+
+    getMatchDetails();
+    $scope.teams = [];
+
+    function createTeamDropDown(matchDetails) {
+      $scope.teams.push({name:matchDetails.homeTeam});
+      $scope.teams.push({name:matchDetails.visitingTeam});
+    }
+
+    $scope.manOfMatch = [];
+
+    function createManOfMatch(players) {
+       players.forEach(function (player)
+       {
+           $scope.manOfMatch.push(
+           player
+         )
+       });
+    }
 
     $scope.outs = [
       {name: 'Catch Out'},
+      {name: 'Caught Behind'},
+      {name: 'Caught And Bowled'},
       {name: 'Stumped'},
       {name: 'Bowled'},
       {name: 'LBW'},
@@ -24,13 +63,28 @@ angular.module('angularPassportApp')
       {name: 'Timed out'}
     ];
 
+    $scope.outMaps = {
+                    Catch_Out: 'C',
+                    Caught_Behind: 'cb',
+                    Caught_And_Bowled: 'c & b',
+                    Stumped: 'st',
+                    Bowled: 'B',
+                    LBW: 'lbw',
+                    Hit_Wicket: 'hit wicket',
+                    Run_Out: 'ro',
+                    Retired: 'retired',
+                    Handled_the_ball: 'handled the ball',
+                    Hit_the_ball_twice: 'hit the ball twice',
+                    Not_Out: 'not out',
+                    Did_not_bat: 'dnb',
+                    Obstructing_the_field: 'obstructing the field',
+                    Timed_out: 'timed out'
+                };
+
     $scope.howOut = $scope.outs[9];
 
     $scope.playerList = [];
     $scope.visitingTeamPlayerList = [];
-
-    $scope.homeTeam = getTeamDetails('Sixers');
-    $scope.visitingTeam = getVisitingTeamDetails('Mavericks');
 
     function homeTeamPlayers(players) {
       players.forEach(function (player)    // check if the team is already added
@@ -40,6 +94,7 @@ angular.module('angularPassportApp')
           name: fullName
         })
       });
+      createManOfMatch($scope.playerList);
     }
 
     function visitingTeamPlayers(players) {
@@ -50,6 +105,7 @@ angular.module('angularPassportApp')
           name: fullName
         })
       });
+      createManOfMatch($scope.visitingTeamPlayerList);
     }
 
     $scope.players = [];
@@ -61,6 +117,7 @@ angular.module('angularPassportApp')
           $scope.players = response.data.players;
           $scope.teamName = response.data.teamName;
           homeTeamPlayers($scope.players);
+
         }).error(function (status, data) {
           console.log(status);
         });
@@ -80,13 +137,31 @@ angular.module('angularPassportApp')
     }
 
     function calculateStrikeRate(runs, balls) {
-    return ((runs * 100) / balls);
+      return ((runs * 100) / balls);
+    }
+
+    function createHowOut(outStyle, fielder, bowler) {
+      var out;
+      console.log(outStyle.split(' ').join('_'));
+      if(fielder || bowler) {
+        if(outStyle === 'Bowled' || outStyle === 'Caught And Bowled') {
+          out = $scope.outMaps[outStyle.split(' ').join('_')] + ' ' + bowler;
+        } else {
+          out = $scope.outMaps[outStyle.split(' ').join('_')] + ' ' + fielder + ' b' + ' ' + bowler;
+        }
+
+      } else {
+        out = $scope.outMaps[outStyle.split(' ').join('_')];
+      }
+      return out;
     }
 
     $scope.homeTeamBattingDetails = [];
     $scope.visitingTeamFielder = [];
     $scope.visitingTeamBowler = [];
     var playerExists = false;
+
+
     $scope.addHomeTeamBatting = function () {
       var playerExists = false;
       $scope.homeTeamBattingDetails.forEach(function (playerInfo)    // check if the team is already added
@@ -99,12 +174,9 @@ angular.module('angularPassportApp')
             });
 
       if(!playerExists) {
-//        if(!$scope.visitingTeamFielder) {
-//          $scope.visitingTeamFielder.name = ' ';
-//        }
         $scope.homeTeamBattingDetails.push({
           player: $scope.homeTeamPlayer.name,
-          outNotOut: $scope.howOut.name || 'Not Out',
+          outNotOut: createHowOut($scope.howOut.name, $scope.visitingTeamFielder.name, $scope.visitingTeamBowler.name),
           fielder: $scope.visitingTeamFielder.name || '--',
           bowler: $scope.visitingTeamBowler.name || '--',
           runs: $scope.runs || 0,
@@ -131,5 +203,7 @@ angular.module('angularPassportApp')
       $scope.fours = "";
       $scope.sixes = "";
     }
+
+
 
   });

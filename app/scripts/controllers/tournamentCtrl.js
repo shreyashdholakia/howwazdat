@@ -9,6 +9,12 @@ angular.module('angularPassportApp')
       {name: 'Neutral'}];
     $scope.umpireType = $scope.umpires[0];
 
+    $scope.currentPage = 0;
+    $scope.pageSize = 10;
+    $scope.numberOfPages=function(){
+     return Math.ceil($scope.tournamentMatches.length/$scope.pageSize);
+    }
+
     $scope.sortType = 'matchDate';
     $scope.sortReverse = false;
 
@@ -379,6 +385,7 @@ angular.module('angularPassportApp')
     $scope.submitMatch = function () {
       $scope.matchDate.setHours($scope.matchStartTime.getHours());
       $scope.matchDate.setMinutes($scope.matchStartTime.getMinutes());
+      var matchNumber = $scope.tournamentInfo.tournamentName + (new Date().getTime()).toString(36);
 
       if ($scope.homeTeam.teamName && $scope.visitingTeam.teamName) {
         if ($scope.homeTeam.teamName === $scope.visitingTeam.teamName) {
@@ -392,7 +399,8 @@ angular.module('angularPassportApp')
             endTime: $scope.matchEndTime,
             umpire: $scope.umpireType.name,
             matchType: $scope.matchType.type,
-            roundType: $scope.roundType.type
+            roundType: $scope.roundType.type,
+            matchNumber: matchNumber
           });
 
           tournamentService.createMatch($scope.tournamentInfo.tournamentName, $scope.tournamentMatches).success(function (data) {
@@ -414,6 +422,15 @@ angular.module('angularPassportApp')
         alertService.displayErrorMessage("Selected Team are not part of the tournament. Please correct the error and try again!");
       }
     };
+  });
+
+
+  angular.module('angularPassportApp')
+  .filter('startFrom', function() {
+      return function(input, start) {
+          start = +start; //parse to int
+          return input.slice(start);
+      }
   });
 
 
