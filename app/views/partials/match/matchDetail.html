@@ -1,0 +1,199 @@
+<div class="container">
+  <ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li><a href="/tournament/{{tournamentName}}">{{tournamentName}}</a></li>
+  </ol>
+  <div class="row">
+    <div class="col-md-6">
+      <h1><a href="#" title="Scroll down for your viewing pleasure">{{matchDetails.homeTeam}} Vs {{matchDetails.visitingTeam}}</a>
+        <br>
+
+        <p class="lead">Match Date: {{matchDetails.matchDate | date:'medium'}}</p>
+
+        <p class="lead">Match # 1234</p>
+      </h1>
+    </div>
+    <div class="col-md-6"><a href="/users" class="pull-right"><img title="profile image"
+                                                                   class="img-circle img-responsive"
+                                                                   src="http://www.gravatar.com/avatar/28fd20ccec6865e2d5f0e1f4446eb7bf?s=100"></a>
+
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <form class="form" id="matchStatusForm" novalidate name="matchStatusForm">
+      <div class="form-group">
+        <div class="col-xs-3">
+          <label for="toss"><h4><i class="fa fa-dot-circle-o"></i> Toss*</h4></label>
+
+          <div>
+            <select id="umpire" class="form-control" ng-model="toss" ng-change="setToss()"
+                    ng-options="team.name for team in teams" required>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-3">
+          <label for="decision"><h4><i class="fa fa-star-o"></i> Decision*</h4></label>
+
+          <div>
+            <select id="winningTeam" class="form-control" ng-model="decision" ng-change="setDecision()"
+                    ng-options="decision.name for decision in decisions" required>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-3">
+          <label for="winner"><h4><i class="fa fa-star-o"></i> Winner*</h4></label>
+
+          <div>
+            <select id="winningTeam" class="form-control" ng-model="winningTeam" ng-change="setWinningTeam()"
+                    ng-options="team.name for team in teams" required>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+
+        <div class="col-xs-3">
+          <label for="last_name"><h4>Man Of The Match*</h4></label>
+          <input type="text" class="form-control" name="playerName" ng-model="mom" id="mom" placeholder="Man of the match" title="home team details" typeahead="player as player.name for player in manOfMatch | filter:{name:$viewValue} | limitTo:8" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-12">
+          <br>
+          <button class="btn btn-default btn-primary pull-right" ng-click="updateMatch()" type="submit"
+                  ng-disabled="matchStatusForm.$invalid"><i class="fa fa-check"></i> Update
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <hr>
+  <div class="row">
+    <h3>Batting Sixers</h3>
+    <div class="table-responsive">
+      <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Player </th>
+          <th></th>
+          <th>R</th>
+          <th>B</th>
+          <th>4s</th>
+          <th>6s</th>
+          <th>SR</th>
+          <th><i class="fa fa-cog"></i></th>
+        </tr>
+        </thead>
+        <tbody id="items"
+               ng-repeat="stats in homeTeamBattingDetails">
+        <tr>
+          <td>{{$index + 1}}</td>
+          <td>{{stats.player}}</td>
+          <td>{{stats.outNotOut}}</td>
+          <td>{{stats.runs}}</td>
+          <td>{{stats.balls}}</td>
+          <td>{{stats.fours}}</td>
+          <td>{{stats.sixes}}</td>
+          <td>{{stats.strikeRate | number:2 || 0}}</td>
+          <td></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <form class="form" id="matchDetailsForm" novalidate name="matchDetailsForm">
+      <div class="form-group">
+        <div class="col-xs-2">
+          <label for="playerName"><h4>Player name</h4></label>
+          <!--<input type="text" class="form-control" name="playerName" ng-model="playerName" id="playerName"-->
+                 <!--title="player name">-->
+          <input type="text" class="form-control" name="playerName" ng-model="homeTeamPlayer" id="playerName" placeholder="Sixers" title="home team details" typeahead="player as player.name for player in playerList | filter:{name:$viewValue} | limitTo:8" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-2">
+          <label for="howOut"><h4>How Out</h4></label>
+          <div>
+            <select class="form-control" name="howOut" ng-model="howOut" ng-change="setHowOut()"
+                    ng-options="out.name for out in outs">
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-2">
+          <label for="fielder"><h4>Fielder</h4></label>
+          <input type="text" class="form-control" name="visitingTeamFielder" ng-model="visitingTeamFielder" id="visitingTeamFielder" placeholder="Sixers" title="home team details" typeahead="player as player.name for player in visitingTeamPlayerList | filter:{name:$viewValue} | limitTo:8"
+                 ng-disabled="howOut.name == 'Not Out' || howOut.name == 'Did not bat'">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-2">
+          <label for="bowler"><h4>Bowler</h4></label>
+          <!--<input type="text" class="form-control" name="bowler" ng-model="bowler" id="bowler"-->
+                 <!--title="bowler">-->
+          <input type="text" class="form-control" name="visitingTeamPlayer" ng-model="visitingTeamBowler" id="visitingTeamPlayer" placeholder="Sixers" title="home team details" typeahead="player as player.name for player in visitingTeamPlayerList | filter:{name:$viewValue} | limitTo:8"
+                 ng-disabled="howOut.name == 'Not Out' || howOut.name == 'Did not bat'">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-1">
+          <label for="runs"><h4>Runs</h4></label>
+          <input type="text" class="form-control" name="runs" ng-model="runs" id="runs"
+                 title="runs">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-1">
+          <label for="balls"><h4>Balls</h4></label>
+          <input type="text" class="form-control" name="balls" ng-model="balls" id="balls"
+                 title="balls">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-1">
+          <label for="fours"><h4>4s</h4></label>
+          <input type="text" class="form-control" name="fours" ng-model="fours" id="fours"
+                 title="fours">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-1">
+          <label for="sixes"><h4>6s</h4></label>
+          <input type="text" class="form-control" name="sixes" ng-model="sixes" id="sixes"
+                 title="sixes">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-12">
+          <button class="btn btn-primary form-control" name="addDetails"
+                  ng-click="addHomeTeamBatting()" type="submit"><i class="fa fa-check"></i> Add</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <hr>
+  <div class="form-group pull-right">
+    <div class="col-xs-12">
+      <br><br>
+      <button class="btn btn-default btn-default" ng-click="createMatch = !createMatch" type="submit"><i class="fa fa-reply"></i> Cancel</button>
+    </div>
+  </div>
+  <div class="form-group pull-right">
+    <div class="col-xs-12">
+      <br><br>
+
+      <button class="btn btn-default btn-primary" ng-click="submitMatch()" type="submit" ng-disabled="matchForm.$invalid"><i class="glyphicon glyphicon-plus"></i> Create</button>
+    </div>
+  </div>
+
+  <!--/col-9-->
+</div>
