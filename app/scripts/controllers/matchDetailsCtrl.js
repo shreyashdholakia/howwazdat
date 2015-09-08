@@ -204,7 +204,7 @@ angular.module('angularPassportApp')
 
     function resetAddPlayerForm() {
       $scope.homeTeamPlayer = "";
-      $scope.howOut = $scope.outs[9];
+      $scope.howOut = $scope.outs[10];
       $scope.visitingTeamFielder = "";
       $scope.visitingTeamBowler = "";
       $scope.runs = "";
@@ -213,7 +213,9 @@ angular.module('angularPassportApp')
       $scope.sixes = "";
     }
 
-    $scope.updateMatch = function () {
+    $scope.matches = [];
+
+    $scope.update = function () { // update the game info
       $scope.tournamentMatches.forEach(function (match)
       {
         if (match.matchNumber === $scope.matchNumber) {
@@ -221,9 +223,22 @@ angular.module('angularPassportApp')
             match.winningTeam = $scope.winningTeam.name;
             match.tossDecision = $scope.decision.name;
             match.mom = $scope.mom.name;
+            $scope.match = match;
         }
       });
-      console.log($scope.tournamentMatches);
+
+      $scope.matches.push(
+        {all:$scope.tournamentMatches,
+          single: $scope.match}
+      );
+
+      matchDetailsService.updateMatch($scope.tournamentName, $scope.matches).success(function (response) {
+        console.log(response.data);
+
+      }).error(function (status, data) {
+        alertService.displayErrorMessage("There was an error! Please try again.");
+      });
+
 
     }
 
