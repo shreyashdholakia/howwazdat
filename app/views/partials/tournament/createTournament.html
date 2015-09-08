@@ -75,8 +75,9 @@
 
                     <ul class="nav nav-tabs" id="myTab" ng-hide="createMatch">
                       <li ng-class="{'active':isActiveTab('teams')}"><a href ng-click="setTab('teams')">List of Teams</a></li>
-                      <li ng-class="{'active':isActiveTab('activity')}"><a href ng-click="setTab('activity')">Recent Matches</a></li>
+                      <li ng-class="{'active':isActiveTab('activity')}"><a href ng-click="setTab('activity')">Fixtures</a></li>
                       <li ng-class="{'active':isActiveTab('calendar')}"><a href ng-click="setTab('calendar')">Calendar</a></li>
+                      <li ng-class="{'active':isActiveTab('points')}"><a href ng-click="setTab('points')">Points Table</a></li>
                     </ul>
 
                     <div class="tab-content" ng-hide="createMatch">
@@ -117,24 +118,46 @@
                               <td><a href="/tournament/{{tournamentInfo.tournamentName}}/{{matches.matchNumber}}"><i class="fa fa-list-ol"></i></a></td>
                             </tr>
                           </tbody>
-                          <tfoot>
-                            <tr>
-                              <td colspan="9">
-                                <div class="row center pull-right">
-                                  <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
-                                    Previous
-                                  </button>
-                                  {{currentPage+1}}/{{numberOfPages()}}
-                                  <button ng-disabled="currentPage >= tournamentMatches.length/pageSize - 1" ng-click="currentPage=currentPage+1">
-                                    Next
-                                  </button>
-                                </div>
-                              </td>
-                            </tr>
-                          </tfoot>
                         </table>
+                         <nav>
+                           <ul class="pager">
+                             <li class="previous" ng-class="{'disabled': currentPage == 0}"><a ng-click="currentPage=currentPage-1"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                             <li class="next" ng-class="{'disabled': currentPage >= tournamentMatches.length/pageSize - 1}"><a ng-click="currentPage=currentPage+1">Next <span aria-hidden="true">&rarr;</span></a></li>
+                           </ul>
+                         </nav>
                       </div>
                     </div><!--/tab-pane-->
+                    <div class="tab-pane" ng-class="{'active':isActiveTab('points')}" id="points">
+                      <div class="table-responsive">
+                        <table class="table table-hover table-striped">
+                          <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Team Name</th>
+                            <th>Matches</th>
+                            <th>Won</th>
+                            <th>Lost</th>
+                            <th>Tied</th>
+                            <th>NRR</th>
+                            <th>Points</th>
+                          </tr>
+                          </thead>
+                          <tbody id="items" ng-repeat="team in tournamentTeams">
+                          <tr>
+                            <td>{{$index + 1}}</td>
+                            <td><a href="/team/{{team.teamName}}">{{team.teamName}}</a></td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                    </div>
                       <div class="tab-pane" ng-class="{'active':isActiveTab('teams')}">
                         <br>
                         <div class="alert alert-danger" ng-hide="tournamentTeams.length > 0">
