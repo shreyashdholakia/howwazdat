@@ -8,8 +8,8 @@ angular.module('angularPassportApp')
         return $http.get(options.api.base_url + '/api/match/' + tournament + '/'+ matchNumber);
       },
 
-      update: function(user) {
-        return $http.put(options.api.base_url + '/api/profile/' + user.username, {'user': user});
+      updateMatch:  function(tournamentName, matches) {
+        return $http.post(options.api.base_url  + '/api/match/' + tournamentName, {'matches': matches});
       },
 
       findProfile: function(user) {
