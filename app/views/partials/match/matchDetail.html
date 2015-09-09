@@ -10,7 +10,8 @@
         <br>
         <span>Match Date: {{matchDetails.matchDate | date:'medium'}}</span><br>
         <span class="text-info" ng-show="matchDetails.status == 'Submitted'"><em>{{matchDetails.toss}} won the toss and elected to <strong ng-show="matchDetails.tossDecision == 'Bowling'">field</strong> <strong ng-show="matchDetails.tossDecision == 'Batting'">bat</strong></em> <i class="fa fa-pencil" ng-click="editMatchStatus = !editMatchStatus"></i></span>
-        <br><span class=" text-info" ng-show="matchDetails.status == 'Submitted'"><em>{{matchDetails.winningTeam}} won by 125 runs </em> <i class="fa fa-pencil" ng-click="editMatchStatus = !editMatchStatus"></i></span>
+        <br><span ng-show="matchDetails.status == 'Submitted'"><em><strong class=" text-info"><u>{{matchDetails.winningTeam}}</u></strong> won by 125 runs </em> <i class="fa fa-pencil" ng-click="editMatchStatus = !editMatchStatus"></i></span>
+        <br><span ng-show="matchDetails.status == 'Submitted'"><em><strong class="text-info"><u>{{matchDetails.mom}}</u></strong> is the Man of the match </em> <i class="fa fa-pencil" ng-click="editMatchStatus = !editMatchStatus"></i></span>
 
     </div>
     <div class="col-md-6"><a href="/users" class="pull-right"><img title="profile image"
