@@ -9,6 +9,7 @@ angular.module('angularPassportApp')
       {name: 'Neutral'}];
      $scope.decisions = [{name: 'Batting'},
       {name: 'Bowling'}];
+    $scope.tossInfo =[];
 
     $scope.urlParams = $location.search();
     $scope.editMatchStatus = false;
@@ -21,6 +22,8 @@ angular.module('angularPassportApp')
        $scope.matchDetails = response.data;
        if($scope.matchDetails.status) {
          $scope.editMatchStatus = true;
+         $scope.tossInfo.push({name:$scope.matchDetails.toss, id: 1});
+         $scope.toss = $scope.tossInfo[0];
        }
        createTeamDropDown($scope.matchDetails);
        $scope.homeTeam = getTeamDetails($scope.matchDetails.homeTeam);

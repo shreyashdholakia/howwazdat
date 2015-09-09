@@ -5,18 +5,17 @@
   </ol>
   <div class="row">
     <div class="col-md-6">
-      <h1><a href="#" title="Scroll down for your viewing pleasure">{{matchDetails.homeTeam}} Vs {{matchDetails.visitingTeam}}</a>
+      <h3>{{tournamentName}} tournament</h3>
+      <h2><a href="#" title="Scroll down for your viewing pleasure">{{matchDetails.homeTeam}} Vs {{matchDetails.visitingTeam}}</a></h2>
         <br>
+        <span>Match Date: {{matchDetails.matchDate | date:'medium'}}</span><br>
+        <span class="text-info" ng-show="matchDetails.status == 'Submitted'"><em>{{matchDetails.toss}} won the toss and elected to <strong ng-show="matchDetails.tossDecision == 'Bowling'">field</strong> <strong ng-show="matchDetails.tossDecision == 'Batting'">bat</strong></em> <i class="fa fa-pencil" ng-click="editMatchStatus = !editMatchStatus"></i></span>
+        <br><span class=" text-info" ng-show="matchDetails.status == 'Submitted'"><em>{{matchDetails.winningTeam}} won by 125 runs </em> <i class="fa fa-pencil" ng-click="editMatchStatus = !editMatchStatus"></i></span>
 
-        <p class="lead">Match Date: {{matchDetails.matchDate | date:'medium'}}</p>
-
-        <p class="lead" ng-show="matchDetails.status == 'Submitted'"><em>{{matchDetails.toss}} won the toss and elected to <strong ng-show="matchDetails.tossDecision == 'Bowling'">field</strong> <strong ng-show="matchDetails.tossDecision == 'Batting'">bat</strong></em> <i class="fa fa-pencil" ng-click="editMatchStatus = !editMatchStatus"></i></p>
-      </h1>
     </div>
     <div class="col-md-6"><a href="/users" class="pull-right"><img title="profile image"
                                                                    class="img-circle img-responsive"
                                                                    src="http://www.gravatar.com/avatar/28fd20ccec6865e2d5f0e1f4446eb7bf?s=100"></a>
-
     </div>
   </div>
   <hr ng-hide="editMatchStatus">
@@ -25,7 +24,6 @@
       <div class="form-group">
         <div class="col-xs-3">
           <label for="toss"><h4><i class="fa fa-dot-circle-o"></i> Toss*</h4></label>
-
           <div>
             <select id="umpire" class="form-control" ng-model="toss" ng-change="setToss()"
                     ng-options="team.name for team in teams" required>
@@ -36,7 +34,6 @@
       <div class="form-group">
         <div class="col-xs-3">
           <label for="decision"><h4><i class="fa fa-star-o"></i> Decision*</h4></label>
-
           <div>
             <select id="winningTeam" class="form-control" ng-model="decision" ng-change="setDecision()"
                     ng-options="decision.name for decision in decisions" required>
@@ -47,7 +44,6 @@
       <div class="form-group">
         <div class="col-xs-3">
           <label for="winner"><h4><i class="fa fa-star-o"></i> Winner*</h4></label>
-
           <div>
             <select id="winningTeam" class="form-control" ng-model="winningTeam" ng-change="setWinningTeam()"
                     ng-options="team.name for team in teams" required>
@@ -56,7 +52,6 @@
         </div>
       </div>
       <div class="form-group">
-
         <div class="col-xs-3">
           <label for="last_name"><h4>Man Of The Match*</h4></label>
           <input type="text" class="form-control" name="playerName" ng-model="mom" id="mom" placeholder="Man of the match" title="home team details" typeahead="player as player.name for player in manOfMatch | filter:{name:$viewValue} | limitTo:8" required>
