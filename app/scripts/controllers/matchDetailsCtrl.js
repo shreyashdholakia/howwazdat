@@ -11,6 +11,7 @@ angular.module('angularPassportApp')
       {name: 'Bowling'}];
 
     $scope.urlParams = $location.search();
+    $scope.editMatchStatus = false;
 
     $scope.tournamentName = $routeParams.tournamentName;
     $scope.matchNumber = $routeParams.matchNumber;
@@ -18,6 +19,9 @@ angular.module('angularPassportApp')
     function getMatchDetails() {
       matchDetailsService.match($scope.tournamentName, $scope.matchNumber).success(function (response) {
        $scope.matchDetails = response.data;
+       if($scope.matchDetails.status) {
+         $scope.editMatchStatus = true;
+       }
        createTeamDropDown($scope.matchDetails);
        $scope.homeTeam = getTeamDetails($scope.matchDetails.homeTeam);
        $scope.visitingTeam = getVisitingTeamDetails($scope.matchDetails.visitingTeam);
@@ -223,6 +227,7 @@ angular.module('angularPassportApp')
             match.winningTeam = $scope.winningTeam.name;
             match.tossDecision = $scope.decision.name;
             match.mom = $scope.mom.name;
+            match.status = 'Submitted';
             $scope.match = match;
         }
       });
@@ -233,13 +238,11 @@ angular.module('angularPassportApp')
       );
 
       matchDetailsService.updateMatch($scope.tournamentName, $scope.matches).success(function (response) {
-        console.log(response.data);
-
+        getMatchDetails();
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.");
       });
+    };
 
-
-    }
 
   });

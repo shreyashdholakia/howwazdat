@@ -107,13 +107,13 @@
                               <th><i class="fa fa-cog"></i></th>
                             </tr>
                           </thead>
-                          <tbody id="items" ng-repeat="matches in tournamentMatches | orderBy:sortType:sortReverse | filter:stages | filter: searchTeam | startFrom:currentPage*pageSize | limitTo:pageSize">
+                          <tbody ng-repeat="matches in tournamentMatches | orderBy:sortType:sortReverse | filter:stages | filter: searchTeam | startFrom:currentPage*pageSize | limitTo:pageSize">
                             <tr>
                               <td>{{$index + 1}}</td>
                               <td>{{matches.matchDate | date:'MM/dd/yyyy @ h:mma'}}</td>
                               <td>{{matches.homeTeam}}</td>
                               <td>{{matches.visitingTeam}}</td>
-                              <td></td>
+                              <td>{{matches.winningTeam}}</td>
                               <td>{{matches.roundType}}</td>
                               <td><a href="/tournament/{{tournamentInfo.tournamentName}}/{{matches.matchNumber}}"><i class="fa fa-list-ol"></i></a></td>
                             </tr>
@@ -142,7 +142,7 @@
                             <th>Points</th>
                           </tr>
                           </thead>
-                          <tbody id="items" ng-repeat="team in tournamentTeams">
+                          <tbody ng-repeat="team in tournamentTeams">
                           <tr>
                             <td>{{$index + 1}}</td>
                             <td><a href="/team/{{team.teamName}}">{{team.teamName}}</a></td>
@@ -263,7 +263,7 @@
                         <div class="col-xs-6">
                           <label for="email"><h4>Match Type</h4></label>
                           <div >
-                            <select id="umpire" class="form-control" ng-model="matchType" ng-change="setMatchType()" ng-options="match.type for match in matchTypes" >
+                            <select id="matchType" class="form-control" ng-model="matchType" ng-change="setMatchType()" ng-options="match.type for match in matchTypes" >
                               <!-- <option ng-model="roleSelected" ng-repeat="role in roles" ng-click="setRole(role)">{{role}}</option> -->
                             </select>
                           </div>
@@ -273,7 +273,7 @@
                         <div class="col-xs-6">
                           <label for="email"><h4>Match Type</h4></label>
                           <div >
-                            <select id="umpire" class="form-control" ng-model="roundType" ng-change="setRoundType()" ng-options="round.type for round in roundTypes" >
+                            <select id="roundType" class="form-control" ng-model="roundType" ng-change="setRoundType()" ng-options="round.type for round in roundTypes" >
                               <!-- <option ng-model="roleSelected" ng-repeat="role in roles" ng-click="setRole(role)">{{role}}</option> -->
                             </select>
                           </div>
@@ -295,9 +295,6 @@
 
                   </form>
                 </div><!--/col-9-->
-
-
-
               </div><!--/row-->
 </div>
 
