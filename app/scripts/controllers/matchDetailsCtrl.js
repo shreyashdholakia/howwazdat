@@ -160,7 +160,7 @@ angular.module('angularPassportApp')
       var out;
       console.log(outStyle.split(' ').join('_'));
       if(fielder || bowler) {
-        if(outStyle === 'Bowled' || outStyle === 'Caught And Bowled') {
+        if(outStyle === 'Bowled' || outStyle === 'Caught And Bowled' || outStyle === 'LBW') {
           out = $scope.outMaps[outStyle.split(' ').join('_')] + ' ' + bowler;
         } else {
           out = $scope.outMaps[outStyle.split(' ').join('_')] + ' ' + fielder + ' b' + ' ' + bowler;
@@ -191,7 +191,7 @@ angular.module('angularPassportApp')
 
       if(!playerExists) {
         $scope.homeTeamBattingDetails.push({
-          player: $scope.homeTeamPlayer.name,
+          player: $scope.firstTeamPlayer.name,
           outNotOut: createHowOut($scope.howOut.name, $scope.visitingTeamFielder.name, $scope.visitingTeamBowler.name),
           fielder: $scope.visitingTeamFielder.name || '--',
           bowler: $scope.visitingTeamBowler.name || '--',
