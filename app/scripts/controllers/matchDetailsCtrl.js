@@ -97,7 +97,7 @@ angular.module('angularPassportApp')
                     Timed_out: 'timed out'
                 };
 
-    $scope.howOut = $scope.outs[9];
+    $scope.howOut = $scope.outs[11];
 
     $scope.playerList = [];
     $scope.visitingTeamPlayerList = [];
@@ -246,6 +246,11 @@ angular.module('angularPassportApp')
         alertService.displayErrorMessage("There was an error! Please try again.");
       });
     };
+
+
+    $scope.setBattingTeam = function (team) {
+      console.log(team);
+    }
 
 
   });
