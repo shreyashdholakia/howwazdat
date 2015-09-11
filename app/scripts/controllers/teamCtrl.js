@@ -27,7 +27,7 @@ angular.module('angularPassportApp')
 	$scope.deletePlayer = function () {
 		$scope.modalInstance.dismiss('cancel');
 		var index = $scope.playerList.indexOf($scope.playerToDelete);
-		$scope.playerList.splice(index, 1); 
+		$scope.playerList.splice(index, 1);
 		$scope.teamUpdate();
 	};
 
@@ -58,7 +58,8 @@ angular.module('angularPassportApp')
 			firstName: $scope.firstName,
 			lastName: $scope.lastName,
 			role: $scope.roleSelected.name,
-			captain: $scope.captain
+			captain: $scope.captain,
+      email: $scope.email
 		});
 		if(action === 'U') {
 			$scope.teamUpdate();
