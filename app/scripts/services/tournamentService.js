@@ -18,6 +18,9 @@ angular.module('angularPassportApp')
 		},
 		createMatch: function(tournamentName, matchDetails) {
 			return $http.put(options.api.base_url  + '/api/tournament/match/' + tournamentName, {'matches': matchDetails})
-		}
+		},
+    all: function() {
+      return $http.get(options.api.base_url  + '/api/tournaments')
+    }
 	};
 });

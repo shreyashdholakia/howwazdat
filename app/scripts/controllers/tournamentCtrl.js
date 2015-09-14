@@ -156,9 +156,20 @@ angular.module('angularPassportApp')
           alertService.displayErrorMessage("There was an error! Please try again.");
         });
       } else {
-        $location.path("/createTournament");
+        $location.path("/tournaments");
 
       }
+    };
+
+    function getTournamentList() {
+
+      tournamentService.all().success(function (response) {
+        $scope.tournamentList = response.data;
+        console.log($scope.tournamentList);
+      }).error(function (status, data) {
+        alertService.displayErrorMessage("There was an error! Please try again.n");
+      });
+
     }
 
     function getTeamList() {
@@ -169,7 +180,7 @@ angular.module('angularPassportApp')
       });
 
     }
-
+    getTournamentList();
     getTeamList();
     $scope.tournamentTeams = [];
 
