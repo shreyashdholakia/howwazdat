@@ -156,7 +156,7 @@ angular.module('angularPassportApp')
           alertService.displayErrorMessage("There was an error! Please try again.");
         });
       } else {
-        $location.path("/tournaments");
+        $location.path("/createTournament");
 
       }
     };
