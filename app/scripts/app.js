@@ -24,7 +24,7 @@ options.api.base_url = "http://localhost:3000";
       })
       .when('/tournaments', {
         templateUrl: 'partials/tournament/tournaments.html',
-        controller: 'tournamentCtrl'
+        controller: 'MainCtrl'
       })
       .when('/blogs', {
         templateUrl: 'partials/blogs/list.html',
