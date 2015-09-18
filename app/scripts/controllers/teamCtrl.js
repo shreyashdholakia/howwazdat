@@ -28,7 +28,6 @@ angular.module('angularPassportApp')
 	$scope.users = [];
 
 	function createUserList(users) {
-	    console.log(users);
 	    users.forEach(function (user)    // check if the team is already added
       {
         var fullName = user.firstname + ' ' + user.lastname;
@@ -39,8 +38,6 @@ angular.module('angularPassportApp')
            email: user.email
         })
       });
-
-      console.log($scope.userList);
 	}
 
 	function allUserAsPlayers() {
