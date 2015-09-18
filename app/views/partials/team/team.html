@@ -1,4 +1,4 @@
-<div class="container"> 
+<div class="container">
   <div class="row">
     <div class="col-sm-10"><h1><strong>{{teamName}}</strong>: List of Players </h1>
     </div>
@@ -16,7 +16,7 @@
           </tr>
         </thead>
         <tbody id="items">
-          <tr ng-repeat="players in playerList" ng-class="{'active lead text-primary': players.captain == 'C'}">
+          <tr ng-repeat="players in playerList" ng-class="{'active text-primary': players.captain == 'C'}">
             <td>{{$index + 1}}</td>
             <td>{{players.firstName}}</td>
             <td>{{players.lastName}}</td>
@@ -29,11 +29,38 @@
         </tbody>
       </table>
       <hr>
-      <div class="form-group">
-       <div class="col-sm-2 pull-right">
-        <button class="btn btn-primary form-control col-sm-2" ng-click="addPlayerForm = !addPlayerForm" type="submit"><i class="glyphicon glyphicon-plus"></i> Add Players</button>
+      <div ng-hide="addPlayerForm">
+          <div class="form-group">
+
+            <div class="col-sm-3">
+              <input type="text" class="form-control" name="playerName" ng-model="player" id="mom" placeholder="Search Player.." title="home team details" typeahead="player as player.name for player in userList | filter:{name:$viewValue} | limitTo:8" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-3">
+              <div >
+                <select id="company" class="form-control" ng-model="roleSelected" ng-change="setRole()" ng-options="role.name for role in roles" >
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <button type="button" class="btn form-control" ng-class="{'active btn-success': isCaptain}" ng-click="isCaptain = !isCaptain"><i class="glyphicon glyphicon-check"></i></button>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-2">
+              <button class="btn btn-success form-control col-sm-2" ng-click="addPlayer('U')"type="submit"><i class="glyphicon glyphicon-plus"></i> Add </button>
+            </div>
+          </div>
       </div>
-    </div>
+          <div class="form-group">
+           <div class="col-sm-2 pull-right">
+            <button class="btn btn-primary form-control col-sm-2" ng-click="addPlayerForm = !addPlayerForm" type="submit"><i class="glyphicon glyphicon-plus"></i> Create a Player</button>
+          </div>
+        </div>
+
     <br><br>
   </div>
   <form class="form" ng-show="addPlayerForm">
@@ -58,7 +85,7 @@
         <label for="email"><h4>Role</h4></label>
         <div >
           <select id="company" class="form-control" ng-model="roleSelected" ng-change="setRole()" ng-options="role.name for role in roles" >
-          </select> 
+          </select>
         </div>
       </div>
     </div>

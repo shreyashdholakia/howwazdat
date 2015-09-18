@@ -119,7 +119,7 @@ angular.module('angularPassportApp')
     $scope.visitingTeamPlayerList = [];
 
     function homeTeamPlayers(players) {
-      players.forEach(function (player)    // check if the team is already added
+      players.forEach(function (player)
       {
         var fullName = player.firstName + ' ' + player.lastName;
         $scope.playerList.push({

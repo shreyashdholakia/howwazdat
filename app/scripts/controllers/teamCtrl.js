@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('angularPassportApp')
-.controller('TeamCtrl', function ($scope, teamService, $location, $routeParams, $rootScope, $http, $cookieStore, $modal, alertService) {
+.controller('TeamCtrl', function ($scope, teamService, $location, $routeParams, $rootScope, $http, $cookieStore, $modal, alertService, userService) {
 
 	$scope.player = [];
 	$scope.roles = [{name:'Batsmen'},
@@ -23,6 +23,36 @@ angular.module('angularPassportApp')
 		$scope.playerToDelete = playerToDelete;
 
 	};
+
+	$scope.userList = [];
+	$scope.users = [];
+
+	function createUserList(users) {
+	    console.log(users);
+	    users.forEach(function (user)    // check if the team is already added
+      {
+        var fullName = user.firstname + ' ' + user.lastname;
+        $scope.userList.push({
+           name: fullName,
+           firstName: user.firstname,
+           lastName: user.lastname,
+           email: user.email
+        })
+      });
+
+      console.log($scope.userList);
+	}
+
+	function allUserAsPlayers() {
+    userService.all().success(function (response) {
+       $scope.users = response.data;
+       createUserList($scope.users);
+       }).error(function (status, data) {
+         alertService.displayErrorMessage("There was an error! Please try again.n");
+       });
+	}
+
+	allUserAsPlayers();
 
 	$scope.deletePlayer = function () {
 		$scope.modalInstance.dismiss('cancel');
@@ -53,6 +83,12 @@ angular.module('angularPassportApp')
 			$scope.captain = 'C';
 		} else {
 			$scope.captain = 'P';
+		}
+
+		if($scope.player) {
+		  $scope.firstName = $scope.player.firstName;
+		  $scope.lastName = $scope.player.lastName;
+		  $scope.email = $scope.player.email;
 		}
 		$scope.playerList.push({
 			firstName: $scope.firstName,
