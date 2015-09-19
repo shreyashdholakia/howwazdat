@@ -120,6 +120,9 @@ angular.module('angularPassportApp')
 				$scope.players = response.exists;
 				$scope.teamName = response.data.teamName;
 				$scope.playerList = response.data.players;
+				$scope.teamWins = response.data.won;
+				$scope.teamGames = response.data.matches;
+				$scope.teamLosses = response.data.lost;
 			}).error(function(status, data) {
 				console.log(status);
 			});
