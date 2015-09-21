@@ -241,8 +241,8 @@ angular.module('angularPassportApp')
         owner: $scope.user.email,
         createdDate: joiningDate,
         address: $scope.tournament.address,
-        addressLatitude: $scope.chosenPlaceDetails.geometry.location.G,
-        addressLongitude: $scope.chosenPlaceDetails.geometry.location.K
+        addressLatitude: $scope.chosenPlaceDetails.geometry.location.lat(),
+        addressLongitude: $scope.chosenPlaceDetails.geometry.location.lng()
       });
 
       tournamentService.create($scope.tournamentDetails).success(function (data) {

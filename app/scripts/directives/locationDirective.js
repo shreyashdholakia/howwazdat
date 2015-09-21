@@ -18,9 +18,9 @@ angular.module('angularPassportApp')
             google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
                 scope.$apply(function() {
                     scope.details = scope.gPlace.getPlace();
-                    scope.latitude = scope.details.geometry.location.A;
-                    scope.longitude = scope.details.geometry.location.F;
-                    model.$setViewValue(element.val());                
+                    scope.latitude = scope.details.geometry.location.lat();
+                    scope.longitude = scope.details.geometry.location.lng();
+                    model.$setViewValue(element.val());
                 });
             });
         }
