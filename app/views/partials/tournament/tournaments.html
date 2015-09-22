@@ -10,7 +10,7 @@
         <div class="panel-heading text-center">Profile <i class="fa fa-user fa-1x"></i></div>
         <ul class="list-group">
           <li class="list-group-item text-right"><span class="pull-left"><strong>Full name</strong></span> {{user.firstname}} {{user.lastname}}</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong>Joined</strong></span> 2.13.2014</li>
+          <li class="list-group-item text-right"><span class="pull-left"><strong>Joined</strong></span> {{user.joiningDate | date:'mediumDate'}}</li>
           <li class="list-group-item text-right"><span class="pull-left"><strong>My Teams</strong></span> <i class="fa fa-users"></i></li>
           <li class="list-group-item text-right"><span class="pull-left"><strong>My Tournaments</strong></span> <i class="fa fa-trophy"></i></li>
           <li class="list-group-item text-right"><span class="pull-left"><strong>Statistics</strong></span> <i class="fa fa-bar-chart"></i></li>

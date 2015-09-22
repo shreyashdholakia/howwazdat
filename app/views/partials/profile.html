@@ -29,25 +29,25 @@
 
           <div class="panel panel-primary">
             <div class="panel-heading text-center">Profile <i class="fa fa-user fa-1x"></i></div>
-            
+
               <ul class="list-group">
                 <li class="list-group-item text-right"><span class="pull-left"><strong>Full name</strong></span> {{user.firstname}} {{user.lastname}}</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong>Joined</strong></span> 2.13.2014</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Joined</strong></span> {{user.joiningDate | date:'mediumDate'}}</li>
                 <li class="list-group-item text-right"><span class="pull-left"><strong>My Teams</strong></span> <i class="fa fa-users"></i></li>
                 <li class="list-group-item text-right"><span class="pull-left"><strong>My Tournaments</strong></span> <i class="fa fa-trophy"></i></li>
                 <li class="list-group-item text-right"><span class="pull-left"><strong>Statistics</strong></span> <i class="fa fa-bar-chart"></i></li>
-              </ul> 
+              </ul>
           </div>
-              
-          
+
+
         </div><!--/col-3-->
     	<div class="col-sm-9">
-          
+
           <ul class="nav nav-tabs" id="myTab">
             <li ng-class="{'active':isActiveTab('profile')}"><a href ng-click="setTab('profile')">Profile</a></li>
             <li ng-class="{'active':isActiveTab('activity')}"><a href ng-click="setTab('activity')">Recent Activity</a></li>
           </ul>
-              
+
           <div class="tab-content">
             <div class="tab-pane" ng-class="{'active':isActiveTab('activity')}" id="home">
               <div class="table-responsive">
@@ -163,36 +163,36 @@
                   </div>
                 </div>
               </div><!--/table-resp-->
-                            
+
              </div><!--/tab-pane-->
              <div class="tab-pane" ng-class="{'active':isActiveTab('profile')}">
-                
-                
+
+
                   <hr>
                   <form class="form" id="registrationForm">
                       <div class="form-group">
-                          
+
                           <div class="col-xs-6">
                               <label for="first_name"><h4>First name</h4></label>
                               <input type="text" class="form-control" name="first_name" ng-model="user.firstname" id="first_name" placeholder="first name" title="enter your first name if any.">
                           </div>
                       </div>
                       <div class="form-group">
-                          
+
                           <div class="col-xs-6">
                             <label for="last_name"><h4>Last name</h4></label>
                               <input type="text" class="form-control" name="last_name" ng-model="user.lastname" id="last_name" placeholder="last name" title="enter your last name if any.">
                           </div>
                       </div>
                       <div class="form-group">
-                          
+
                           <div class="col-xs-6">
                               <label for="email"><h4>Email</h4></label>
                               <input type="email" class="form-control" id="location" ng-model="user.email" placeholder="somewhere" title="enter a location" ng-disabled="isEmail">
                           </div>
                       </div>
                       <div class="form-group">
-                          
+
                           <div class="col-xs-6">
                               <label for="location"><h4>Location</h4></label>
                               <input type="text" class="form-control" name="phone" id="location" ng-model="user.location" placeholder="enter location" title="enter your location if any.">
@@ -206,7 +206,7 @@
                       </div>
                 </form>
               </div>
-               
+
               </div><!--/tab-pane-->
           </div><!--/tab-content-->
 
