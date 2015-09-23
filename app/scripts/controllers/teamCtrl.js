@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('angularPassportApp')
-.controller('TeamCtrl', function ($scope, teamService, $location, $routeParams, $rootScope, $http, $cookieStore, $modal, alertService) {
+.controller('TeamCtrl', function ($scope, teamService, $location, $routeParams, $rootScope, $http, $cookieStore, $modal, alertService, userService) {
 
 	$scope.player = [];
 	$scope.roles = [{name:'Batsmen'},
@@ -24,10 +24,37 @@ angular.module('angularPassportApp')
 
 	};
 
+	$scope.userList = [];
+	$scope.users = [];
+
+	function createUserList(users) {
+	    users.forEach(function (user)    // check if the team is already added
+      {
+        var fullName = user.firstname + ' ' + user.lastname;
+        $scope.userList.push({
+           name: fullName,
+           firstName: user.firstname,
+           lastName: user.lastname,
+           email: user.email
+        })
+      });
+	}
+
+	function allUserAsPlayers() {
+    userService.all().success(function (response) {
+       $scope.users = response.data;
+       createUserList($scope.users);
+       }).error(function (status, data) {
+         alertService.displayErrorMessage("There was an error! Please try again.n");
+       });
+	}
+
+	allUserAsPlayers();
+
 	$scope.deletePlayer = function () {
 		$scope.modalInstance.dismiss('cancel');
 		var index = $scope.playerList.indexOf($scope.playerToDelete);
-		$scope.playerList.splice(index, 1); 
+		$scope.playerList.splice(index, 1);
 		$scope.teamUpdate();
 	};
 
@@ -54,11 +81,18 @@ angular.module('angularPassportApp')
 		} else {
 			$scope.captain = 'P';
 		}
+
+		if($scope.player) {
+		  $scope.firstName = $scope.player.firstName;
+		  $scope.lastName = $scope.player.lastName;
+		  $scope.email = $scope.player.email;
+		}
 		$scope.playerList.push({
 			firstName: $scope.firstName,
 			lastName: $scope.lastName,
 			role: $scope.roleSelected.name,
-			captain: $scope.captain
+			captain: $scope.captain,
+      email: $scope.email
 		});
 		if(action === 'U') {
 			$scope.teamUpdate();
@@ -86,6 +120,10 @@ angular.module('angularPassportApp')
 				$scope.players = response.exists;
 				$scope.teamName = response.data.teamName;
 				$scope.playerList = response.data.players;
+				$scope.teamWins = response.data.won;
+				$scope.teamGames = response.data.matches;
+				$scope.teamLosses = response.data.lost;
+				$scope.tournaments = response.data.tournaments;
 			}).error(function(status, data) {
 				console.log(status);
 			});

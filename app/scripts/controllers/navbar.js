@@ -7,10 +7,11 @@ angular.module('angularPassportApp')
       "link": "createTeam"
     }];
 
-    $scope.authMenu = [{
-      "title": "Profile",
-      "link": "profile"
-    }];
+    $scope.authMenu = [
+      {
+        "title": "Tournaments",
+        "link": "tournaments"
+      }];
 
     $scope.logout = function() {
       Auth.logout(function(err) {
