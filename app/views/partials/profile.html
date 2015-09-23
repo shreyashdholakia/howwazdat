@@ -18,10 +18,6 @@
                     <strong>14</strong><br>
                     <h4>Wickets</h4>
                   </a>
-                  <!-- <a href="#" class="btn alert-info col-sm-3">
-                    <i class="glyphicon glyphicon-question-sign"></i><br>
-                    Help
-                  </a> -->
                 </div>
                 <hr>
     <div class="row">
@@ -51,109 +47,28 @@
           <div class="tab-content">
             <div class="tab-pane" ng-class="{'active':isActiveTab('activity')}" id="home">
               <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-hover table-striped">
                   <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Label 1</th>
-                      <th>Label 2</th>
-                      <th>Label 3</th>
-                      <th>Label </th>
-                      <th>Label </th>
-                      <th>Label </th>
-                    </tr>
+                  <tr>
+                    <th>#</th>
+                    <th ng-click="sortType='matchDate'; sortReverse = !sortReverse">Date <i class="fa fa-sort"></i></th>
+                    <th ng-click="sortType='homeTeam'; sortReverse = !sortReverse">Home <i class="fa fa-sort"></i></th>
+                    <th ng-click="sortType='visitingTeam'; sortReverse = !sortReverse">Visiting <i class="fa fa-sort"></i></th>
+                    <th ng-click="sortType='matchDate'; sortReverse = !sortReverse">Winner</th>
+                    <th ng-click="sortType='roundType'; sortReverse = !sortReverse">Stage <i class="fa fa-sort"></i></th>
+                    <th><i class="fa fa-cog"></i></th>
+                  </tr>
                   </thead>
-                  <tbody id="items">
-                    <tr>
-                      <td>1</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                    </tr>
-                    <tr>
-                      <td>6</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                    </tr>
-                    <tr>
-                      <td>7</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                    </tr>
-                     <tr>
-                      <td>8</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                    </tr>
-                    <tr>
-                      <td>9</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                    </tr>
-                    <tr>
-                      <td>10</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                      <td>Table cell</td>
-                    </tr>
+                  <tbody ng-repeat="match in matches | orderBy:sortType:sortReverse">
+                  <tr>
+                    <td>{{$index + 1}}</td>
+                    <td>{{match.matchDate | date:'MM/dd/yyyy @ h:mma'}}</td>
+                    <td>{{match.homeTeam}}</td>
+                    <td>{{match.visitingTeam}}</td>
+                    <td>{{match.winningTeam}}</td>
+                    <td>{{match.roundType}}</td>
+                    <td><a href="/tournament/{{tournamentInfo.tournamentName}}/{{match.matchNumber}}"><i class="fa fa-list-ol"></i></a></td>
+                  </tr>
                   </tbody>
                 </table>
                 <hr>
