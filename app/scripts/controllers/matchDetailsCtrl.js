@@ -440,12 +440,21 @@ angular.module('angularPassportApp')
             match.mom = $scope.mom.name;
             match.status = 'Submitted';
             $scope.match = match;
+            match.scoreCard = getScoreCardUpdated($scope.matchDetails.winningTeam,$scope.winningTeam.name);
         }
       });
 
       submitMatchScores($scope.match);
 
     };
+
+    function getScoreCardUpdated(previousTeam, newTeam) {
+      if(previousTeam === newTeam) {
+        return 'notChanged';
+      } else {
+        return 'changed';
+      }
+    }
 
     function submitMatchScores(match) {
 
