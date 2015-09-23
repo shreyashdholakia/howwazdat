@@ -419,6 +419,14 @@ angular.module('angularPassportApp')
       submitMatchScores($scope.match);
     }
 
+    function getLosingTeam(team) {
+      if(team === $scope.matchDetails.homeTeam) {
+        return $scope.matchDetails.visitingTeam;
+      } else {
+        return $scope.matchDetails.homeTeam;
+      }
+    }
+
     $scope.matches = [];
 
     $scope.update = function () { // update the game info
@@ -427,6 +435,7 @@ angular.module('angularPassportApp')
         if (match.matchNumber === $scope.matchNumber) {
             match.toss = $scope.toss.name;
             match.winningTeam = $scope.winningTeam.name;
+            match.losingTeam = getLosingTeam($scope.winningTeam.name);
             match.tossDecision = $scope.decision.name;
             match.mom = $scope.mom.name;
             match.status = 'Submitted';
