@@ -13,11 +13,11 @@
         <h4>Games</h4>
       </a>
       <a href="#" class="btn alert-success col-sm-4">
-        <strong>{{teamWins}}</strong><br>
+        <strong>{{teamWins.length}}</strong><br>
         <h4>Wins</h4>
       </a>
       <a href="#" class="btn alert-info col-sm-3">
-        <strong>{{teamLosses}}</strong><br>
+        <strong>{{teamLosses.length}}</strong><br>
         <h4>Loss</h4>
       </a>
     </div>
@@ -70,7 +70,7 @@
           </div>
           <div class="form-group">
             <div class="col-sm-2">
-              <button class="btn btn-success form-control col-sm-2" ng-click="addPlayer('U')"type="submit"><i class="fa fa-plus"></i> Add </button>
+              <button class="btn btn-success form-control col-sm-2" ng-click="addPlayer('user')"type="submit"><i class="fa fa-plus"></i> Add </button>
             </div>
           </div>
       </div>

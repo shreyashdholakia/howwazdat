@@ -82,11 +82,13 @@ angular.module('angularPassportApp')
 			$scope.captain = 'P';
 		}
 
-		if($scope.player) {
+		if(action === 'user') {
+		  console.log("here");
 		  $scope.firstName = $scope.player.firstName;
 		  $scope.lastName = $scope.player.lastName;
 		  $scope.email = $scope.player.email;
 		}
+
 		$scope.playerList.push({
 			firstName: $scope.firstName,
 			lastName: $scope.lastName,
@@ -94,7 +96,7 @@ angular.module('angularPassportApp')
 			captain: $scope.captain,
       email: $scope.email
 		});
-		if(action === 'U') {
+		if(action === 'U' || action === 'user') {
 			$scope.teamUpdate();
 		} else {
 			$scope.addTeam(); //save the added new players
