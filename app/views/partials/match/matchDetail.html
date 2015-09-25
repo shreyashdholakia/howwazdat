@@ -71,7 +71,7 @@
   <hr>
   <div ng-show="matchDetails.status">
   <div class="row">
-    <h3>Batting {{matchDetails.homeTeam}}</h3>
+    <h3>Batting {{matchDetails.homeTeam}} : <em>Scored {{homeTeamRuns}}/{{homeTeamWickets}} ({{homeTeamOvers}} ov) RR {{homeTeamRunRate}}</em></h3>
     <div class="table-responsive">
       <table class="table table-hover table-striped">
         <thead>
@@ -106,7 +106,7 @@
   </div>
   <hr>
   <div class="row">
-    <form class="form" id="matchDetailsForm" novalidate name="matchDetailsForm">
+    <form class="form" novalidate name="matchDetailsForm">
       <div class="form-group">
         <div class="col-xs-2">
           <label for="playerName"><h4>Player name</h4></label>
@@ -173,6 +173,57 @@
         <div class="col-xs-12">
           <button class="btn btn-primary form-control" name="addDetails"
                   ng-click="addHomeTeamBatting()" type="submit"><i class="fa fa-check"></i> Add</button>
+        </div>
+      </div>
+    </form>
+
+    <form class="form" novalidate name="homeTeamTotalsForm">
+      <div class="form-group">
+        <div class="col-xs-2">
+          <label for="totalRuns"><h4>Total Runs</h4></label>
+          <input type="text" class="form-control" name="first_name" ng-model="homeTeamRuns" placeholder="Total Runs" title="enter total runs">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-2">
+          <label for="overs"><h4>Overs</h4></label>
+          <input type="text" class="form-control"  ng-model="homeTeamOvers" placeholder="Overs" title="enter overs">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-2">
+          <label for="wides"><h4>Wickets</h4></label>
+          <input type="text" class="form-control" ng-model="homeTeamWickets"  placeholder="Wickets">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-1">
+          <label for="wides"><h4>Wides</h4></label>
+          <input type="text" class="form-control" ng-model="homeTeamWides" placeholder="Wides">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-1">
+          <label for="nb"><h4>NB</h4></label>
+          <input type="text" class="form-control" ng-model="homeTeamNoBalls"  placeholder="NB" >
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-1">
+          <label for="byes"><h4>Byes</h4></label>
+          <input type="text" class="form-control" ng-model="homeTeamByes"  placeholder="Byes" >
+        </div>
+      </div>
+      <div class="form-group">
+         <div class="col-xs-1">
+            <label for="lb"><h4>LB</h4></label>
+            <input type="text" class="form-control" ng-model="homeTeamLegByes"  placeholder="LB">
+         </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-2">
+          <label for="email"><h4> Add Total</h4></label>
+          <button class="btn btn-primary form-control"  ng-click="addHomeTeamTotal()" type="submit"><i class="fa fa-plus"></i></button>
         </div>
       </div>
     </form>
@@ -470,7 +521,7 @@
     <div class="col-xs-12">
       <br><br>
 
-      <button class="btn btn-primary" ng-click="submitMatch()" type="submit" ng-disabled="matchForm.$invalid"><i class="glyphicon glyphicon-plus"></i> Submit</button>
+      <button class="btn btn-primary" ng-click="submitMatch()" type="submit" ng-disabled="matchForm.$invalid"><i class="fa fa-plus"></i> Submit</button>
     </div>
   </div>
 
