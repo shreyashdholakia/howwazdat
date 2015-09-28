@@ -14,6 +14,10 @@ angular.module('angularPassportApp')
       },
       getUserMatches: function(player) {
         return $http.post(options.api.base_url  + '/api/match', {'playerName': player})
+      },
+      updateMatchTotals: function(totals, matchNumber) {
+
       }
+
     };
   });
