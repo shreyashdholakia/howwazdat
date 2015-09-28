@@ -71,7 +71,7 @@
   <hr>
   <div ng-show="matchDetails.status">
   <div class="row">
-    <h3>Batting {{matchDetails.homeTeam}} <strong ng-show="homeTeamRuns" class="text-info"><em><u> : Scored {{homeTeamRuns}}/{{homeTeamWickets}} ({{homeTeamOvers}} ov) RR {{homeTeamRunRate}}</u></em></strong></h3>
+    <h3>Batting {{matchDetails.homeTeam}} <strong ng-show="homeTeamRuns" class="text-info"><em><u> : Scored {{homeTeamRuns}}/{{homeTeamWickets}} ({{homeTeamOvers}} ov) (RR {{homeTeamRunRate | number: 2}} runs per over)</u></em></strong></h3>
     <div class="table-responsive">
       <table class="table table-hover table-striped">
         <thead>
@@ -312,7 +312,7 @@
   </div>
   <hr>
   <div class="row">
-    <h3>Batting {{matchDetails.visitingTeam}} <strong ng-show="visitingTeamRuns" class="text-info"><em><u> : Scored {{visitingTeamRuns}}/{{visitingTeamWickets}} ({{visitingTeamOvers}} ov) RR {{visitingTeamRunRate}}</u></em></strong></h3>
+    <h3>Batting {{matchDetails.visitingTeam}} <strong ng-show="visitingTeamRuns" class="text-info"><em><u> : Scored {{visitingTeamRuns}}/{{visitingTeamWickets}} ({{visitingTeamOvers}} ov) RR {{visitingTeamRunRate | number: 2}}</u></em></strong></h3>
     <div class="table-responsive">
       <table class="table table-hover table-striped">
         <thead>
