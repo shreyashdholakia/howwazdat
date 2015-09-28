@@ -7,9 +7,9 @@ angular.module('angularPassportApp')
 
     $scope.umpires = [{name: 'Self'},
       {name: 'Neutral'}];
-     $scope.decisions = [{name: 'Batting'},
+    $scope.decisions = [{name: 'Batting'},
       {name: 'Bowling'}];
-    $scope.tossInfo =[];
+    $scope.tossInfo = [];
 
     $scope.urlParams = $location.search();
     $scope.editMatchStatus = false;
@@ -19,48 +19,60 @@ angular.module('angularPassportApp')
 
     function getMatchDetails() {
       matchDetailsService.match($scope.tournamentName, $scope.matchNumber).success(function (response) {
-       $scope.matchDetails = response.data;
+        $scope.matchDetails = response.data;
 
-       if($scope.matchDetails.homeTeamBatting) {
-         $scope.homeTeamBattingDetails = $scope.matchDetails.homeTeamBatting[0].battingScores;
-       }
+        if ($scope.matchDetails.homeTeamBatting) {
+          $scope.homeTeamBattingDetails = $scope.matchDetails.homeTeamBatting[0].battingScores;
+        }
 
-       if($scope.matchDetails.visitingTeamBatting) {
+        if ($scope.matchDetails.visitingTeamBatting) {
           $scope.visitingTeamBattingDetails = $scope.matchDetails.visitingTeamBatting[0].battingScores;
-       }
+        }
 
-        if($scope.matchDetails.visitingTeamBowling) {
+        if ($scope.matchDetails.visitingTeamBowling) {
           $scope.visitingTeamBowlingDetails = $scope.matchDetails.visitingTeamBowling[0].bowlingCard;
         }
-       if($scope.matchDetails.homeTeamBowling) {
-                 $scope.homeTeamBowlingDetails = $scope.matchDetails.homeTeamBowling[0].bowlingCard;
+        if ($scope.matchDetails.homeTeamBowling) {
+          $scope.homeTeamBowlingDetails = $scope.matchDetails.homeTeamBowling[0].bowlingCard;
         }
-       if($scope.matchDetails.status) {
-         $scope.editMatchStatus = true;
-         $scope.tossInfo.push({name:$scope.matchDetails.toss, id: 1});
-         $scope.toss = $scope.tossInfo[0];
-       }
+        if ($scope.matchDetails.status) {
+          $scope.editMatchStatus = true;
+          $scope.tossInfo.push({name: $scope.matchDetails.toss, id: 1});
+          $scope.toss = $scope.tossInfo[0];
+        }
 
-       if($scope.matchDetails.homeTeamTotal) {
-         $scope.homeTeamRuns = $scope.matchDetails.homeTeamTotal[0].total;
-         $scope.homeTeamOvers = $scope.matchDetails.homeTeamTotal[0].overs;
-         $scope.homeTeamWickets = $scope.matchDetails.homeTeamTotal[0].wickets;
-         $scope.homeTeamWides = $scope.matchDetails.homeTeamTotal[0].wides;
-         $scope.homeTeamNoBalls = $scope.matchDetails.homeTeamTotal[0].noBalls;
-         $scope.homeTeamByes = $scope.matchDetails.homeTeamTotal[0].byes;
-         $scope.homeTeamLegByes = $scope.matchDetails.homeTeamTotal[0].legByes;
-       }
-       createTeamDropDown($scope.matchDetails);
-       $scope.homeTeam = getTeamDetails($scope.matchDetails.homeTeam);
-       $scope.visitingTeam = getVisitingTeamDetails($scope.matchDetails.visitingTeam);
-         }).error(function (status, data) {
-          alertService.displayErrorMessage("There was an error! Please try again.");
-       });
+        if ($scope.matchDetails.homeTeamTotal) {
+          $scope.homeTeamRuns = $scope.matchDetails.homeTeamTotal[0].total;
+          $scope.homeTeamOvers = $scope.matchDetails.homeTeamTotal[0].overs;
+          $scope.homeTeamWickets = $scope.matchDetails.homeTeamTotal[0].wickets;
+          $scope.homeTeamWides = $scope.matchDetails.homeTeamTotal[0].wides;
+          $scope.homeTeamNoBalls = $scope.matchDetails.homeTeamTotal[0].noBalls;
+          $scope.homeTeamByes = $scope.matchDetails.homeTeamTotal[0].byes;
+          $scope.homeTeamLegByes = $scope.matchDetails.homeTeamTotal[0].legByes;
+          $scope.homeTeamRunRate = $scope.homeTeamRuns / $scope.homeTeamOvers;
+        }
+
+        if ($scope.matchDetails.visitingTeamTotal) {
+          $scope.visitingTeamRuns = $scope.matchDetails.visitingTeamTotal[0].total;
+          $scope.visitingTeamOvers = $scope.matchDetails.visitingTeamTotal[0].overs;
+          $scope.visitingTeamWickets = $scope.matchDetails.visitingTeamTotal[0].wickets;
+          $scope.visitingTeamWides = $scope.matchDetails.visitingTeamTotal[0].wides;
+          $scope.visitingTeamNoBalls = $scope.matchDetails.visitingTeamTotal[0].noBalls;
+          $scope.visitingTeamByes = $scope.matchDetails.visitingTeamTotal[0].byes;
+          $scope.visitingTeamLegByes = $scope.matchDetails.visitingTeamTotal[0].legByes;
+          $scope.visitingTeamRunRate = $scope.visitingTeamRuns / $scope.visitingTeamOvers;
+        }
+        createTeamDropDown($scope.matchDetails);
+        $scope.homeTeam = getTeamDetails($scope.matchDetails.homeTeam);
+        $scope.visitingTeam = getVisitingTeamDetails($scope.matchDetails.visitingTeam);
+      }).error(function (status, data) {
+        alertService.displayErrorMessage("There was an error! Please try again.");
+      });
     }
 
-    function getTournamentDetails () {
+    function getTournamentDetails() {
       tournamentService.tournamentDetails($scope.tournamentName).success(function (response) {
-        $scope.tournamentMatches  = response.data.matches;
+        $scope.tournamentMatches = response.data.matches;
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.");
       });
@@ -71,19 +83,18 @@ angular.module('angularPassportApp')
     $scope.teams = [];
 
     function createTeamDropDown(matchDetails) {
-      $scope.teams.push({name:matchDetails.homeTeam});
-      $scope.teams.push({name:matchDetails.visitingTeam});
+      $scope.teams.push({name: matchDetails.homeTeam});
+      $scope.teams.push({name: matchDetails.visitingTeam});
     }
 
     $scope.manOfMatch = [];
 
     function createManOfMatch(players) {
-       players.forEach(function (player)
-       {
-           $scope.manOfMatch.push(
-           player
-         )
-       });
+      players.forEach(function (player) {
+        $scope.manOfMatch.push(
+          player
+        )
+      });
     }
 
     $scope.outs = [
@@ -105,22 +116,22 @@ angular.module('angularPassportApp')
     ];
 
     $scope.outMaps = {
-                    Catch_Out: 'C',
-                    Caught_Behind: 'cb',
-                    Caught_And_Bowled: 'c & b',
-                    Stumped: 'st',
-                    Bowled: 'B',
-                    LBW: 'lbw',
-                    Hit_Wicket: 'hit wicket',
-                    Run_Out: 'ro',
-                    Retired: 'retired',
-                    Handled_the_ball: 'handled the ball',
-                    Hit_the_ball_twice: 'hit the ball twice',
-                    Not_Out: 'not out',
-                    Did_not_bat: 'dnb',
-                    Obstructing_the_field: 'obstructing the field',
-                    Timed_out: 'timed out'
-                };
+      Catch_Out: 'C',
+      Caught_Behind: 'cb',
+      Caught_And_Bowled: 'c & b',
+      Stumped: 'st',
+      Bowled: 'B',
+      LBW: 'lbw',
+      Hit_Wicket: 'hit wicket',
+      Run_Out: 'ro',
+      Retired: 'retired',
+      Handled_the_ball: 'handled the ball',
+      Hit_the_ball_twice: 'hit the ball twice',
+      Not_Out: 'not out',
+      Did_not_bat: 'dnb',
+      Obstructing_the_field: 'obstructing the field',
+      Timed_out: 'timed out'
+    };
 
     $scope.howOut = $scope.outs[11];
     $scope.howOutTeam2 = $scope.outs[11];
@@ -129,8 +140,7 @@ angular.module('angularPassportApp')
     $scope.visitingTeamPlayerList = [];
 
     function homeTeamPlayers(players) {
-      players.forEach(function (player)
-      {
+      players.forEach(function (player) {
         var fullName = player.firstName + ' ' + player.lastName;
         $scope.playerList.push({
           name: fullName
@@ -183,13 +193,13 @@ angular.module('angularPassportApp')
     }
 
     function calculateBowlingEconomy(runs, overs) {
-      return (runs/overs);
+      return (runs / overs);
     }
 
     function createHowOut(outStyle, fielder, bowler) {
       var out;
-      if(fielder || bowler) {
-        if(outStyle === 'Bowled' || outStyle === 'Caught And Bowled' || outStyle === 'LBW') {
+      if (fielder || bowler) {
+        if (outStyle === 'Bowled' || outStyle === 'Caught And Bowled' || outStyle === 'LBW') {
           out = $scope.outMaps[outStyle.split(' ').join('_')] + ' ' + bowler;
         } else {
           out = $scope.outMaps[outStyle.split(' ').join('_')] + ' ' + fielder + ' b' + ' ' + bowler;
@@ -217,15 +227,15 @@ angular.module('angularPassportApp')
     $scope.addHomeTeamBatting = function () {
       var playerExists = false;
       $scope.homeTeamBattingDetails.forEach(function (playerInfo)    // check if the team is already added
-            {
-              if (playerInfo.player === $scope.visitingTeamPlayer.name) {
-                alertService.displayErrorMessage("Player already added..");
-                playerExists = true;
+      {
+        if (playerInfo.player === $scope.visitingTeamPlayer.name) {
+          alertService.displayErrorMessage("Player already added..");
+          playerExists = true;
 
-              }
-            });
+        }
+      });
 
-      if(!playerExists) {
+      if (!playerExists) {
         $scope.homeTeamBattingDetails.push({
           player: $scope.visitingTeamPlayer.name,
           outNotOut: createHowOut($scope.howOut.name, $scope.visitingTeamFielder.name, $scope.visitingTeamBowler.name),
@@ -248,37 +258,36 @@ angular.module('angularPassportApp')
     };
 
     $scope.addVisitingTeamBatting = function () {
-          var playerExists = false;
-          $scope.visitingTeamBattingDetails.forEach(function (playerInfo)
-                {
-                  if (playerInfo.player === $scope.homeTeamPlayer.name) {
-                    alertService.displayErrorMessage("Player already added..");
-                    playerExists = true;
+      var playerExists = false;
+      $scope.visitingTeamBattingDetails.forEach(function (playerInfo) {
+        if (playerInfo.player === $scope.homeTeamPlayer.name) {
+          alertService.displayErrorMessage("Player already added..");
+          playerExists = true;
 
-                  }
-                });
+        }
+      });
 
-          if(!playerExists) {
-            $scope.visitingTeamBattingDetails.push({
-              player: $scope.homeTeamPlayer.name,
-              outNotOut: createHowOut($scope.howOutTeam2.name, $scope.homeTeamFielder.name, $scope.homeTeamBowler.name),
-              fielder: $scope.homeTeamFielder.name || '--',
-              bowler: $scope.homeTeamBowler.name || '--',
-              runs: $scope.runsTeam2 || 0,
-              balls: $scope.ballsTeam2 || 0,
-              fours: $scope.foursTeam2 || 0,
-              sixes: $scope.sixesTeam2 || 0,
-              strikeRate: calculateStrikeRate($scope.runsTeam2, $scope.ballsTeam2)
-            });
+      if (!playerExists) {
+        $scope.visitingTeamBattingDetails.push({
+          player: $scope.homeTeamPlayer.name,
+          outNotOut: createHowOut($scope.howOutTeam2.name, $scope.homeTeamFielder.name, $scope.homeTeamBowler.name),
+          fielder: $scope.homeTeamFielder.name || '--',
+          bowler: $scope.homeTeamBowler.name || '--',
+          runs: $scope.runsTeam2 || 0,
+          balls: $scope.ballsTeam2 || 0,
+          fours: $scope.foursTeam2 || 0,
+          sixes: $scope.sixesTeam2 || 0,
+          strikeRate: calculateStrikeRate($scope.runsTeam2, $scope.ballsTeam2)
+        });
 
-            addBattingToTournament($scope.visitingTeamBattingDetails, 'visiting');
+        addBattingToTournament($scope.visitingTeamBattingDetails, 'visiting');
 
-            resetAddPlayerForm();
-          } else {
-            resetAddPlayerForm();
-          }
+        resetAddPlayerForm();
+      } else {
+        resetAddPlayerForm();
+      }
 
-        };
+    };
 
     $scope.addVisingTeamBowlingDetails = function () {
 
@@ -291,7 +300,7 @@ angular.module('angularPassportApp')
         }
       });
 
-      if(!playerExists) {
+      if (!playerExists) {
         $scope.visitingTeamBowlingDetails.push({
           player: $scope.visitingTeamBowler.name,
           overs: $scope.visitingTeamBowlerOvers || 0,
@@ -312,33 +321,33 @@ angular.module('angularPassportApp')
 
     $scope.addHomeTeamBowlingDetails = function () {
 
-          var playerExists = false;
-          $scope.homeTeamBowlingDetails.forEach(function (playerInfo)    // check if the team is already added
-          {
-            if (playerInfo.player === $scope.visitingTeamBowler.name) {
-              alertService.displayErrorMessage("Bowler already added..");
-              playerExists = true;
-            }
-          });
+      var playerExists = false;
+      $scope.homeTeamBowlingDetails.forEach(function (playerInfo)    // check if the team is already added
+      {
+        if (playerInfo.player === $scope.visitingTeamBowler.name) {
+          alertService.displayErrorMessage("Bowler already added..");
+          playerExists = true;
+        }
+      });
 
-          if(!playerExists) {
-            $scope.homeTeamBowlingDetails.push({
-              player: $scope.homeTeamBowler.name,
-              overs: $scope.homeTeamBowlerOvers || 0,
-              maiden: $scope.homeTeamBowlerMaiden || 0,
-              runs: $scope.homeTeamBowlerRuns || 0,
-              wickets: $scope.homeTeamBowlerWickets || 0,
-              econ: calculateBowlingEconomy($scope.homeTeamBowlerRuns, $scope.homeTeamBowlerOvers)
-            });
+      if (!playerExists) {
+        $scope.homeTeamBowlingDetails.push({
+          player: $scope.homeTeamBowler.name,
+          overs: $scope.homeTeamBowlerOvers || 0,
+          maiden: $scope.homeTeamBowlerMaiden || 0,
+          runs: $scope.homeTeamBowlerRuns || 0,
+          wickets: $scope.homeTeamBowlerWickets || 0,
+          econ: calculateBowlingEconomy($scope.homeTeamBowlerRuns, $scope.homeTeamBowlerOvers)
+        });
 
-            addBowlingToTournament($scope.homeTeamBowlingDetails, 'home');
+        addBowlingToTournament($scope.homeTeamBowlingDetails, 'home');
 
-            resetAddPlayerForm();
-          } else {
-            resetAddPlayerForm();
-          }
+        resetAddPlayerForm();
+      } else {
+        resetAddPlayerForm();
+      }
 
-        };
+    };
 
     function resetAddPlayerForm() {
       $scope.visitingTeamPlayer = "";
@@ -355,22 +364,21 @@ angular.module('angularPassportApp')
       $scope.homeTeamBowler = "";
       $scope.runsTeam2 = "";
       $scope.ballsTeam2 = "";
-      $scope.foursTeam2= "";
+      $scope.foursTeam2 = "";
       $scope.sixesTeam2 = "";
     }
 
     $scope.homeTeamBattingScores = [];
     $scope.visitingTeamBattingScore = [];
 
-    function addBattingToTournament (battingInfo, team) {
-      if(team == 'home') {
+    function addBattingToTournament(battingInfo, team) {
+      if (team == 'home') {
         $scope.homeTeamBattingScores.push({
-            team:$scope.matchDetails.homeTeam,
-            battingScores: battingInfo
+          team: $scope.matchDetails.homeTeam,
+          battingScores: battingInfo
         });
 
-        $scope.tournamentMatches.forEach(function (match)
-        {
+        $scope.tournamentMatches.forEach(function (match) {
           if (match.matchNumber === $scope.matchNumber) {
             match.homeTeamBatting = $scope.homeTeamBattingScores;
             match.battingScores = battingInfo;
@@ -379,30 +387,28 @@ angular.module('angularPassportApp')
         });
       } else {
         $scope.visitingTeamBattingScore.push({
-          team:$scope.matchDetails.visitingTeam,
+          team: $scope.matchDetails.visitingTeam,
           battingScores: battingInfo
-          });
+        });
 
-          $scope.tournamentMatches.forEach(function (match)
-            {
-               if (match.matchNumber === $scope.matchNumber) {
-                   match.visitingTeamBatting = $scope.visitingTeamBattingScore;
-                   match.battingScores = battingInfo;
-                   $scope.match = match;
-                }
-            });
+        $scope.tournamentMatches.forEach(function (match) {
+          if (match.matchNumber === $scope.matchNumber) {
+            match.visitingTeamBatting = $scope.visitingTeamBattingScore;
+            match.battingScores = battingInfo;
+            $scope.match = match;
+          }
+        });
       }
       submitMatchScores($scope.match);
     }
 
-    function addBowlingToTournament (bowling, team) {
-      if(team == 'visiting') {
+    function addBowlingToTournament(bowling, team) {
+      if (team == 'visiting') {
         $scope.visitingTeamBowlingScores.push({
           bowlingCard: bowling
         });
 
-        $scope.tournamentMatches.forEach(function (match)
-        {
+        $scope.tournamentMatches.forEach(function (match) {
           if (match.matchNumber === $scope.matchNumber) {
             match.visitingTeamBowling = $scope.visitingTeamBowlingScores;
             match.bowlingCard = bowling;
@@ -411,23 +417,22 @@ angular.module('angularPassportApp')
         });
       } else {
         $scope.homeTeamBowlingScores.push({
-           bowlingCard: bowling
-         });
+          bowlingCard: bowling
+        });
 
-         $scope.tournamentMatches.forEach(function (match)
-         {
-           if (match.matchNumber === $scope.matchNumber) {
-             match.homeTeamBowling = $scope.homeTeamBowlingScores;
-             match.bowlingCard = bowling;
-             $scope.match = match;
-           }
-         });
+        $scope.tournamentMatches.forEach(function (match) {
+          if (match.matchNumber === $scope.matchNumber) {
+            match.homeTeamBowling = $scope.homeTeamBowlingScores;
+            match.bowlingCard = bowling;
+            $scope.match = match;
+          }
+        });
       }
       submitMatchScores($scope.match);
     }
 
     function getLosingTeam(team) {
-      if(team === $scope.matchDetails.homeTeam) {
+      if (team === $scope.matchDetails.homeTeam) {
         return $scope.matchDetails.visitingTeam;
       } else {
         return $scope.matchDetails.homeTeam;
@@ -438,19 +443,18 @@ angular.module('angularPassportApp')
     $scope.visitingTeamScoreDetails = [];
 
     $scope.update = function () { // update the game info
-      $scope.tournamentMatches.forEach(function (match)
-      {
+      $scope.tournamentMatches.forEach(function (match) {
         if (match.matchNumber === $scope.matchNumber) {
-            match.toss = $scope.toss.name;
-            match.winningTeam = $scope.winningTeam.name;
-            match.losingTeam = getLosingTeam($scope.winningTeam.name);
-            match.tossDecision = $scope.decision.name;
-            match.mom = $scope.mom.name;
-            match.status = 'Submitted';
-            match.homeTeamTotal = $scope.homeTeamScoreDetails;
-            match.visitingTeamTotal = $scope.visitingTeamScoreDetails;
-            match.scoreCard = getScoreCardUpdated($scope.matchDetails.winningTeam,$scope.winningTeam.name);
-            $scope.match = match;
+          match.toss = $scope.toss.name;
+          match.winningTeam = $scope.winningTeam.name;
+          match.losingTeam = getLosingTeam($scope.winningTeam.name);
+          match.tossDecision = $scope.decision.name;
+          match.mom = $scope.mom.name;
+          match.status = 'Submitted';
+          match.homeTeamTotal = $scope.homeTeamScoreDetails;
+          match.visitingTeamTotal = $scope.visitingTeamScoreDetails;
+          match.scoreCard = getScoreCardUpdated($scope.matchDetails.winningTeam, $scope.winningTeam.name);
+          $scope.match = match;
         }
       });
 
@@ -459,8 +463,8 @@ angular.module('angularPassportApp')
     };
 
     function getScoreCardUpdated(previousTeam, newTeam) {
-      if(previousTeam) {
-        if(previousTeam === newTeam) {
+      if (previousTeam) {
+        if (previousTeam === newTeam) {
           return 'notChanged';
         } else {
           return 'changed';
@@ -472,8 +476,10 @@ angular.module('angularPassportApp')
     function submitMatchScores(match) {
 
       $scope.matches.push(
-        {all:$scope.tournamentMatches,
-          single: match}
+        {
+          all: $scope.tournamentMatches,
+          single: match
+        }
       );
 
       matchDetailsService.updateMatch($scope.tournamentName, $scope.matches).success(function (response) {
@@ -487,33 +493,45 @@ angular.module('angularPassportApp')
     }
 
     $scope.homeTeamScoreDetails = [];
+    $scope.visitingTeamScoreDetails = [];
     $scope.addHomeTeamTotal = function () {
 
       $scope.homeTeamScoreDetails.push({
         total: $scope.homeTeamRuns,
         overs: $scope.homeTeamOvers,
-        wickets:  $scope.homeTeamWickets,
+        wickets: $scope.homeTeamWickets,
         wides: $scope.homeTeamWides,
         noBalls: $scope.homeTeamNoBalls,
         byes: $scope.homeTeamByes,
         legByes: $scope.homeTeamLegByes
       });
-      addHomeTeamTotalScore($scope.homeTeamScoreDetails, 'home');
+      addTeamTotalScore($scope.homeTeamScoreDetails, 'home');
 
-  };
+    };
 
-    function addHomeTeamTotalScore(teamScores, team) {
-      if(team === 'home') {
-        $scope.tournamentMatches.forEach(function (match)
-        {
+    $scope.addVisitingTeamTotal = function () {
+      $scope.visitingTeamScoreDetails.push({
+        total: $scope.visitingTeamRuns,
+        overs: $scope.visitingTeamOvers,
+        wickets: $scope.visitingTeamWickets,
+        wides: $scope.visitingTeamWides,
+        noBalls: $scope.visitingTeamNoBalls,
+        byes: $scope.visitingTeamByes,
+        legByes: $scope.visitingTeamLegByes
+      });
+      addTeamTotalScore($scope.homeTeamScoreDetails, 'visiting');
+    };
+
+    function addTeamTotalScore(teamScores, team) {
+      if (team === 'home') {
+        $scope.tournamentMatches.forEach(function (match) {
           if (match.matchNumber === $scope.matchNumber) {
             match.homeTeamTotal = $scope.homeTeamScoreDetails;
             $scope.match = match;
           }
         });
       } else {
-        $scope.tournamentMatches.forEach(function (match)
-        {
+        $scope.tournamentMatches.forEach(function (match) {
           if (match.matchNumber === $scope.matchNumber) {
             match.visitingTeamTotal = $scope.visitingTeamScoreDetails;
             $scope.match = match;
