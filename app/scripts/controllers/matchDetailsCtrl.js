@@ -580,4 +580,8 @@ angular.module('angularPassportApp')
       $scope.modalInstance.dismiss('cancel');
     };
 
+    $scope.return = function () {
+      $location.path("/tournament/" + $scope.tournamentName);
+    }
+
   });
