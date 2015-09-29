@@ -611,7 +611,7 @@
     <div class="form-group pull-right">
       <div class="col-xs-12">
         <br><br>
-        <button class="btn btn-default btn-default" ng-click="createMatch = !createMatch" type="submit"><i
+        <button class="btn btn-default btn-default" ng-click="cancel()" type="submit"><i
           class="fa fa-reply"></i> Cancel
         </button>
       </div>
@@ -619,10 +619,24 @@
     <div class="form-group pull-right">
       <div class="col-xs-12">
         <br><br>
-        <button class="btn btn-primary" ng-click="submitMatch()" type="submit" ng-disabled="matchForm.$invalid"><i
+        <button class="btn btn-primary" ng-click="open()" type="submit" ng-disabled="matchForm.$invalid"><i
           class="fa fa-plus"></i> Submit
         </button>
       </div>
     </div>
   </div>
 </div>
+
+
+<script type="text/ng-template" id="matchSubmit.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Submit <i class="fa fa-check"></i></h3>
+  </div>
+  <div class="modal-body">
+    Submit the match for review?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="submitMatch()">Yes</button>
+    <button class="btn btn-warning" type="button" ng-click="close()">Cancel</button>
+  </div>
+</script>

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('angularPassportApp')
-  .controller('matchDetailsCtrl', function ($scope, teamService, $location, $routeParams, $rootScope, matchDetailsService, $cookieStore, tournamentService, alertService) {
+  .controller('matchDetailsCtrl', function ($scope, teamService, $location, $routeParams, $rootScope, matchDetailsService, $cookieStore, tournamentService, alertService, $modal) {
 
     $scope.matchDetails = true;
 
@@ -485,7 +485,6 @@ angular.module('angularPassportApp')
       matchDetailsService.updateMatch($scope.tournamentName, $scope.matches).success(function (response) {
         alertService.displaySaveMessage("Success");
         getMatchDetails();
-
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.");
       });
@@ -541,5 +540,44 @@ angular.module('angularPassportApp')
       submitMatchScores($scope.match);
     }
 
+    $scope.submitMatch = function() {
+      $scope.tournamentMatches.forEach(function (match) {
+        if (match.matchNumber === $scope.matchNumber) {
+          match.status = 'Review';
+          $scope.match = match;
+        }
+      });
+
+      submitMatchForReview($scope.match);
+    };
+
+    function submitMatchForReview(match) {
+      $scope.matches.push(
+        {
+          all: $scope.tournamentMatches,
+          single: match
+        }
+      );
+
+      matchDetailsService.submitMatch($scope.tournamentName, $scope.matches).success(function (response) {
+        $scope.modalInstance.dismiss('cancel');
+        alertService.displaySaveMessage("Success");
+        getMatchDetails();
+      }).error(function (status, data) {
+        alertService.displayErrorMessage("There was an error! Please try again.");
+      });
+    }
+
+    $scope.open = function () {
+      $scope.modalInstance = $modal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: 'matchSubmit.html',
+        scope:$scope
+      });
+    };
+
+    $scope.close = function () {
+      $scope.modalInstance.dismiss('cancel');
+    };
 
   });
