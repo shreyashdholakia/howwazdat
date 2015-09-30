@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('angularPassportApp')
-  .controller('tournamentCtrl', function ($scope, tournamentService, teamService, ProfileService, $location, $routeParams, $rootScope, $http, $cookieStore, alertService, $modal, uiCalendarConfig, $filter, $compile, $timeout) {
+  .controller('tournamentCtrl', function ($scope, tournamentService, teamService, ProfileService, $location, $routeParams, $rootScope, $http, $cookieStore, alertService, $modal, uiCalendarConfig, $filter, $compile, $timeout, pointService) {
 
     $scope.isProfileCreated = false;
     $scope.eventSources = [];
@@ -52,6 +52,10 @@ angular.module('angularPassportApp')
     $scope.matchType = $scope.matchTypes[0];
 
     var date = new Date();
+
+    $scope.createTeam = function () {
+      $location.path("/createTeam");
+    }
 
     $scope.events = [];
 
@@ -180,6 +184,17 @@ angular.module('angularPassportApp')
       });
 
     }
+
+    function getPointsTable() {
+      pointService.pointsTable($routeParams.tournamentName).success(function (response) {
+          $scope.pointTable = response.data.teamStats;
+      }).error(function (status, data) {
+          alertService.displayErrorMessage("There was an error! Please try again.");
+      });
+    }
+
+    // get all the details
+    getPointsTable();
     getTournamentList();
     getTeamList();
     $scope.tournamentTeams = [];
