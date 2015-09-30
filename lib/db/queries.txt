@@ -1,0 +1,1 @@
+db.getCollection('pointstables').find({'teamStats.team': 'Sixers'})
