@@ -41,27 +41,27 @@ angular.module('angularPassportApp')
           $scope.toss = $scope.tossInfo[0];
         }
 
-        if ($scope.matchDetails.homeTeamTotal.length > 0) {
-          $scope.homeTeamRuns = $scope.matchDetails.homeTeamTotal[0].total;
-          $scope.homeTeamOvers = $scope.matchDetails.homeTeamTotal[0].overs;
-          $scope.homeTeamWickets = $scope.matchDetails.homeTeamTotal[0].wickets;
-          $scope.homeTeamWides = $scope.matchDetails.homeTeamTotal[0].wides;
-          $scope.homeTeamNoBalls = $scope.matchDetails.homeTeamTotal[0].noBalls;
-          $scope.homeTeamByes = $scope.matchDetails.homeTeamTotal[0].byes;
-          $scope.homeTeamLegByes = $scope.matchDetails.homeTeamTotal[0].legByes;
-          $scope.homeTeamRunRate = $scope.homeTeamRuns / $scope.homeTeamOvers;
-        }
-
-        if ($scope.matchDetails.visitingTeamTotal.length > 0) {
-          $scope.visitingTeamRuns = $scope.matchDetails.visitingTeamTotal[0].total;
-          $scope.visitingTeamOvers = $scope.matchDetails.visitingTeamTotal[0].overs;
-          $scope.visitingTeamWickets = $scope.matchDetails.visitingTeamTotal[0].wickets;
-          $scope.visitingTeamWides = $scope.matchDetails.visitingTeamTotal[0].wides;
-          $scope.visitingTeamNoBalls = $scope.matchDetails.visitingTeamTotal[0].noBalls;
-          $scope.visitingTeamByes = $scope.matchDetails.visitingTeamTotal[0].byes;
-          $scope.visitingTeamLegByes = $scope.matchDetails.visitingTeamTotal[0].legByes;
-          $scope.visitingTeamRunRate = $scope.visitingTeamRuns / $scope.visitingTeamOvers;
-        }
+        //if ($scope.matchDetails.homeTeamTotal.length > 0) {
+        //  $scope.homeTeamRuns = $scope.matchDetails.homeTeamTotal[0].total;
+        //  $scope.homeTeamOvers = $scope.matchDetails.homeTeamTotal[0].overs;
+        //  $scope.homeTeamWickets = $scope.matchDetails.homeTeamTotal[0].wickets;
+        //  $scope.homeTeamWides = $scope.matchDetails.homeTeamTotal[0].wides;
+        //  $scope.homeTeamNoBalls = $scope.matchDetails.homeTeamTotal[0].noBalls;
+        //  $scope.homeTeamByes = $scope.matchDetails.homeTeamTotal[0].byes;
+        //  $scope.homeTeamLegByes = $scope.matchDetails.homeTeamTotal[0].legByes;
+        //  $scope.homeTeamRunRate = $scope.homeTeamRuns / $scope.homeTeamOvers;
+        //}
+        //
+        //if ($scope.matchDetails.visitingTeamTotal.length > 0) {
+        //  $scope.visitingTeamRuns = $scope.matchDetails.visitingTeamTotal[0].total;
+        //  $scope.visitingTeamOvers = $scope.matchDetails.visitingTeamTotal[0].overs;
+        //  $scope.visitingTeamWickets = $scope.matchDetails.visitingTeamTotal[0].wickets;
+        //  $scope.visitingTeamWides = $scope.matchDetails.visitingTeamTotal[0].wides;
+        //  $scope.visitingTeamNoBalls = $scope.matchDetails.visitingTeamTotal[0].noBalls;
+        //  $scope.visitingTeamByes = $scope.matchDetails.visitingTeamTotal[0].byes;
+        //  $scope.visitingTeamLegByes = $scope.matchDetails.visitingTeamTotal[0].legByes;
+        //  $scope.visitingTeamRunRate = $scope.visitingTeamRuns / $scope.visitingTeamOvers;
+        //}
         createTeamDropDown($scope.matchDetails);
         $scope.homeTeam = getTeamDetails($scope.matchDetails.homeTeam);
         $scope.visitingTeam = getVisitingTeamDetails($scope.matchDetails.visitingTeam);
