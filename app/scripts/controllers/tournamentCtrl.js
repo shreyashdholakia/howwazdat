@@ -194,9 +194,13 @@ angular.module('angularPassportApp')
     }
 
     // get all the details
-    getPointsTable();
-    getTournamentList();
-    getTeamList();
+    function getAllDetails() {
+      getPointsTable();
+      getTournamentList();
+      getTeamList();
+    }
+
+    getAllDetails();
     $scope.tournamentTeams = [];
 
     $scope.addTeamToTournament = function (team) {
@@ -235,6 +239,7 @@ angular.module('angularPassportApp')
         $scope.tournamentName = response.data.tournamentName;
         $scope.tournamentTeams = response.data.teams;
         $scope.tournamentPage = true;
+        getAllDetails();
         $scope.teamToDelete = [];
         alertService.displaySaveMessage("Success");
       }).error(function (status, data) {
@@ -453,6 +458,7 @@ angular.module('angularPassportApp')
             $scope.tournamentMatches = data.data.matches;
             $scope.addEvent($scope.tournamentMatches);
             loadGoogleMap($scope.tournamentInfo);
+            getAllDetails();
             $scope.createMatch = false;
             $('#calendar').fullCalendar('refetchEvents');
             $scope.tab = "calendar";
