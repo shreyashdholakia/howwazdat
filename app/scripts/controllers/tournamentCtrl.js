@@ -227,8 +227,6 @@ angular.module('angularPassportApp')
         });
         $scope.saveTeams($scope.tournamentTeams);
       }
-
-      // alertService.displaySaveMessage("Teams Added");
     };
 
     $scope.saveTeams = function (teams) {
