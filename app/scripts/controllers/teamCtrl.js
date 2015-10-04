@@ -10,9 +10,9 @@ angular.module('angularPassportApp')
 
 	$scope.roleSelected = $scope.roles[0];
 
-	$scope.setRole = function () {
-		console.log($scope.roleSelected);
-	};
+	//$scope.setRole = function () {
+	//	console.log($scope.roleSelected);
+	//};
 
 	$scope.confirmModal = false;
 
@@ -45,7 +45,7 @@ angular.module('angularPassportApp')
        $scope.users = response.data;
        createUserList($scope.users);
        }).error(function (status, data) {
-         alertService.displayErrorMessage("There was an error! Please try again.n");
+         alertService.displayErrorMessage("There was an error! Please try again");
        });
 	}
 
@@ -59,15 +59,13 @@ angular.module('angularPassportApp')
 	};
 
 	$scope.teamUpdate = function() {
-		console.log($scope.playerList);
-        alertService.clearLastToast();
+    alertService.clearLastToast();
 		teamService.update($scope.teamName, $scope.playerList).success(function(data) {
 			$location.path("/team/" + data.data.teamName);
 			$scope.playerList = data.data.players;
 			alertService.displaySaveMessage("Success");
 		}).error(function(status, data) {
-			console.log(status);
-			console.log(data);
+      alertService.displayErrorMessage("There was an error! Please try again");
 		});
 
 	};
@@ -127,7 +125,7 @@ angular.module('angularPassportApp')
 				$scope.teamLosses = response.data.lost;
 				$scope.tournaments = response.data.tournaments;
 			}).error(function(status, data) {
-				console.log(status);
+        alertService.displayErrorMessage("There was an error! Please try again");
 			});
 		}
 	}
@@ -147,8 +145,7 @@ angular.module('angularPassportApp')
 			$location.path("/team/" + data.data.teamName);
 			$scope.playerList = data.data.players;
 		}).error(function(status, data) {
-			console.log(status);
-			console.log(data);
+      alertService.displayErrorMessage("There was an error! Please try again");
 		});
 	};
 

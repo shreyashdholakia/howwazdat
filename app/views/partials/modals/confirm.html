@@ -3,13 +3,13 @@
 </div>
 <div class="modal-body">
   <ng-form name="myForm">
-  <ul>
-    <li ng-repeat="item in items">
-        <a ng-click="selected.item = item">{{ item }}</a>
-    </li>
-</ul>
-Selected: <b>{{ selected.item }}</b>
-</ng-form>
+    <ul>
+      <li ng-repeat="item in items">
+          <a ng-click="selected.item = item">{{ item }}</a>
+      </li>
+    </ul>
+    Selected: <b>{{ selected.item }}</b>
+  </ng-form>
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" ng-click="ok()">OK</button>

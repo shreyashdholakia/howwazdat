@@ -15,8 +15,8 @@ angular.module('angularPassportApp')
       getUserMatches: function(player) {
         return $http.post(options.api.base_url  + '/api/match', {'playerName': player})
       },
-      updateMatchTotals: function(totals, matchNumber) {
-
+      submitMatch: function(tournamentName, matches) {
+        return $http.post(options.api.base_url  + '/api/match/review/' + tournamentName, {'matches': matches});
       }
 
     };

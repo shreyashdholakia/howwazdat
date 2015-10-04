@@ -142,16 +142,16 @@
                             <th>Points</th>
                           </tr>
                           </thead>
-                          <tbody ng-repeat="team in tournamentTeams">
+                          <tbody ng-repeat="team in pointTable">
                           <tr>
                             <td>{{$index + 1}}</td>
-                            <td><a href="/team/{{team.teamName}}">{{team.teamName}}</a></td>
+                            <td><a href="/team/{{team.team}}">{{team.team}}</a></td>
+                            <td>{{team.games}}</td>
+                            <td>{{team.won || 0}}</td>
+                            <td>{{team.lost || 0}}</td>
                             <td>0</td>
                             <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
+                            <td>{{team.points|| 0}}</td>
                           </tr>
                           </tbody>
                         </table>
@@ -161,7 +161,7 @@
                       <div class="tab-pane" ng-class="{'active':isActiveTab('teams')}">
                         <br>
                         <div class="alert alert-danger" ng-hide="tournamentTeams.length > 0">
-                          <span class="glyphicon glyphicon-info-sign"></span> No Teams added. Please add teams and start playing!!
+                          <span class="fa fa-info-circle"></span> No Teams added. Please add teams and start playing!!
                         </div>
                           <form class="form">
                             <div class="form-group">
@@ -172,7 +172,12 @@
                             </div>
                             <div class="form-group">
                              <div class="col-xs-3">
-                              <button class="btn btn-default btn-primary" ng-click="addTeamToTournament(teamName)" type="submit"><i class="glyphicon glyphicon-plus"></i> Add Team</button>
+                              <button class="btn btn-default btn-primary" ng-click="addTeamToTournament(teamName)" type="submit"><i class="fa fa-plus"></i> Add Team</button>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-xs-3">
+                               <button type="button" class="btn btn-default btn-success" ng-click="createTeam()" type="submit"><i class="fa fa-plus"></i> Create Team</button>
                             </div>
                           </div>
                         </form>
@@ -184,7 +189,7 @@
                                 <th>#</th>
                                 <th>Team Name</th>
                                 <th>Captain</th>
-                                <th><i class="glyphicon glyphicon-cog"></i></th>
+                                <th><i class="fa fa-cog"></i></th>
                               </tr>
                             </thead>
                             <tbody id="items" ng-repeat="team in tournamentTeams">

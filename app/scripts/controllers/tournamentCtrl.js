@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('angularPassportApp')
-  .controller('tournamentCtrl', function ($scope, tournamentService, teamService, ProfileService, $location, $routeParams, $rootScope, $http, $cookieStore, alertService, $modal, uiCalendarConfig, $filter, $compile, $timeout) {
+  .controller('tournamentCtrl', function ($scope, tournamentService, teamService, ProfileService, $location, $routeParams, $rootScope, $http, $cookieStore, alertService, $modal, uiCalendarConfig, $filter, $compile, $timeout, pointService) {
 
     $scope.isProfileCreated = false;
     $scope.eventSources = [];
@@ -52,6 +52,10 @@ angular.module('angularPassportApp')
     $scope.matchType = $scope.matchTypes[0];
 
     var date = new Date();
+
+    $scope.createTeam = function () {
+      $location.path("/createTeam");
+    }
 
     $scope.events = [];
 
@@ -180,8 +184,23 @@ angular.module('angularPassportApp')
       });
 
     }
-    getTournamentList();
-    getTeamList();
+
+    function getPointsTable() {
+      pointService.pointsTable($routeParams.tournamentName).success(function (response) {
+          $scope.pointTable = response.data.teamStats;
+      }).error(function (status, data) {
+          alertService.displayErrorMessage("There was an error! Please try again.");
+      });
+    }
+
+    // get all the details
+    function getAllDetails() {
+      getPointsTable();
+      getTournamentList();
+      getTeamList();
+    }
+
+    getAllDetails();
     $scope.tournamentTeams = [];
 
     $scope.addTeamToTournament = function (team) {
@@ -212,8 +231,6 @@ angular.module('angularPassportApp')
         });
         $scope.saveTeams($scope.tournamentTeams);
       }
-
-      // alertService.displaySaveMessage("Teams Added");
     };
 
     $scope.saveTeams = function (teams) {
@@ -222,6 +239,7 @@ angular.module('angularPassportApp')
         $scope.tournamentName = response.data.tournamentName;
         $scope.tournamentTeams = response.data.teams;
         $scope.tournamentPage = true;
+        getAllDetails();
         $scope.teamToDelete = [];
         alertService.displaySaveMessage("Success");
       }).error(function (status, data) {
@@ -440,6 +458,7 @@ angular.module('angularPassportApp')
             $scope.tournamentMatches = data.data.matches;
             $scope.addEvent($scope.tournamentMatches);
             loadGoogleMap($scope.tournamentInfo);
+            getAllDetails();
             $scope.createMatch = false;
             $('#calendar').fullCalendar('refetchEvents');
             $scope.tab = "calendar";
