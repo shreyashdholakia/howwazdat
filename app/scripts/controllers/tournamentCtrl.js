@@ -315,7 +315,7 @@ angular.module('angularPassportApp')
         zoom: 10,
         center: myLatLng
       });
-
+      var address = "https://www.google.com/maps/place/" + info.address;
       var contentString = '<div id="gmap-content">' +
         '<div id="gmap-siteNotice">' +
         '</div>' +
@@ -324,7 +324,7 @@ angular.module('angularPassportApp')
         '<p><b>Address</b>:<br>' +
         info.address
         + '<br> <br>' +
-        '<strong><a href="http://maps.google.com/maps?saddr="' + info.address + '" title="Get Driving Directions" target="_blank">Get Directions</a></strong><br>' +
+        '<strong><a href="' + address + '" title="Get Driving Directions" target="_blank">Get Directions</a></strong><br>' +
         '</p>' +
         '<div class="clear clearfix"></div>' +
         '</div>' +

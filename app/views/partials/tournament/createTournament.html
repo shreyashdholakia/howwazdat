@@ -63,7 +63,7 @@
                         <ul class="list-group">
                           <li class="list-group-item text-right"><span class="pull-left"><strong>Tournament</strong></span> {{tournamentInfo.tournamentName}}</li>
                           <li class="list-group-item text-right"><span class="pull-left"><i class="fa fa-calendar"></i></span> {{tournamentInfo.createdDate | date:'mediumDate'}}</li>
-                          <li class="list-group-item text-right"><span class="pull-left"><i class="fa fa-map-marker"></i></span> {{tournamentInfo.address}}</li>
+                          <li class="list-group-item text-right"><span class="pull-left"><i class="fa fa-map-marker"></i></span> <a href="https://www.google.com/maps/place/{{tournamentInfo.address}}">{{tournamentInfo.address}}</a></li>
                         </ul>
                     </div>
 
