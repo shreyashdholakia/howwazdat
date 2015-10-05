@@ -321,10 +321,11 @@ angular.module('angularPassportApp')
         '</div>' +
         '<h2 id="gmap-firstHeading" class="gmap-firstHeading">' + info.tournamentName + '</h2>' +
         '<div id="gmap-bodyContent">' +
-        '<p><b>Address</b>:<br>' +
+        '<p>' +
         info.address
         + '<br> <br>' +
-        '<strong><a href="' + address + '" title="Get Driving Directions" target="_blank">Get Directions</a></strong><br>' +
+        '<strong><a href="' + address +
+        '" title="Get Driving Directions" target="_blank">Get Directions</a></strong><br>' +
         '</p>' +
         '<div class="clear clearfix"></div>' +
         '</div>' +
