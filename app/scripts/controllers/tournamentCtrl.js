@@ -169,7 +169,6 @@ angular.module('angularPassportApp')
 
       tournamentService.all().success(function (response) {
         $scope.tournamentList = response.data;
-        console.log($scope.tournamentList);
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.n");
       });
@@ -186,11 +185,13 @@ angular.module('angularPassportApp')
     }
 
     function getPointsTable() {
-      pointService.pointsTable($routeParams.tournamentName).success(function (response) {
+      if($routeParams.tournamentName) {
+        pointService.pointsTable($routeParams.tournamentName).success(function (response) {
           $scope.pointTable = response.data.teamStats;
-      }).error(function (status, data) {
+        }).error(function (status, data) {
           alertService.displayErrorMessage("There was an error! Please try again.");
-      });
+        });
+      }
     }
 
     // get all the details
