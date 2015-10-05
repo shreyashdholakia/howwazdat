@@ -17,13 +17,15 @@ angular.module('angularPassportApp')
     $scope.tournamentName = $routeParams.tournamentName;
     $scope.matchNumber = $routeParams.matchNumber;
 
-    function getMatchDetails() {
+    function getMatchDetails(status) {
       matchDetailsService.match($scope.tournamentName, $scope.matchNumber).success(function (response) {
         $scope.matchDetails = response.data;
-        createTeamDropDown($scope.matchDetails);
-        createMatchResults($scope.matchDetails);
-        $scope.homeTeam = getTeamDetails($scope.matchDetails.homeTeam);
-        $scope.visitingTeam = getVisitingTeamDetails($scope.matchDetails.visitingTeam);
+        if(status === 'new') {
+          createTeamDropDown($scope.matchDetails);
+          createMatchResults();
+          $scope.homeTeam = getTeamDetails($scope.matchDetails.homeTeam);
+          $scope.visitingTeam = getVisitingTeamDetails($scope.matchDetails.visitingTeam);
+        }
         if ($scope.matchDetails.homeTeamBatting) {
           $scope.homeTeamBattingDetails = $scope.matchDetails.homeTeamBatting[0].battingScores;
         }
@@ -79,14 +81,13 @@ angular.module('angularPassportApp')
       });
     }
 
-    getMatchDetails();
+    getMatchDetails('new');
     getTournamentDetails();
     $scope.teams = [];
     $scope.matchResults = [];
 
-    function createMatchResults(matchDetails) {
-      $scope.matchResults.push({name: matchDetails.homeTeam});
-      $scope.matchResults.push({name: matchDetails.visitingTeam});
+    function createMatchResults() {
+      $scope.matchResults.push({name: 'Completed'});
       $scope.matchResults.push({name: 'Tie'});
       $scope.matchResults.push({name: 'Washed Out'});
       $scope.matchResults.push({name: 'Abandoned'});
@@ -95,11 +96,7 @@ angular.module('angularPassportApp')
     function createTeamDropDown(matchDetails) {
       $scope.teams.push({name: matchDetails.homeTeam});
       $scope.teams.push({name: matchDetails.visitingTeam});
-
     }
-
-
-
     $scope.manOfMatch = [];
 
     function createManOfMatch(players) {
@@ -459,6 +456,7 @@ angular.module('angularPassportApp')
       $scope.tournamentMatches.forEach(function (match) {
         if (match.matchNumber === $scope.matchNumber) {
           match.toss = $scope.toss.name;
+          match.result = $scope.result.name;
           match.winningTeam = $scope.winningTeam.name;
           match.losingTeam = getLosingTeam($scope.winningTeam.name);
           match.tossDecision = $scope.decision.name;
@@ -497,7 +495,7 @@ angular.module('angularPassportApp')
 
       matchDetailsService.updateMatch($scope.tournamentName, $scope.matches).success(function (response) {
         alertService.displaySaveMessage("Success");
-        getMatchDetails();
+        getMatchDetails('update');
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.");
       });
@@ -575,7 +573,7 @@ angular.module('angularPassportApp')
       matchDetailsService.submitMatch($scope.tournamentName, $scope.matches).success(function (response) {
         $scope.modalInstance.dismiss('cancel');
         alertService.displaySaveMessage("Success");
-        getMatchDetails();
+        getMatchDetails('update');
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.");
       });

@@ -32,7 +32,7 @@
   <div class="row" ng-hide="editMatchStatus">
     <form class="form" id="matchStatusForm" novalidate name="matchStatusForm">
       <div class="form-group">
-        <div class="col-xs-3">
+        <div class="col-xs-2">
           <label for="toss"><h4><i class="fa fa-dot-circle-o"></i> Toss*</h4></label>
 
           <div>
@@ -43,7 +43,7 @@
         </div>
       </div>
       <div class="form-group">
-        <div class="col-xs-3">
+        <div class="col-xs-2">
           <label for="decision"><h4><i class="fa fa-star-o"></i> Decision*</h4></label>
 
           <div>
@@ -54,18 +54,28 @@
         </div>
       </div>
       <div class="form-group">
-        <div class="col-xs-3">
-          <label for="winner"><h4><i class="fa fa-star-o"></i> Winner*</h4></label>
+        <div class="col-xs-2">
+          <label for="winner"><h4><i class="fa fa-star-o"></i> Result*</h4></label>
 
           <div>
-            <select class="form-control" ng-model="winningTeam" ng-change="setWinningTeam()"
+            <select class="form-control" ng-model="result" ng-change="setWinningTeam()"
                     ng-options="team.name for team in matchResults" required>
             </select>
           </div>
         </div>
       </div>
       <div class="form-group">
-        <div class="col-xs-3">
+        <div class="col-xs-2">
+          <label for="winner"><h4><i class="fa fa-star-o"></i> Winner*</h4></label>
+          <div>
+            <select class="form-control" ng-model="winningTeam" ng-change="setWinningTeam()"
+                    ng-options="team.name for team in teams" required>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-2">
           <label for="last_name"><h4>Man Of The Match*</h4></label>
           <input type="text" class="form-control" name="playerName" ng-model="mom" id="mom"
                  placeholder="Man of the match" title="home team details"
@@ -74,9 +84,10 @@
         </div>
       </div>
       <div class="form-group">
-        <div class="col-xs-12">
+        <div class="col-xs-2">
+          <label for="last_name" class="text-center"><h4><i class="fa fa-floppy-o"></i></h4></label>
           <br>
-          <button class="btn btn-default btn-primary pull-right" ng-click="update()" type="submit"
+          <button class="btn btn-default btn-primary" ng-click="update()" type="submit"
                   ng-disabled="matchStatusForm.$invalid"><i class="fa fa-check"></i> Update
           </button>
         </div>
