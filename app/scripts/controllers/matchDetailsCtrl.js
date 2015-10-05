@@ -20,7 +20,10 @@ angular.module('angularPassportApp')
     function getMatchDetails() {
       matchDetailsService.match($scope.tournamentName, $scope.matchNumber).success(function (response) {
         $scope.matchDetails = response.data;
-
+        createTeamDropDown($scope.matchDetails);
+        createMatchResults($scope.matchDetails);
+        $scope.homeTeam = getTeamDetails($scope.matchDetails.homeTeam);
+        $scope.visitingTeam = getVisitingTeamDetails($scope.matchDetails.visitingTeam);
         if ($scope.matchDetails.homeTeamBatting) {
           $scope.homeTeamBattingDetails = $scope.matchDetails.homeTeamBatting[0].battingScores;
         }
@@ -53,7 +56,6 @@ angular.module('angularPassportApp')
         }
 
         if ($scope.matchDetails.visitingTeamTotal.length > 0) {
-          console.log("total");
           $scope.visitingTeamRuns = $scope.matchDetails.visitingTeamTotal[0].total;
           $scope.visitingTeamOvers = $scope.matchDetails.visitingTeamTotal[0].overs;
           $scope.visitingTeamWickets = $scope.matchDetails.visitingTeamTotal[0].wickets;
@@ -63,9 +65,7 @@ angular.module('angularPassportApp')
           $scope.visitingTeamLegByes = $scope.matchDetails.visitingTeamTotal[0].legByes;
           $scope.visitingTeamRunRate = $scope.visitingTeamRuns / $scope.visitingTeamOvers;
         }
-        createTeamDropDown($scope.matchDetails);
-        $scope.homeTeam = getTeamDetails($scope.matchDetails.homeTeam);
-        $scope.visitingTeam = getVisitingTeamDetails($scope.matchDetails.visitingTeam);
+
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.");
       });
@@ -82,11 +82,23 @@ angular.module('angularPassportApp')
     getMatchDetails();
     getTournamentDetails();
     $scope.teams = [];
+    $scope.matchResults = [];
+
+    function createMatchResults(matchDetails) {
+      $scope.matchResults.push({name: matchDetails.homeTeam});
+      $scope.matchResults.push({name: matchDetails.visitingTeam});
+      $scope.matchResults.push({name: 'Tie'});
+      $scope.matchResults.push({name: 'Washed Out'});
+      $scope.matchResults.push({name: 'Abandoned'});
+    }
 
     function createTeamDropDown(matchDetails) {
       $scope.teams.push({name: matchDetails.homeTeam});
       $scope.teams.push({name: matchDetails.visitingTeam});
+
     }
+
+
 
     $scope.manOfMatch = [];
 
