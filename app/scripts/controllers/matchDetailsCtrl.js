@@ -494,19 +494,12 @@ angular.module('angularPassportApp')
     };
 
     function getScoreCardUpdated(previousTeam, previousResult, newTeam, result) {
-      console.log(previousResult + "here" +  previousTeam)
-      if (previousTeam && previousResult) {
-        if(previousResult === result || result === 'Tie' || result === 'Abandoned' || result === 'Washed Out') {
-          console.log("result");
-          return 'notChanged';
-        } else if (previousTeam === newTeam) {
-            console.log("teams");
-            return 'notChanged';
-          } else {
-          return 'changed';
-        }
+      console.log(previousResult + "here" +  previousTeam);
+      if(!previousResult) {
+        return 'new';
+      } else if(previousResult === result){
+        return 'unchanged';
       }
-      return 'new';
     }
 
     function submitMatchScores(match) {
