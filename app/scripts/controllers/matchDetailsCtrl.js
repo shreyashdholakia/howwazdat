@@ -471,8 +471,7 @@ angular.module('angularPassportApp')
       if($scope.result.name != 'Completed') {
         $scope.winningTeam = [{name: $scope.matchDetails.homeTeam}];
       }
-      console.log(getWinningTeam($scope.result.name));
-      console.log(getLosingTeam($scope.result.name, $scope.winningTeam.name));
+
       $scope.tournamentMatches.forEach(function (match) {
         if (match.matchNumber === $scope.matchNumber) {
           match.toss = $scope.toss.name;
@@ -489,15 +488,20 @@ angular.module('angularPassportApp')
         }
       });
       console.log(getScoreCardUpdated($scope.matchDetails.winningTeam, $scope.matchDetails.result, $scope.winningTeam.name, $scope.result.name));
-      submitMatchScores($scope.match);
+      //submitMatchScores($scope.match);
 
     };
 
     function getScoreCardUpdated(previousTeam, previousResult, newTeam, result) {
-      console.log(previousResult + "here" +  previousTeam);
       if(!previousResult) {
         return 'new';
-      } else if(previousResult === result){
+      } else if(previousResult === result && (result === 'Tie' || result === 'Washed Out' || result === 'Abandoned')){
+        return 'unchanged';
+      } else if ((previousResult === 'Tie' || previousResult === 'Washed Out' || previousResult === 'Abandoned') && (result === 'Tie' || result === 'Washed Out' || result === 'Abandoned')) {
+        return 'unchanged';
+      } else if((previousResult === 'Tie' || previousResult === 'Washed Out' || previousResult === 'Abandoned') && (result === 'Completed')) {
+        return 'changed';
+      } else if (previousResult === 'Completed' && result === 'Completed') {
         return 'unchanged';
       }
     }
