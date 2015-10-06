@@ -453,6 +453,11 @@ angular.module('angularPassportApp')
     $scope.visitingTeamScoreDetails = [];
 
     $scope.update = function () { // update the game info
+
+      if($scope.result.name != 'Completed') {
+        $scope.winningTeam = [{name: $scope.matchDetails.homeTeam}];
+      }
+
       $scope.tournamentMatches.forEach(function (match) {
         if (match.matchNumber === $scope.matchNumber) {
           match.toss = $scope.toss.name;

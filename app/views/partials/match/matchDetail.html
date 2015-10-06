@@ -69,7 +69,7 @@
           <label for="winner"><h4><i class="fa fa-star-o"></i> Winner*</h4></label>
           <div>
             <select class="form-control" ng-model="winningTeam" ng-change="setWinningTeam()"
-                    ng-options="team.name for team in teams" required>
+                    ng-options="team.name for team in teams" ng-disabled="result.name == 'Tie' || result.name == 'Abandoned' || result.name == 'Washed Out'">
             </select>
           </div>
         </div>
