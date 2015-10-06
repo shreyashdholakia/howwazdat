@@ -441,12 +441,26 @@ angular.module('angularPassportApp')
       submitMatchScores($scope.match);
     }
 
-    function getLosingTeam(team) {
+    function getLosingTeam(result, team) {
+
+      if(result === 'Tie' || result === 'Abandoned' || result === 'Washed Out'){
+        return null;
+      }
+
       if (team === $scope.matchDetails.homeTeam) {
         return $scope.matchDetails.visitingTeam;
       } else {
         return $scope.matchDetails.homeTeam;
       }
+    }
+
+    function getWinningTeam(result) {
+      if(result === 'Tie' || result === 'Abandoned' || result === 'Washed Out'){
+        return null;
+      } else {
+        return $scope.winningTeam.name;
+      }
+
     }
 
     $scope.matches = [];
@@ -457,32 +471,38 @@ angular.module('angularPassportApp')
       if($scope.result.name != 'Completed') {
         $scope.winningTeam = [{name: $scope.matchDetails.homeTeam}];
       }
-
+      console.log(getWinningTeam($scope.result.name));
+      console.log(getLosingTeam($scope.result.name, $scope.winningTeam.name));
       $scope.tournamentMatches.forEach(function (match) {
         if (match.matchNumber === $scope.matchNumber) {
           match.toss = $scope.toss.name;
           match.result = $scope.result.name;
-          match.winningTeam = $scope.winningTeam.name;
-          match.losingTeam = getLosingTeam($scope.winningTeam.name);
+          match.winningTeam = getWinningTeam($scope.result.name);
+          match.losingTeam = getLosingTeam($scope.result.name, $scope.winningTeam.name);
           match.tossDecision = $scope.decision.name;
           match.mom = $scope.mom.name;
           match.status = 'Submitted';
           match.homeTeamTotal = $scope.homeTeamScoreDetails;
           match.visitingTeamTotal = $scope.visitingTeamScoreDetails;
-          match.scoreCard = getScoreCardUpdated($scope.matchDetails.winningTeam, $scope.winningTeam.name);
+          match.scoreCard = getScoreCardUpdated($scope.matchDetails.winningTeam, $scope.matchDetails.result, $scope.winningTeam.name, $scope.result.name);
           $scope.match = match;
         }
       });
-
+      console.log(getScoreCardUpdated($scope.matchDetails.winningTeam, $scope.matchDetails.result, $scope.winningTeam.name, $scope.result.name));
       submitMatchScores($scope.match);
 
     };
 
-    function getScoreCardUpdated(previousTeam, newTeam) {
-      if (previousTeam) {
-        if (previousTeam === newTeam) {
+    function getScoreCardUpdated(previousTeam, previousResult, newTeam, result) {
+      console.log(previousResult + "here" +  previousTeam)
+      if (previousTeam && previousResult) {
+        if(previousResult === result || result === 'Tie' || result === 'Abandoned' || result === 'Washed Out') {
+          console.log("result");
           return 'notChanged';
-        } else {
+        } else if (previousTeam === newTeam) {
+            console.log("teams");
+            return 'notChanged';
+          } else {
           return 'changed';
         }
       }
