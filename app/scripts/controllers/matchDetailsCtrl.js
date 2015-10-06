@@ -488,7 +488,7 @@ angular.module('angularPassportApp')
         }
       });
       console.log(getScoreCardUpdated($scope.matchDetails.winningTeam, $scope.matchDetails.result, $scope.winningTeam.name, $scope.result.name));
-      //submitMatchScores($scope.match);
+      submitMatchScores($scope.match);
 
     };
 
@@ -503,6 +503,8 @@ angular.module('angularPassportApp')
         return 'changed';
       } else if (previousResult === 'Completed' && result === 'Completed') {
         return 'unchanged';
+      } else if((result === 'Tie' || result === 'Washed Out' || result === 'Abandoned') && (previousResult === 'Completed')) {
+        return 'changed';
       }
     }
 
