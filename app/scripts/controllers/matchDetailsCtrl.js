@@ -481,6 +481,7 @@ angular.module('angularPassportApp')
           match.tossDecision = $scope.decision.name;
           match.mom = $scope.mom.name;
           match.status = 'Submitted';
+          match.previousResult = $scope.matchDetails.result;
           match.homeTeamTotal = $scope.homeTeamScoreDetails;
           match.visitingTeamTotal = $scope.visitingTeamScoreDetails;
           match.scoreCard = getScoreCardUpdated($scope.matchDetails.winningTeam, $scope.matchDetails.result, $scope.winningTeam.name, $scope.result.name);
