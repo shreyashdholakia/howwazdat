@@ -11,8 +11,8 @@ angular.module('angularPassportApp')
 
     $scope.currentPage = 0;
     $scope.pageSize = 10;
-    $scope.numberOfPages=function(){
-     return Math.ceil($scope.tournamentMatches.length/$scope.pageSize);
+    $scope.numberOfPages = function () {
+      return Math.ceil($scope.tournamentMatches.length / $scope.pageSize);
     }
 
     $scope.sortType = 'matchDate';
@@ -111,7 +111,7 @@ angular.module('angularPassportApp')
         $scope.profileExists = response.exists;
         $scope.user = response.data;
       }).error(function (status, data) {
-         alertService.displayErrorMessage("There was an error! Please try again.");
+        alertService.displayErrorMessage("There was an error! Please try again.");
       });
 
     };
@@ -129,7 +129,7 @@ angular.module('angularPassportApp')
         ProfileService.update(user).success(function (data) {
           $location.path("/profile");
         }).error(function (status, data) {
-           alertService.displayErrorMessage("There was an error! Please try again.");
+          alertService.displayErrorMessage("There was an error! Please try again.");
         });
       } else {
         $scope.create(user);
@@ -149,9 +149,7 @@ angular.module('angularPassportApp')
               $scope.tournamentMatches = response.data.matches;
               $scope.addEvent($scope.tournamentMatches);
             }
-
             $scope.tournamentInfo = response.data;
-            //$('#calendar').fullCalendar('refetchEvents');
             loadGoogleMap($scope.tournamentInfo);
           } else {
             $location.path("/createTournament");
@@ -161,19 +159,15 @@ angular.module('angularPassportApp')
         });
       } else {
         $location.path("/createTournament");
-
       }
     };
 
     function getTournamentList() {
-
       tournamentService.all().success(function (response) {
         $scope.tournamentList = response.data;
-        console.log($scope.tournamentList);
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.n");
       });
-
     }
 
     function getTeamList() {
@@ -182,15 +176,16 @@ angular.module('angularPassportApp')
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.");
       });
-
     }
 
     function getPointsTable() {
-      pointService.pointsTable($routeParams.tournamentName).success(function (response) {
+      if ($routeParams.tournamentName) {
+        pointService.pointsTable($routeParams.tournamentName).success(function (response) {
           $scope.pointTable = response.data.teamStats;
-      }).error(function (status, data) {
+        }).error(function (status, data) {
           alertService.displayErrorMessage("There was an error! Please try again.");
-      });
+        });
+      }
     }
 
     // get all the details
@@ -270,7 +265,7 @@ angular.module('angularPassportApp')
         $scope.tournamentInfo = data.data;
         loadGoogleMap($scope.tournamentInfo);
       }).error(function (status, data) {
-         alertService.displayErrorMessage("There was an error! Please try again.");
+        alertService.displayErrorMessage("There was an error! Please try again.");
       });
     };
 
@@ -320,16 +315,17 @@ angular.module('angularPassportApp')
         zoom: 10,
         center: myLatLng
       });
-
+      var address = "https://www.google.com/maps/place/" + info.address;
       var contentString = '<div id="gmap-content">' +
         '<div id="gmap-siteNotice">' +
         '</div>' +
         '<h2 id="gmap-firstHeading" class="gmap-firstHeading">' + info.tournamentName + '</h2>' +
         '<div id="gmap-bodyContent">' +
-        '<p><b>Address</b>:<br>' +
+        '<p>' +
         info.address
         + '<br> <br>' +
-        '<strong><a href="http://maps.google.com/maps?saddr="' + info.address + '" title="Get Driving Directions" target="_blank">Get Directions</a></strong><br>' +
+        '<strong><a href="' + address +
+        '" title="Get Driving Directions" target="_blank">Get Directions</a></strong><br>' +
         '</p>' +
         '<div class="clear clearfix"></div>' +
         '</div>' +
@@ -434,21 +430,23 @@ angular.module('angularPassportApp')
           });
 
           $scope.match.push({
-                      homeTeam: $scope.homeTeam.teamName,
-                      visitingTeam: $scope.visitingTeam.teamName,
-                      matchDate: $scope.matchDate,
-                      startTime: $scope.matchStartTime,
-                      endTime: $scope.matchEndTime,
-                      umpire: $scope.umpireType.name,
-                      matchType: $scope.matchType.type,
-                      roundType: $scope.roundType.type,
-                      matchNumber: matchNumber
-                    });
+            homeTeam: $scope.homeTeam.teamName,
+            visitingTeam: $scope.visitingTeam.teamName,
+            matchDate: $scope.matchDate,
+            startTime: $scope.matchStartTime,
+            endTime: $scope.matchEndTime,
+            umpire: $scope.umpireType.name,
+            matchType: $scope.matchType.type,
+            roundType: $scope.roundType.type,
+            matchNumber: matchNumber
+          });
 
-           $scope.matches.push(
-              {all:$scope.tournamentMatches,
-               single: $scope.match}
-           );
+          $scope.matches.push(
+            {
+              all: $scope.tournamentMatches,
+              single: $scope.match
+            }
+          );
 
           tournamentService.createMatch($scope.tournamentInfo.tournamentName, $scope.matches).success(function (data) {
             $location.path("/tournament/" + data.data.tournamentName);
@@ -463,7 +461,7 @@ angular.module('angularPassportApp')
             $('#calendar').fullCalendar('refetchEvents');
             $scope.tab = "calendar";
           }).error(function (status, data) {
-             alertService.displayErrorMessage("There was an error! Please try again.");
+            alertService.displayErrorMessage("There was an error! Please try again.");
           });
         }
       } else {
@@ -473,12 +471,12 @@ angular.module('angularPassportApp')
   });
 
 
-  angular.module('angularPassportApp')
-  .filter('startFrom', function() {
-      return function(input, start) {
-          start = +start; //parse to int
-          return input.slice(start);
-      }
+angular.module('angularPassportApp')
+  .filter('startFrom', function () {
+    return function (input, start) {
+      start = +start; //parse to int
+      return input.slice(start);
+    }
   });
 
 

@@ -17,10 +17,15 @@ angular.module('angularPassportApp')
     $scope.tournamentName = $routeParams.tournamentName;
     $scope.matchNumber = $routeParams.matchNumber;
 
-    function getMatchDetails() {
+    function getMatchDetails(status) {
       matchDetailsService.match($scope.tournamentName, $scope.matchNumber).success(function (response) {
         $scope.matchDetails = response.data;
-
+        if(status === 'new') {
+          createTeamDropDown($scope.matchDetails);
+          createMatchResults();
+          $scope.homeTeam = getTeamDetails($scope.matchDetails.homeTeam);
+          $scope.visitingTeam = getVisitingTeamDetails($scope.matchDetails.visitingTeam);
+        }
         if ($scope.matchDetails.homeTeamBatting) {
           $scope.homeTeamBattingDetails = $scope.matchDetails.homeTeamBatting[0].battingScores;
         }
@@ -41,30 +46,28 @@ angular.module('angularPassportApp')
           $scope.toss = $scope.tossInfo[0];
         }
 
-        //if ($scope.matchDetails.homeTeamTotal.length > 0) {
-        //  $scope.homeTeamRuns = $scope.matchDetails.homeTeamTotal[0].total;
-        //  $scope.homeTeamOvers = $scope.matchDetails.homeTeamTotal[0].overs;
-        //  $scope.homeTeamWickets = $scope.matchDetails.homeTeamTotal[0].wickets;
-        //  $scope.homeTeamWides = $scope.matchDetails.homeTeamTotal[0].wides;
-        //  $scope.homeTeamNoBalls = $scope.matchDetails.homeTeamTotal[0].noBalls;
-        //  $scope.homeTeamByes = $scope.matchDetails.homeTeamTotal[0].byes;
-        //  $scope.homeTeamLegByes = $scope.matchDetails.homeTeamTotal[0].legByes;
-        //  $scope.homeTeamRunRate = $scope.homeTeamRuns / $scope.homeTeamOvers;
-        //}
-        //
-        //if ($scope.matchDetails.visitingTeamTotal.length > 0) {
-        //  $scope.visitingTeamRuns = $scope.matchDetails.visitingTeamTotal[0].total;
-        //  $scope.visitingTeamOvers = $scope.matchDetails.visitingTeamTotal[0].overs;
-        //  $scope.visitingTeamWickets = $scope.matchDetails.visitingTeamTotal[0].wickets;
-        //  $scope.visitingTeamWides = $scope.matchDetails.visitingTeamTotal[0].wides;
-        //  $scope.visitingTeamNoBalls = $scope.matchDetails.visitingTeamTotal[0].noBalls;
-        //  $scope.visitingTeamByes = $scope.matchDetails.visitingTeamTotal[0].byes;
-        //  $scope.visitingTeamLegByes = $scope.matchDetails.visitingTeamTotal[0].legByes;
-        //  $scope.visitingTeamRunRate = $scope.visitingTeamRuns / $scope.visitingTeamOvers;
-        //}
-        createTeamDropDown($scope.matchDetails);
-        $scope.homeTeam = getTeamDetails($scope.matchDetails.homeTeam);
-        $scope.visitingTeam = getVisitingTeamDetails($scope.matchDetails.visitingTeam);
+        if ($scope.matchDetails.homeTeamTotal.length > 0) {
+          $scope.homeTeamRuns = $scope.matchDetails.homeTeamTotal[0].total;
+          $scope.homeTeamOvers = $scope.matchDetails.homeTeamTotal[0].overs;
+          $scope.homeTeamWickets = $scope.matchDetails.homeTeamTotal[0].wickets;
+          $scope.homeTeamWides = $scope.matchDetails.homeTeamTotal[0].wides;
+          $scope.homeTeamNoBalls = $scope.matchDetails.homeTeamTotal[0].noBalls;
+          $scope.homeTeamByes = $scope.matchDetails.homeTeamTotal[0].byes;
+          $scope.homeTeamLegByes = $scope.matchDetails.homeTeamTotal[0].legByes;
+          $scope.homeTeamRunRate = $scope.homeTeamRuns / $scope.homeTeamOvers;
+        }
+
+        if ($scope.matchDetails.visitingTeamTotal.length > 0) {
+          $scope.visitingTeamRuns = $scope.matchDetails.visitingTeamTotal[0].total;
+          $scope.visitingTeamOvers = $scope.matchDetails.visitingTeamTotal[0].overs;
+          $scope.visitingTeamWickets = $scope.matchDetails.visitingTeamTotal[0].wickets;
+          $scope.visitingTeamWides = $scope.matchDetails.visitingTeamTotal[0].wides;
+          $scope.visitingTeamNoBalls = $scope.matchDetails.visitingTeamTotal[0].noBalls;
+          $scope.visitingTeamByes = $scope.matchDetails.visitingTeamTotal[0].byes;
+          $scope.visitingTeamLegByes = $scope.matchDetails.visitingTeamTotal[0].legByes;
+          $scope.visitingTeamRunRate = $scope.visitingTeamRuns / $scope.visitingTeamOvers;
+        }
+
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.");
       });
@@ -78,15 +81,22 @@ angular.module('angularPassportApp')
       });
     }
 
-    getMatchDetails();
+    getMatchDetails('new');
     getTournamentDetails();
     $scope.teams = [];
+    $scope.matchResults = [];
+
+    function createMatchResults() {
+      $scope.matchResults.push({name: 'Completed'});
+      $scope.matchResults.push({name: 'Tie'});
+      $scope.matchResults.push({name: 'Washed Out'});
+      $scope.matchResults.push({name: 'Abandoned'});
+    }
 
     function createTeamDropDown(matchDetails) {
       $scope.teams.push({name: matchDetails.homeTeam});
       $scope.teams.push({name: matchDetails.visitingTeam});
     }
-
     $scope.manOfMatch = [];
 
     function createManOfMatch(players) {
@@ -431,7 +441,12 @@ angular.module('angularPassportApp')
       submitMatchScores($scope.match);
     }
 
-    function getLosingTeam(team) {
+    function getLosingTeam(result, team) {
+
+      if(result === 'Tie' || result === 'Abandoned' || result === 'Washed Out'){
+        return null;
+      }
+
       if (team === $scope.matchDetails.homeTeam) {
         return $scope.matchDetails.visitingTeam;
       } else {
@@ -439,38 +454,59 @@ angular.module('angularPassportApp')
       }
     }
 
+    function getWinningTeam(result) {
+      if(result === 'Tie' || result === 'Abandoned' || result === 'Washed Out'){
+        return null;
+      } else {
+        return $scope.winningTeam.name;
+      }
+
+    }
+
     $scope.matches = [];
     $scope.visitingTeamScoreDetails = [];
 
     $scope.update = function () { // update the game info
+
+      if($scope.result.name != 'Completed') {
+        $scope.winningTeam = [{name: $scope.matchDetails.homeTeam}];
+      }
+
       $scope.tournamentMatches.forEach(function (match) {
         if (match.matchNumber === $scope.matchNumber) {
           match.toss = $scope.toss.name;
-          match.winningTeam = $scope.winningTeam.name;
-          match.losingTeam = getLosingTeam($scope.winningTeam.name);
+          match.result = $scope.result.name;
+          match.winningTeam = getWinningTeam($scope.result.name);
+          match.losingTeam = getLosingTeam($scope.result.name, $scope.winningTeam.name);
           match.tossDecision = $scope.decision.name;
           match.mom = $scope.mom.name;
           match.status = 'Submitted';
+          match.previousResult = $scope.matchDetails.result;
           match.homeTeamTotal = $scope.homeTeamScoreDetails;
           match.visitingTeamTotal = $scope.visitingTeamScoreDetails;
-          match.scoreCard = getScoreCardUpdated($scope.matchDetails.winningTeam, $scope.winningTeam.name);
+          match.scoreCard = getScoreCardUpdated($scope.matchDetails.winningTeam, $scope.matchDetails.result, $scope.winningTeam.name, $scope.result.name);
           $scope.match = match;
         }
       });
-
+      console.log(getScoreCardUpdated($scope.matchDetails.winningTeam, $scope.matchDetails.result, $scope.winningTeam.name, $scope.result.name));
       submitMatchScores($scope.match);
 
     };
 
-    function getScoreCardUpdated(previousTeam, newTeam) {
-      if (previousTeam) {
-        if (previousTeam === newTeam) {
-          return 'notChanged';
-        } else {
-          return 'changed';
-        }
+    function getScoreCardUpdated(previousTeam, previousResult, newTeam, result) {
+      if(!previousResult) {
+        return 'new';
+      } else if(previousResult === result && (result === 'Tie' || result === 'Washed Out' || result === 'Abandoned')){
+        return 'unchanged';
+      } else if ((previousResult === 'Tie' || previousResult === 'Washed Out' || previousResult === 'Abandoned') && (result === 'Tie' || result === 'Washed Out' || result === 'Abandoned')) {
+        return 'unchanged';
+      } else if((previousResult === 'Tie' || previousResult === 'Washed Out' || previousResult === 'Abandoned') && (result === 'Completed')) {
+        return 'changed';
+      } else if (previousResult === 'Completed' && result === 'Completed') {
+        return 'unchanged';
+      } else if((result === 'Tie' || result === 'Washed Out' || result === 'Abandoned') && (previousResult === 'Completed')) {
+        return 'changed';
       }
-      return 'new';
     }
 
     function submitMatchScores(match) {
@@ -484,7 +520,7 @@ angular.module('angularPassportApp')
 
       matchDetailsService.updateMatch($scope.tournamentName, $scope.matches).success(function (response) {
         alertService.displaySaveMessage("Success");
-        getMatchDetails();
+        getMatchDetails('update');
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.");
       });
@@ -526,6 +562,7 @@ angular.module('angularPassportApp')
         $scope.tournamentMatches.forEach(function (match) {
           if (match.matchNumber === $scope.matchNumber) {
             match.homeTeamTotal = $scope.homeTeamScoreDetails;
+            match.scoreCard = 'unchanged';
             $scope.match = match;
           }
         });
@@ -533,6 +570,7 @@ angular.module('angularPassportApp')
         $scope.tournamentMatches.forEach(function (match) {
           if (match.matchNumber === $scope.matchNumber) {
             match.visitingTeamTotal = $scope.visitingTeamScoreDetails;
+            match.scoreCard = 'unchanged';
             $scope.match = match;
           }
         });
@@ -562,7 +600,7 @@ angular.module('angularPassportApp')
       matchDetailsService.submitMatch($scope.tournamentName, $scope.matches).success(function (response) {
         $scope.modalInstance.dismiss('cancel');
         alertService.displaySaveMessage("Success");
-        getMatchDetails();
+        getMatchDetails('update');
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.");
       });
