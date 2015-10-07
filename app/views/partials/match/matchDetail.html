@@ -15,10 +15,10 @@
         class=" text-info"><u>{{matchDetails.toss}}</u></strong> won the toss and elected to <strong
         ng-show="matchDetails.tossDecision == 'Bowling'">field</strong> <strong
         ng-show="matchDetails.tossDecision == 'Batting'">bat</strong></em> <i class="fa fa-pencil"
-                                                                              ng-click="editMatchStatus = !editMatchStatus"></i></span><br>
+                                                                              ng-click="editMatchStatus = !editMatchStatus"></i></span>
       <span ng-show="matchDetails.result == 'Completed'"><br><em><strong class=" text-info"><u>{{matchDetails.winningTeam}}</u></strong>
       won by 125 runs </em> <i class="fa fa-pencil" ng-click="editMatchStatus = !editMatchStatus"></i></span>
-      <span ng-show="matchDetails.result != 'Completed'"><em><strong class=" text-info"><u>The game was a {{matchDetails.result}}</u></strong>
+      <span ng-show="matchDetails.result != 'Completed'"><br><em><strong class=" text-info"><u>The game was a {{matchDetails.result}}</u></strong>
         </em> <i class="fa fa-pencil" ng-click="editMatchStatus = !editMatchStatus"></i></span>
       <br><span ng-show="matchDetails.status == 'Submitted'"><em><strong
       class="text-info"><u>{{matchDetails.mom}}</u></strong> is the Man of the match </em> <i class="fa fa-pencil"
