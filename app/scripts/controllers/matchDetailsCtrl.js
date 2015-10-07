@@ -562,6 +562,7 @@ angular.module('angularPassportApp')
         $scope.tournamentMatches.forEach(function (match) {
           if (match.matchNumber === $scope.matchNumber) {
             match.homeTeamTotal = $scope.homeTeamScoreDetails;
+            match.scoreCard = 'unchanged';
             $scope.match = match;
           }
         });
@@ -569,6 +570,7 @@ angular.module('angularPassportApp')
         $scope.tournamentMatches.forEach(function (match) {
           if (match.matchNumber === $scope.matchNumber) {
             match.visitingTeamTotal = $scope.visitingTeamScoreDetails;
+            match.scoreCard = 'unchanged';
             $scope.match = match;
           }
         });
