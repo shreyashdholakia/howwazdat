@@ -55,16 +55,6 @@ angular.module('angularPassportApp')
           $scope.homeTeamByes = $scope.matchDetails.homeTeamTotal[0].byes;
           $scope.homeTeamLegByes = $scope.matchDetails.homeTeamTotal[0].legByes;
           $scope.homeTeamRunRate = $scope.homeTeamRuns / $scope.homeTeamOvers;
-
-          $scope.homeTeamScoreDetails.push({
-            total: $scope.homeTeamRuns || 0,
-            overs: $scope.homeTeamOvers || 0,
-            wickets: $scope.homeTeamWickets || 0,
-            wides: $scope.homeTeamWides || 0,
-            noBalls: $scope.homeTeamNoBalls || 0,
-            byes: $scope.homeTeamByes || 0,
-            legByes: $scope.homeTeamLegByes || 0
-          });
         }
 
         if ($scope.matchDetails.visitingTeamTotal.length > 0) {
@@ -570,6 +560,8 @@ angular.module('angularPassportApp')
         byes: $scope.homeTeamByes || 0,
         legByes: $scope.homeTeamLegByes || 0
       });
+
+
       addTeamTotalScore($scope.homeTeamScoreDetails, 'home');
 
     };
@@ -593,6 +585,7 @@ angular.module('angularPassportApp')
           if (match.matchNumber === $scope.matchNumber) {
             match.homeTeamTotal = $scope.homeTeamScoreDetails;
             match.scoreCard = 'unchanged';
+            match.whichTeamTotal = team;
             $scope.match = match;
           }
         });
@@ -601,6 +594,7 @@ angular.module('angularPassportApp')
           if (match.matchNumber === $scope.matchNumber) {
             match.visitingTeamTotal = $scope.visitingTeamScoreDetails;
             match.scoreCard = 'unchanged';
+            match.whichTeamTotal = team;
             $scope.match = match;
           }
         });
