@@ -46,7 +46,7 @@ angular.module('angularPassportApp')
           $scope.toss = $scope.tossInfo[0];
         }
 
-        if ($scope.matchDetails.homeTeamTotal.length > 0) {
+        if ($scope.matchDetails.homeTeamTotal && $scope.matchDetails.homeTeamTotal.length > 0) {
           $scope.homeTeamRuns = $scope.matchDetails.homeTeamTotal[0].total;
           $scope.homeTeamOvers = $scope.matchDetails.homeTeamTotal[0].overs;
           $scope.homeTeamWickets = $scope.matchDetails.homeTeamTotal[0].wickets;
@@ -57,7 +57,7 @@ angular.module('angularPassportApp')
           $scope.homeTeamRunRate = $scope.homeTeamRuns / $scope.homeTeamOvers;
         }
 
-        if ($scope.matchDetails.visitingTeamTotal.length > 0) {
+        if ($scope.matchDetails.visitingTeamTotal && $scope.matchDetails.visitingTeamTotal.length > 0) {
           $scope.visitingTeamRuns = $scope.matchDetails.visitingTeamTotal[0].total;
           $scope.visitingTeamOvers = $scope.matchDetails.visitingTeamTotal[0].overs;
           $scope.visitingTeamWickets = $scope.matchDetails.visitingTeamTotal[0].wickets;
@@ -482,16 +482,34 @@ angular.module('angularPassportApp')
           match.mom = $scope.mom.name;
           match.status = 'Submitted';
           match.previousResult = $scope.matchDetails.result;
-          match.homeTeamTotal = $scope.homeTeamScoreDetails;
-          match.visitingTeamTotal = $scope.visitingTeamScoreDetails;
+          match.previousWinningTeam = $scope.matchDetails.winningTeam;
           match.scoreCard = getScoreCardUpdated($scope.matchDetails.winningTeam, $scope.matchDetails.result, $scope.winningTeam.name, $scope.result.name);
           $scope.match = match;
         }
       });
+
       console.log(getScoreCardUpdated($scope.matchDetails.winningTeam, $scope.matchDetails.result, $scope.winningTeam.name, $scope.result.name));
-      submitMatchScores($scope.match);
+      submitMatchResult($scope.match);
 
     };
+
+    function submitMatchScores(match) {
+
+      $scope.matches.push(
+        {
+          all: $scope.tournamentMatches,
+          single: match
+        }
+      );
+
+      matchDetailsService.updateMatchScores($scope.tournamentName, $scope.matches).success(function (response) {
+        alertService.displaySaveMessage("Success");
+        getMatchDetails('update');
+      }).error(function (status, data) {
+        alertService.displayErrorMessage("There was an error! Please try again.");
+      });
+
+    }
 
     function getScoreCardUpdated(previousTeam, previousResult, newTeam, result) {
       if(!previousResult) {
@@ -502,14 +520,16 @@ angular.module('angularPassportApp')
         return 'unchanged';
       } else if((previousResult === 'Tie' || previousResult === 'Washed Out' || previousResult === 'Abandoned') && (result === 'Completed')) {
         return 'changed';
-      } else if (previousResult === 'Completed' && result === 'Completed') {
+      } else if (previousResult === 'Completed' && result === 'Completed' && (previousTeam === newTeam)) {
         return 'unchanged';
       } else if((result === 'Tie' || result === 'Washed Out' || result === 'Abandoned') && (previousResult === 'Completed')) {
+        return 'changed';
+      }else if (previousResult === 'Completed' && result === 'Completed' && (previousTeam !== newTeam)) {
         return 'changed';
       }
     }
 
-    function submitMatchScores(match) {
+    function submitMatchResult(match) {
 
       $scope.matches.push(
         {
@@ -532,27 +552,29 @@ angular.module('angularPassportApp')
     $scope.addHomeTeamTotal = function () {
 
       $scope.homeTeamScoreDetails.push({
-        total: $scope.homeTeamRuns,
-        overs: $scope.homeTeamOvers,
-        wickets: $scope.homeTeamWickets,
-        wides: $scope.homeTeamWides,
-        noBalls: $scope.homeTeamNoBalls,
-        byes: $scope.homeTeamByes,
-        legByes: $scope.homeTeamLegByes
+        total: $scope.homeTeamRuns || 0,
+        overs: $scope.homeTeamOvers || 0,
+        wickets: $scope.homeTeamWickets || 0,
+        wides: $scope.homeTeamWides || 0,
+        noBalls: $scope.homeTeamNoBalls || 0,
+        byes: $scope.homeTeamByes || 0,
+        legByes: $scope.homeTeamLegByes || 0
       });
+
+
       addTeamTotalScore($scope.homeTeamScoreDetails, 'home');
 
     };
 
     $scope.addVisitingTeamTotal = function () {
       $scope.visitingTeamScoreDetails.push({
-        total: $scope.visitingTeamRuns,
-        overs: $scope.visitingTeamOvers,
-        wickets: $scope.visitingTeamWickets,
-        wides: $scope.visitingTeamWides,
-        noBalls: $scope.visitingTeamNoBalls,
-        byes: $scope.visitingTeamByes,
-        legByes: $scope.visitingTeamLegByes
+        total: $scope.visitingTeamRuns || 0,
+        overs: $scope.visitingTeamOvers || 0,
+        wickets: $scope.visitingTeamWickets || 0,
+        wides: $scope.visitingTeamWides || 0,
+        noBalls: $scope.visitingTeamNoBalls || 0,
+        byes: $scope.visitingTeamByes || 0,
+        legByes: $scope.visitingTeamLegByes || 0
       });
       addTeamTotalScore($scope.homeTeamScoreDetails, 'visiting');
     };
@@ -563,6 +585,7 @@ angular.module('angularPassportApp')
           if (match.matchNumber === $scope.matchNumber) {
             match.homeTeamTotal = $scope.homeTeamScoreDetails;
             match.scoreCard = 'unchanged';
+            match.whichTeamTotal = team;
             $scope.match = match;
           }
         });
@@ -571,6 +594,7 @@ angular.module('angularPassportApp')
           if (match.matchNumber === $scope.matchNumber) {
             match.visitingTeamTotal = $scope.visitingTeamScoreDetails;
             match.scoreCard = 'unchanged';
+            match.whichTeamTotal = team;
             $scope.match = match;
           }
         });

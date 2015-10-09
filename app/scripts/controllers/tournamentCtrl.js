@@ -418,6 +418,7 @@ angular.module('angularPassportApp')
           alertService.displayErrorMessage("Same Team cannot play against each other. Please select two different teams");
         } else {
           $scope.tournamentMatches.push({
+            tournament: $scope.tournamentInfo.tournamentName,
             homeTeam: $scope.homeTeam.teamName,
             visitingTeam: $scope.visitingTeam.teamName,
             matchDate: $scope.matchDate,
@@ -430,6 +431,7 @@ angular.module('angularPassportApp')
           });
 
           $scope.match.push({
+            tournament: $scope.tournamentInfo.tournamentName,
             homeTeam: $scope.homeTeam.teamName,
             visitingTeam: $scope.visitingTeam.teamName,
             matchDate: $scope.matchDate,

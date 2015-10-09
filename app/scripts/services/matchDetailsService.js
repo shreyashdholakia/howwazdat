@@ -9,6 +9,9 @@ angular.module('angularPassportApp')
       updateMatch:  function(tournamentName, matches) {
         return $http.post(options.api.base_url  + '/api/match/' + tournamentName, {'matches': matches});
       },
+      updateMatchScores:  function(tournamentName, matches) {
+        return $http.put(options.api.base_url  + '/api/match/' + tournamentName, {'matches': matches});
+      },
       findProfile: function(user) {
         return $http.get(options.api.base_url  + '/api/profile/' + user);
       },

@@ -83,7 +83,7 @@
                     <div class="tab-content" ng-hide="createMatch">
                       <div class="tab-pane" ng-class="{'active':isActiveTab('activity')}" id="home">
                       <br>
-                      <button type="button" class="btn btn-default btn-success" ng-click="createMatch = !createMatch" type="submit"><i class="glyphicon glyphicon-plus"></i> Create Match</button>
+                      <button type="button" class="btn btn-default btn-success" ng-click="createMatch = !createMatch" type="submit" ng-disabled="tournamentTeams.length == 0"><i class="glyphicon glyphicon-plus"></i> Create Match</button>
                       <span class="col-md-3">
                           <input type="text" class="form-control ng-pristine ng-valid" placeholder="Search..." ng-model="searchTeam">
                       </span>
@@ -150,7 +150,7 @@
                             <td>{{team.won || 0}}</td>
                             <td>{{team.lost || 0}}</td>
                             <td>{{team.tied || 0}}</td>
-                            <td>{{team.runs/team.overs | number:'2' || 0}}</td>
+                            <td>{{(team.runs/team.overs) - (team.runsAgainst/team.oversAgainst) | number:'2' || 0}}</td>
                             <td>{{team.points|| 0}}</td>
                           </tr>
                           </tbody>
@@ -167,7 +167,7 @@
                             <div class="form-group">
 
                               <div class="col-xs-6">
-                                <input type="text" class="form-control" name="teamName" ng-model="teamName" id="team_name" placeholder="Search Team" title="enter a team name" ng-model="team" typeahead="team as team.teamName for team in teamList | filter:{teamName:$viewValue} | limitTo:8">
+                                <input type="text" class="form-control" name="teamName" ng-model="teamName" id="team_name" placeholder="Search Team to add" title="enter a team name" ng-model="team" typeahead="team as team.teamName for team in teamList | filter:{teamName:$viewValue} | limitTo:8">
                               </div>
                             </div>
                             <div class="form-group">
