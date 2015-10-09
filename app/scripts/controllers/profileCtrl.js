@@ -25,6 +25,7 @@ angular.module('angularPassportApp')
       matchDetailsService.getUserMatches(fullName).success(function(response) {
             $scope.profileExists = response.exists;
             $scope.matches = response.data;
+        console.log($scope.matches);
           }).error(function(status, data) {
             console.log(status);
           });
