@@ -83,7 +83,7 @@
                     <div class="tab-content" ng-hide="createMatch">
                       <div class="tab-pane" ng-class="{'active':isActiveTab('activity')}" id="home">
                       <br>
-                      <button type="button" class="btn btn-default btn-success" ng-click="createMatch = !createMatch" type="submit"><i class="glyphicon glyphicon-plus"></i> Create Match</button>
+                      <button type="button" class="btn btn-default btn-success" ng-click="createMatch = !createMatch" type="submit" ng-disabled="tournamentTeams.length == 0"><i class="glyphicon glyphicon-plus"></i> Create Match</button>
                       <span class="col-md-3">
                           <input type="text" class="form-control ng-pristine ng-valid" placeholder="Search..." ng-model="searchTeam">
                       </span>
