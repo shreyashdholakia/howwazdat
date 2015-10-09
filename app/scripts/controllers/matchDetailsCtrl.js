@@ -480,6 +480,8 @@ angular.module('angularPassportApp')
           match.losingTeam = getLosingTeam($scope.result.name, $scope.winningTeam.name);
           match.tossDecision = $scope.decision.name;
           match.mom = $scope.mom.name;
+          match.updatedBy = $rootScope.currentUser.username;
+          match.lastUpdated = new Date();
           match.status = 'Submitted';
           match.previousResult = $scope.matchDetails.result;
           match.previousWinningTeam = $scope.matchDetails.winningTeam;
@@ -585,6 +587,8 @@ angular.module('angularPassportApp')
           if (match.matchNumber === $scope.matchNumber) {
             match.homeTeamTotal = $scope.homeTeamScoreDetails;
             match.scoreCard = 'unchanged';
+            match.updatedBy = $rootScope.currentUser.username;
+            match.lastUpdated = new Date();
             match.whichTeamTotal = team;
             $scope.match = match;
           }
@@ -594,6 +598,8 @@ angular.module('angularPassportApp')
           if (match.matchNumber === $scope.matchNumber) {
             match.visitingTeamTotal = $scope.visitingTeamScoreDetails;
             match.scoreCard = 'unchanged';
+            match.updatedBy = $rootScope.currentUser.username;
+            match.lastUpdated = new Date();
             match.whichTeamTotal = team;
             $scope.match = match;
           }
