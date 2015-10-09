@@ -46,7 +46,7 @@ angular.module('angularPassportApp')
           $scope.toss = $scope.tossInfo[0];
         }
 
-        if ($scope.matchDetails.homeTeamTotal.length > 0) {
+        if ($scope.matchDetails.homeTeamTotal && $scope.matchDetails.homeTeamTotal.length > 0) {
           $scope.homeTeamRuns = $scope.matchDetails.homeTeamTotal[0].total;
           $scope.homeTeamOvers = $scope.matchDetails.homeTeamTotal[0].overs;
           $scope.homeTeamWickets = $scope.matchDetails.homeTeamTotal[0].wickets;
@@ -57,7 +57,7 @@ angular.module('angularPassportApp')
           $scope.homeTeamRunRate = $scope.homeTeamRuns / $scope.homeTeamOvers;
         }
 
-        if ($scope.matchDetails.visitingTeamTotal.length > 0) {
+        if ($scope.matchDetails.visitingTeamTotal && $scope.matchDetails.visitingTeamTotal.length > 0) {
           $scope.visitingTeamRuns = $scope.matchDetails.visitingTeamTotal[0].total;
           $scope.visitingTeamOvers = $scope.matchDetails.visitingTeamTotal[0].overs;
           $scope.visitingTeamWickets = $scope.matchDetails.visitingTeamTotal[0].wickets;
