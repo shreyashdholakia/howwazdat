@@ -247,28 +247,39 @@ angular.module('angularPassportApp')
     $scope.getTournamentDetails();
 
     $scope.createTournament = function (tournament) {
-      var joiningDate = new Date();
-      $scope.tournamentDetails.push({
-        tournamentName: $scope.tournament.name,
-        organizer: $scope.tournament.organizer,
-        owner: $scope.user.email,
-        createdDate: joiningDate,
-        updatedBy: $rootScope.currentUser.username,
-        lastUpdated: new Date(),
-        address: $scope.tournament.address,
-        addressLatitude: $scope.chosenPlaceDetails.geometry.location.lat(),
-        addressLongitude: $scope.chosenPlaceDetails.geometry.location.lng()
+      var tournamentExists = false;
+      $scope.tournamentList.forEach(function (tournaments)
+      {
+        if(tournaments.tournamentName === $scope.tournament.name){
+          alertService.displayErrorMessage("Tournament Name already taken. Please choose a different name");
+          tournamentExists = true;
+        }
       });
 
-      tournamentService.create($scope.tournamentDetails).success(function (data) {
-        $location.path("/tournament/" + data.data.tournamentName);
-        $scope.tournamentName = data.data.tournamentName;
-        $scope.tournamentPage = true;
-        $scope.tournamentInfo = data.data;
-        loadGoogleMap($scope.tournamentInfo);
-      }).error(function (status, data) {
-        alertService.displayErrorMessage("There was an error! Please try again.");
-      });
+      if(!tournamentExists) {
+        var joiningDate = new Date();
+        $scope.tournamentDetails.push({
+          tournamentName: $scope.tournament.name,
+          organizer: $scope.tournament.organizer,
+          owner: $scope.user.email,
+          createdDate: joiningDate,
+          updatedBy: $rootScope.currentUser.username,
+          lastUpdated: new Date(),
+          address: $scope.tournament.address,
+          addressLatitude: $scope.chosenPlaceDetails.geometry.location.lat(),
+          addressLongitude: $scope.chosenPlaceDetails.geometry.location.lng()
+        });
+
+        tournamentService.create($scope.tournamentDetails).success(function (data) {
+          $location.path("/tournament/" + data.data.tournamentName);
+          $scope.tournamentName = data.data.tournamentName;
+          $scope.tournamentPage = true;
+          $scope.tournamentInfo = data.data;
+          loadGoogleMap($scope.tournamentInfo);
+        }).error(function (status, data) {
+          alertService.displayErrorMessage("There was an error! Please try again.");
+        });
+      }
     };
 
     $scope.tab = "calendar";
