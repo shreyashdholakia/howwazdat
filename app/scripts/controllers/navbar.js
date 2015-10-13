@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularPassportApp')
+angular.module('howWasThat')
   .controller('NavbarCtrl', function ($scope, Auth, $location) {
     $scope.menu = [{
       "title": "Team",

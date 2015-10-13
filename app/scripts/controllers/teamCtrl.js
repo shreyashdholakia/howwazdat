@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularPassportApp')
+angular.module('howWasThat')
 .controller('TeamCtrl', function ($scope, teamService, $location, $routeParams, $rootScope, $http, $cookieStore, $modal, alertService, userService) {
 
 	$scope.player = [];

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularPassportApp')
+angular.module('howWasThat')
 .factory('calendarService', ['$compile',  function($scope, $compile, uiCalendarConfig) {
 
     function popoverHTMLForEvent(event) {

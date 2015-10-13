@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('angularPassportApp', [
+var app = angular.module('howWasThat', [
   'ngCookies',
   'ngResource',
   'ngSanitize',

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularPassportApp')
+angular.module('howWasThat')
 .factory('teamService', function($http) {
 	return {
 
@@ -12,7 +12,7 @@ angular.module('angularPassportApp')
 		},
 		update: function(teamName,teamList) {
 			return $http.put(options.api.base_url  + '/api/team/' + teamName, {'team': teamList});
-		}, 
+		},
 		getTeams: function () {
 			return $http.get(options.api.base_url + '/api/team');
 		}

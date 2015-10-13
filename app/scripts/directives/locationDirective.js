@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularPassportApp')
+angular.module('howWasThat')
 .directive('googleplace', function() {
     return {
         require: 'ngModel',

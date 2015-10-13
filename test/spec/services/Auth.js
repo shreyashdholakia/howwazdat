@@ -3,7 +3,7 @@
 describe('Service: Auth', function () {
 
   // load the service's module
-  beforeEach(module('angularPassportApp'));
+  beforeEach(module('howWasThat'));
 
   // instantiate service
   var Auth,

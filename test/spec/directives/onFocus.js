@@ -3,7 +3,7 @@
 describe('Directive: onFocus', function () {
 
   // load the directive's module
-  beforeEach(module('angularPassportApp'));
+  beforeEach(module('howWasThat'));
 
   var element, container,
     scope;
