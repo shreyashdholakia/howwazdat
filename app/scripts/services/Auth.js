@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularPassportApp')
+angular.module('howWasThat')
   .factory('Auth', function Auth($location, $rootScope, Session, User, $cookieStore) {
     $rootScope.currentUser = $cookieStore.get('user') || null;
     $cookieStore.remove('user');

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularPassportApp')
+angular.module('howWasThat')
   .controller('tournamentCtrl', function ($scope, tournamentService, teamService, ProfileService, $location, $routeParams, $rootScope, $http, $cookieStore, alertService, $modal, uiCalendarConfig, $filter, $compile, $timeout, pointService) {
 
     $scope.isProfileCreated = false;
@@ -473,7 +473,7 @@ angular.module('angularPassportApp')
   });
 
 
-angular.module('angularPassportApp')
+angular.module('howWasThat')
   .filter('startFrom', function () {
     return function (input, start) {
       start = +start; //parse to int

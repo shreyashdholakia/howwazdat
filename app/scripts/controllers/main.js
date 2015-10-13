@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularPassportApp')
+angular.module('howWasThat')
   .controller('MainCtrl', function ($scope, $rootScope, tournamentService, alertService, ProfileService) {
 
 

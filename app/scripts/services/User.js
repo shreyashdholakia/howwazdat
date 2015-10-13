@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularPassportApp')
+angular.module('howWasThat')
   .factory('User', function ($resource) {
     return $resource('/auth/users/:id/', {},
       {
@@ -9,5 +9,5 @@ angular.module('angularPassportApp')
         }
       });
 
-    return 
+    return
   });

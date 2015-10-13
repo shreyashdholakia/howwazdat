@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularPassportApp')
+angular.module('howWasThat')
   .controller('SignupCtrl', function ($scope, Auth, $location) {
     $scope.register = function(form) {
       Auth.createUser({

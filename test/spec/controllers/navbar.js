@@ -3,7 +3,7 @@
 describe('Controller: NavbarCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('angularPassportApp'));
+  beforeEach(module('howWasThat'));
 
   var NavbarCtrl,
     scope,
