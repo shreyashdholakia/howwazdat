@@ -133,21 +133,44 @@ angular.module('howWasThat')
 	$scope.getTeamDetails();
 
 	$scope.addTeam = function () {
-		var joiningDate = new Date();
-		$scope.teamDetails.push({
-			teamName: $scope.teamName,
-			owner: $rootScope.currentUser.username,
-			joiningDate: joiningDate,
-			players: $scope.playerList
-		});
+	  var teamExists = false;
+    $scope.allTeams.forEach(function (teams)
+      {
+        if(teams.teamName === $scope.teamName){
+          alertService.displayErrorMessage("Team Name already taken. Please choose a different name");
+          teamExists = true;
+        }
+      });
 
-		teamService.create($scope.teamDetails).success(function(data) {
-			$location.path("/team/" + data.data.teamName);
-			$scope.playerList = data.data.players;
+
+    if(!teamExists) {
+      var joiningDate = new Date();
+      $scope.teamDetails.push({
+        teamName: $scope.teamName,
+        owner: $rootScope.currentUser.username,
+        joiningDate: joiningDate,
+        players: $scope.playerList
+      });
+
+      teamService.create($scope.teamDetails).success(function(data) {
+        $location.path("/team/" + data.data.teamName);
+        $scope.playerList = data.data.players;
+      }).error(function(status, data) {
+        alertService.displayErrorMessage("There was an error! Please try again");
+      });
+		}
+	};
+
+	function getAllTeams() {
+    teamService.getTeams().success(function(response) {
+			$scope.allTeams = response.data;
 		}).error(function(status, data) {
       alertService.displayErrorMessage("There was an error! Please try again");
 		});
-	};
+
+	}
+
+	getAllTeams();
 
 	$scope.open = function (player) {
 		$scope.playerToDelete = player;
