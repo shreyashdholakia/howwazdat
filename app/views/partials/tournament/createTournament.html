@@ -25,7 +25,7 @@
       <div class="form-group">
 
         <div class="col-xs-6">
-          <label for="email"><h4>Email</h4></label>
+          <labels><h4>Email</h4></labels>
           <input type="email" class="form-control" id="location" ng-model="user.email" placeholder="somewhere" title="Email" ng-disabled="isEmail" required>
         </div>
       </div>
@@ -44,264 +44,310 @@
     </div>
   </form>
 
-</div><!--/col-9-->
-<div class="row" ng-show="tournamentPage">
-  <div class="col-sm-10"><h1>{{tournamentInfo.tournamentName}}</h1>
-  <p> Last updated: {{tournamentInfo.lastUpdated | date: 'medium'}}</p></div>
-  <div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="http://www.gravatar.com/avatar/28fd20ccec6865e2d5f0e1f4446eb7bf?s=100"></a></div>
-</div>
-<br>
-<div class="row" ng-show="tournamentPage">
+  </div><!--/col-9-->
+  <div class="row" ng-show="tournamentPage">
+    <div class="col-sm-10"><h1>{{tournamentInfo.tournamentName}}</h1>
+    <p> Last updated: {{tournamentInfo.lastUpdated | date: 'medium'}}</p></div>
+    <div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="http://www.gravatar.com/avatar/28fd20ccec6865e2d5f0e1f4446eb7bf?s=100"></a></div>
+  </div>
+  <br>
 
-                  <!-- <div class="panel panel-primary">
-                    <div class="panel-heading">Bootstrap 3 - Panel Primary</div>
-                    <div class="panel-body">Panel content goes here..</div>
-                  </div> -->
-                  <div class="col-sm-4"><!--left col-->
-                    <div class="panel panel-primary">
-                      <div class="panel-heading text-center">Tournament Details <i class="fa fa-trophy fa-1x"></i></div>
+  <div class="row" ng-show="tournamentPage">
 
-                        <ul class="list-group">
-                          <li class="list-group-item text-right"><span class="pull-left"><strong>Tournament</strong></span> {{tournamentInfo.tournamentName}}</li>
-                          <li class="list-group-item text-right"><span class="pull-left"><i class="fa fa-calendar"></i></span> {{tournamentInfo.createdDate | date:'mediumDate'}}</li>
-                          <li class="list-group-item text-right"><span class="pull-left"><i class="fa fa-map-marker"></i></span> <a href="https://www.google.com/maps/place/{{tournamentInfo.address}}">{{tournamentInfo.address}}</a></li>
-                        </ul>
-                    </div>
+    <div class="col-sm-4"><!--left col-->
+      <div class="panel panel-primary">
+        <div class="panel-heading text-center"><i class="fa fa-trophy fa-1x"></i> Tournament Details</div>
 
-                  <ul class="list-group">
-                    <li id="map"></li>
-                  </ul>
-                </div><!--/col-3-->
-                  <div class="col-sm-8">
+        <ul class="list-group">
+          <li class="list-group-item text-right"><span class="pull-left"><strong>Tournament</strong></span>
+            {{tournamentInfo.tournamentName}}
+          </li>
+          <li class="list-group-item text-right"><span class="pull-left"><i class="fa fa-calendar"></i></span>
+            {{tournamentInfo.createdDate | date:'mediumDate'}}
+          </li>
+          <li class="list-group-item text-right"><span class="pull-left"><i class="fa fa-map-marker"></i></span> <a
+            href="https://www.google.com/maps/place/{{tournamentInfo.address}}">{{tournamentInfo.address}}</a></li>
+        </ul>
+      </div>
+      <div class="panel panel-primary">
+        <div class="panel-heading text-center"><i class="fa fa-map-marker"></i> Location</div>
+        <ul class="list-group">
+          <li id="map"></li>
+        </ul>
+      </div>
+    </div>
+    <!--/col-3-->
+    <div class="col-sm-8">
+      <ul class="nav nav-tabs" id="myTab" ng-hide="createMatch">
 
-                    <ul class="nav nav-tabs" id="myTab" ng-hide="createMatch">
-                      <li ng-class="{'active':isActiveTab('teams')}"><a href ng-click="setTab('teams')">List of Teams</a></li>
-                      <li ng-class="{'active':isActiveTab('activity')}"><a href ng-click="setTab('activity')">Fixtures</a></li>
-                      <li ng-class="{'active':isActiveTab('calendar')}"><a href ng-click="setTab('calendar')">Calendar</a></li>
-                      <li ng-class="{'active':isActiveTab('points')}"><a href ng-click="setTab('points')">Points Table</a></li>
-                    </ul>
+        <li ng-class="{'active':isActiveTab('activity')}"><a href ng-click="setTab('activity')">Fixtures</a></li>
+        <li ng-class="{'active':isActiveTab('calendar')}"><a href ng-click="setTab('calendar')">Calendar</a></li>
+        <li ng-class="{'active':isActiveTab('points')}"><a href ng-click="setTab('points')">Points Table</a></li>
+        <li ng-class="{'active':isActiveTab('stats')}"><a href ng-click="setTab('stats')">Statistics</a></li>
+      </ul>
+      <div class="tab-content" ng-hide="createMatch">
+        <div class="tab-pane" ng-class="{'active':isActiveTab('activity')}" id="home">
+          <br>
+          <button type="button" class="btn btn-default btn-success" ng-click="createMatch = !createMatch" type="submit"
+                  ng-disabled="tournamentTeams.length == 0"><i class="glyphicon glyphicon-plus"></i> Create Match
+          </button>
+          <span class="col-md-3">
+                 <input type="text" class="form-control ng-pristine ng-valid" placeholder="Search..."
+                    ng-model="searchTeam">
+          </span>
+          <div class="row pull-right">
+            <button type="button" class="btn btn-default" ng-click="clearFilter()">All</button>
+            <button type="button" class="btn btn-default"
+                    ng-class="{'btn-success lead fa fa-check': stageFilter.indexOf('League') > -1}"
+                    ng-click="filterStages('League')">League
+            </button>
+            <button type="button" class="btn btn-default"
+                    ng-class="{'btn-success lead fa fa-check': stageFilter.indexOf('PlayOffs') > -1}"
+                    ng-click="filterStages('PlayOffs')">PlayOffs
+            </button>
+            <button type="button" class="btn btn-default"
+                    ng-class="{'btn-success lead fa fa-check': stageFilter.indexOf('Final') > -1}"
+                    ng-click="filterStages('Final')">Final
+            </button>
+          </div>
+          <br>
+          <div class="table-responsive">
+            <table class="table table-hover table-striped">
+              <thead>
+              <tr>
+                <th>#</th>
+                <th ng-click="sortType='matchDate'; sortReverse = !sortReverse">Date <i class="fa fa-sort"></i></th>
+                <th ng-click="sortType='homeTeam'; sortReverse = !sortReverse">Home <i class="fa fa-sort"></i></th>
+                <th ng-click="sortType='visitingTeam'; sortReverse = !sortReverse">Visiting <i class="fa fa-sort"></i>
+                </th>
+                <th ng-click="sortType='matchDate'; sortReverse = !sortReverse">Winner</th>
+                <th ng-click="sortType='roundType'; sortReverse = !sortReverse">Stage <i class="fa fa-sort"></i></th>
+                <th><i class="fa fa-cog"></i></th>
+              </tr>
+              </thead>
+              <tbody
+                ng-repeat="matches in tournamentMatches | orderBy:sortType:sortReverse | filter:stages | filter: searchTeam | startFrom:currentPage*pageSize | limitTo:pageSize">
+              <tr>
+                <td>{{$index + 1}}</td>
+                <td>{{matches.matchDate | date:'MM/dd/yyyy @ h:mma'}}</td>
+                <td>{{matches.homeTeam}}</td>
+                <td>{{matches.visitingTeam}}</td>
+                <td>{{matches.winningTeam}}</td>
+                <td>{{matches.roundType}}</td>
+                <td><a href="/tournament/{{tournamentInfo.tournamentName}}/{{matches.matchNumber}}"><i
+                  class="fa fa-list-ol"></i></a></td>
+              </tr>
+              </tbody>
+            </table>
+            <nav>
+              <ul class="pager">
+                <li class="previous" ng-class="{'disabled': currentPage == 0}"><a
+                  ng-click="currentPage=currentPage-1"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                <li class="next" ng-class="{'disabled': currentPage >= tournamentMatches.length/pageSize - 1}"><a
+                  ng-click="currentPage=currentPage+1">Next <span aria-hidden="true">&rarr;</span></a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <!--/tab-pane-->
+        <div class="tab-pane" ng-class="{'active':isActiveTab('points')}" id="points">
+          <br>
+          <div class="alert alert-danger" ng-hide="tournamentTeams.length > 0">
+            <span class="fa fa-info-circle"></span> No Teams added. Please add teams and start playing!!
+          </div>
+          <form class="form">
+            <div class="form-group">
+              <div class="col-xs-6">
+                <input type="text" class="form-control" name="teamName" ng-model="teamName" id="team_name"
+                       placeholder="Search Team to add" title="enter a team name" ng-model="team"
+                       typeahead="team as team.teamName for team in teamList | filter:{teamName:$viewValue} | limitTo:8">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-xs-3">
+                <button class="btn btn-default btn-primary" ng-click="addTeamToTournament(teamName)" type="submit"><i
+                  class="fa fa-plus"></i> Add Team
+                </button>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-xs-3">
+                <button type="button" class="btn btn-default btn-success" ng-click="createTeam()" type="submit"><i
+                  class="fa fa-plus"></i> Create Team
+                </button>
+              </div>
+            </div>
+          </form>
+          <div class="table-responsive">
+            <table class="table table-hover table-striped">
+              <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Team Name</th>
+                <th>Matches</th>
+                <th>Won</th>
+                <th>Lost</th>
+                <th>Tied</th>
+                <th>NRR</th>
+                <th>Points</th>
+              </tr>
+              </thead>
+              <tbody ng-repeat="team in pointTable | orderBy:['-points','-nrr']">
+              <tr>
+                <td>{{$index + 1}}</td>
+                <td><a href="/team/{{team.team}}">{{team.team}}</a></td>
+                <td>{{team.games}}</td>
+                <td>{{team.won || 0}}</td>
+                <td>{{team.lost || 0}}</td>
+                <td>{{team.tied || 0}}</td>
+                <td>{{(team.runs/team.overs) - (team.runsAgainst/team.oversAgainst) | number:'2' || 0}}</td>
+                <td>{{team.points|| 0}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tab-pane" ng-class="{'active':isActiveTab('calendar')}">
+          <br>
+          <div ui-calendar="uiConfig.calendar" id="calendar" ng-model="eventSources" calendar="myCalendar"></div>
+        </div>
+        <div class="tab-pane" ng-class="{'active':isActiveTab('stats')}">
+          <br>
+          <div class="table-responsive">
+            <table class="table table-hover table-striped">
+              <thead>
+              <tr>
+                <th>#</th>
+                <th>Player</th>
+                <th>Team</th>
+                <th>M</th>
+                <th>Inn</th>
+                <th>R</th>
+                <th>HS</th>
+                <th>W</th>
+              </tr>
+              </thead>
+              <tbody id="items" ng-repeat="team in tournamentTeams">
+              <tr>
+                <td>{{$index + 1}}</td>
+                <td><a href="/team/{{team.teamName}}">{{team.teamName}}</a></td>
+                <td>{{team.captain}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!--/tab-pane-->
+      </div>
+      <!--/tab-content-->
+      <form class="form" id="matchForm" name="matchForm" ng-show="createMatch">
+        <div class="form-group">
 
-                    <div class="tab-content" ng-hide="createMatch">
-                      <div class="tab-pane" ng-class="{'active':isActiveTab('activity')}" id="home">
-                      <br>
-                      <button type="button" class="btn btn-default btn-success" ng-click="createMatch = !createMatch" type="submit" ng-disabled="tournamentTeams.length == 0"><i class="glyphicon glyphicon-plus"></i> Create Match</button>
-                      <span class="col-md-3">
-                          <input type="text" class="form-control ng-pristine ng-valid" placeholder="Search..." ng-model="searchTeam">
-                      </span>
-                      <div class="row pull-right">
-                        <button type="button" class="btn btn-default" ng-click="clearFilter()">All</button>
-                        <button type="button" class="btn btn-default" ng-class="{'btn-success lead fa fa-check': stageFilter.indexOf('League') > -1}" ng-click="filterStages('League')">League</button>
-                        <button type="button" class="btn btn-default" ng-class="{'btn-success lead fa fa-check': stageFilter.indexOf('PlayOffs') > -1}" ng-click="filterStages('PlayOffs')">PlayOffs</button>
-                        <button type="button" class="btn btn-default" ng-class="{'btn-success lead fa fa-check': stageFilter.indexOf('Final') > -1}" ng-click="filterStages('Final')">Final</button>
-                      </div>
-                      <br>
-                       <div class="table-responsive">
-                        <table class="table table-hover table-striped">
-                          <thead>
-                            <tr>
-                              <th>#</th>
-                              <th ng-click="sortType='matchDate'; sortReverse = !sortReverse">Date <i class="fa fa-sort"></i></th>
-                              <th ng-click="sortType='homeTeam'; sortReverse = !sortReverse">Home <i class="fa fa-sort"></i></th>
-                              <th ng-click="sortType='visitingTeam'; sortReverse = !sortReverse">Visiting <i class="fa fa-sort"></i></th>
-                              <th ng-click="sortType='matchDate'; sortReverse = !sortReverse">Winner</th>
-                              <th ng-click="sortType='roundType'; sortReverse = !sortReverse">Stage <i class="fa fa-sort"></i></th>
-                              <th><i class="fa fa-cog"></i></th>
-                            </tr>
-                          </thead>
-                          <tbody ng-repeat="matches in tournamentMatches | orderBy:sortType:sortReverse | filter:stages | filter: searchTeam | startFrom:currentPage*pageSize | limitTo:pageSize">
-                            <tr>
-                              <td>{{$index + 1}}</td>
-                              <td>{{matches.matchDate | date:'MM/dd/yyyy @ h:mma'}}</td>
-                              <td>{{matches.homeTeam}}</td>
-                              <td>{{matches.visitingTeam}}</td>
-                              <td>{{matches.winningTeam}}</td>
-                              <td>{{matches.roundType}}</td>
-                              <td><a href="/tournament/{{tournamentInfo.tournamentName}}/{{matches.matchNumber}}"><i class="fa fa-list-ol"></i></a></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                         <nav>
-                           <ul class="pager">
-                             <li class="previous" ng-class="{'disabled': currentPage == 0}"><a ng-click="currentPage=currentPage-1"><span aria-hidden="true">&larr;</span> Previous</a></li>
-                             <li class="next" ng-class="{'disabled': currentPage >= tournamentMatches.length/pageSize - 1}"><a ng-click="currentPage=currentPage+1">Next <span aria-hidden="true">&rarr;</span></a></li>
-                           </ul>
-                         </nav>
-                      </div>
-                    </div><!--/tab-pane-->
-                    <div class="tab-pane" ng-class="{'active':isActiveTab('points')}" id="points">
-                      <div class="table-responsive">
-                        <table class="table table-hover table-striped">
-                          <thead>
-                          <tr>
-                            <th>Rank</th>
-                            <th>Team Name</th>
-                            <th>Matches</th>
-                            <th>Won</th>
-                            <th>Lost</th>
-                            <th>Tied</th>
-                            <th>NRR</th>
-                            <th>Points</th>
-                          </tr>
-                          </thead>
-                          <tbody ng-repeat="team in pointTable | orderBy:['-points','-nrr']">
-                          <tr>
-                            <td>{{$index + 1}}</td>
-                            <td><a href="/team/{{team.team}}">{{team.team}}</a></td>
-                            <td>{{team.games}}</td>
-                            <td>{{team.won || 0}}</td>
-                            <td>{{team.lost || 0}}</td>
-                            <td>{{team.tied || 0}}</td>
-                            <td>{{(team.runs/team.overs) - (team.runsAgainst/team.oversAgainst) | number:'2' || 0}}</td>
-                            <td>{{team.points|| 0}}</td>
-                          </tr>
-                          </tbody>
-                        </table>
-                      </div>
+          <div class="col-xs-6">
+            <label><h4>Home Team</h4></label>
+            <input type="text" class="form-control" name="first_name" ng-model="homeTeam" id="first_name"
+                   placeholder="Home Team" title="enter your first name if any."
+                   typeahead="team as team.teamName for team in tournamentTeams | filter:{teamName:$viewValue} | limitTo:8"
+                   required>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-6">
+            <label><h4>Visiting Team</h4></label>
+            <input type="text" class="form-control" name="last_name" ng-model="visitingTeam" id="last_name"
+                   placeholder="Visiting Team" title="enter your last name if any."
+                   typeahead="team as team.teamName for team in tournamentTeams | filter:{teamName:$viewValue} | limitTo:8"
+                   required>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-6">
+            <label><h4>Match Date</h4></label>
 
-                    </div>
-                      <div class="tab-pane" ng-class="{'active':isActiveTab('teams')}">
-                        <br>
-                        <div class="alert alert-danger" ng-hide="tournamentTeams.length > 0">
-                          <span class="fa fa-info-circle"></span> No Teams added. Please add teams and start playing!!
-                        </div>
-                          <form class="form">
-                            <div class="form-group">
-
-                              <div class="col-xs-6">
-                                <input type="text" class="form-control" name="teamName" ng-model="teamName" id="team_name" placeholder="Search Team to add" title="enter a team name" ng-model="team" typeahead="team as team.teamName for team in teamList | filter:{teamName:$viewValue} | limitTo:8">
-                              </div>
-                            </div>
-                            <div class="form-group">
-                             <div class="col-xs-3">
-                              <button class="btn btn-default btn-primary" ng-click="addTeamToTournament(teamName)" type="submit"><i class="fa fa-plus"></i> Add Team</button>
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <div class="col-xs-3">
-                               <button type="button" class="btn btn-default btn-success" ng-click="createTeam()" type="submit"><i class="fa fa-plus"></i> Create Team</button>
-                            </div>
-                          </div>
-                        </form>
-                        <br>
-                        <div class="table-responsive">
-                          <table class="table table-hover table-striped">
-                            <thead>
-                              <tr>
-                                <th>#</th>
-                                <th>Team Name</th>
-                                <th>Captain</th>
-                                <th><i class="fa fa-cog"></i></th>
-                              </tr>
-                            </thead>
-                            <tbody id="items" ng-repeat="team in tournamentTeams">
-                              <tr>
-                                <td>{{$index + 1}}</td>
-                                <td><a href="/team/{{team.teamName}}">{{team.teamName}}</a></td>
-                                <td>{{team.captain}}</td>
-                                <td><i class="text-danger glyphicon glyphicon-remove"></i></td>
-                              </tr>
-                            </tbody>
-                          </table>
-                      </div>
-
-                    </div><!--/tab-pane-->
-                    <div class="tab-pane" ng-class="{'active':isActiveTab('calendar')}">
-                      <br>
-                      <div ui-calendar="uiConfig.calendar" id="calendar" ng-model="eventSources" calendar="myCalendar"></div>
-
-                    </div><!--/tab-pane-->
-                  </div><!--/tab-content-->
-                  <form class="form" id="matchForm" name="matchForm"ng-show="createMatch">
-                      <div class="form-group">
-
-                          <div class="col-xs-6">
-                              <label for="homeTeam"><h4>Home Team</h4></label>
-                              <input type="text" class="form-control" name="first_name" ng-model="homeTeam" id="first_name" placeholder="Home Team" title="enter your first name if any." typeahead="team as team.teamName for team in tournamentTeams | filter:{teamName:$viewValue} | limitTo:8" required>
-                          </div>
-                      </div>
-                      <div class="form-group">
-
-                          <div class="col-xs-6">
-                            <label for="visitingTeam"><h4>Visiting Team</h4></label>
-                              <input type="text" class="form-control" name="last_name" ng-model="visitingTeam" id="last_name" placeholder="Visiting Team" title="enter your last name if any." typeahead="team as team.teamName for team in tournamentTeams | filter:{teamName:$viewValue} | limitTo:8" required>
-                          </div>
-                      </div>
-                      <div class="form-group">
-                           <div class="col-xs-6">
-                                <label for="date"><h4>Match Date</h4></label>
-                                <p class="input-group">
-                                  <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="matchDate" is-open="status.opened" min-date="minDate" max-date="'2020-06-22'" datepicker-options="dateOptions" on-open-focus="true" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-                                  <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
-                                  </span>
-                                </p>
-                            </div>
-                      </div>
-                       <div class="form-group">
-                        <div class="col-xs-6">
-                          <label for="email"><h4>Umpire</h4></label>
-                          <div >
-                            <select id="umpire" class="form-control" ng-model="umpireType" ng-change="setRole()" ng-options="umpire.name for umpire in umpires" >
-                              <!-- <option ng-model="roleSelected" ng-repeat="role in roles" ng-click="setRole(role)">{{role}}</option> -->
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group">
-
-                          <div class="col-xs-6">
-                              <label for="startTime"><h4>Start Time</h4></label>
-                              <p class="input-group">
-                                <timepicker ng-model="matchStartTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
-                              </p>
-                          </div>
-                      </div>
-                      <div class="form-group">
-
-                          <div class="col-xs-6">
-                              <label for="endTime"><h4>End Time</h4></label>
-                              <p class="input-group">
-                                <timepicker ng-model="matchEndTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
-                              </p>
-                          </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="col-xs-6">
-                          <label for="email"><h4>Match Type</h4></label>
-                          <div >
-                            <select id="matchType" class="form-control" ng-model="matchType" ng-change="setMatchType()" ng-options="match.type for match in matchTypes" >
-                              <!-- <option ng-model="roleSelected" ng-repeat="role in roles" ng-click="setRole(role)">{{role}}</option> -->
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="col-xs-6">
-                          <label for="email"><h4>Match Type</h4></label>
-                          <div >
-                            <select id="roundType" class="form-control" ng-model="roundType" ng-change="setRoundType()" ng-options="round.type for round in roundTypes" >
-                              <!-- <option ng-model="roleSelected" ng-repeat="role in roles" ng-click="setRole(role)">{{role}}</option> -->
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group pull-right">
-                             <div class="col-xs-12">
-                             <br><br>
-                              <button class="btn btn-default btn-default" ng-click="createMatch = !createMatch" type="submit"><i class="fa fa-reply"></i> Cancel</button>
-                            </div>
-                      </div>
-                      <div class="form-group pull-right">
-                             <div class="col-xs-12">
-                              <br><br>
-
-                              <button class="btn btn-default btn-primary" ng-click="submitMatch()" type="submit" ng-disabled="matchForm.$invalid"><i class="fa fa-plus"></i> Create</button>
-                            </div>
-                      </div>
-
-                  </form>
-                </div><!--/col-9-->
-              </div><!--/row-->
+            <p class="input-group">
+              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="matchDate"
+                     is-open="status.opened" min-date="minDate" max-date="'2020-06-22'" datepicker-options="dateOptions"
+                     on-open-focus="true" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
+              <span class="input-group-btn">
+                     <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-6">
+            <label><h4>Umpire</h4></label>
+            <div>
+              <select id="umpire" class="form-control" ng-model="umpireType" ng-change="setRole()"
+                      ng-options="umpire.name for umpire in umpires">
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-6">
+            <label><h4>Start Time</h4></label>
+            <p class="input-group">
+              <timepicker ng-model="matchStartTime" ng-change="changed()" hour-step="hstep" minute-step="mstep"
+                          show-meridian="ismeridian"></timepicker>
+            </p>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-6">
+            <label><h4>End Time</h4></label>
+            <p class="input-group">
+              <timepicker ng-model="matchEndTime" ng-change="changed()" hour-step="hstep" minute-step="mstep"
+                          show-meridian="ismeridian"></timepicker>
+            </p>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-6">
+            <label><h4>Match Type</h4></label>
+            <div>
+              <select id="matchType" class="form-control" ng-model="matchType" ng-change="setMatchType()"
+                      ng-options="match.type for match in matchTypes">
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-6">
+            <label><h4>Match Type</h4></label>
+            <div>
+              <select id="roundType" class="form-control" ng-model="roundType" ng-change="setRoundType()"
+                      ng-options="round.type for round in roundTypes">
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group pull-right">
+          <div class="col-xs-12">
+            <br><br>
+            <button class="btn btn-default btn-default" ng-click="createMatch = !createMatch" type="submit"><i
+              class="fa fa-reply"></i> Cancel
+            </button>
+          </div>
+        </div>
+        <div class="form-group pull-right">
+          <div class="col-xs-12">
+            <br><br>
+            <button class="btn btn-default btn-primary" ng-click="submitMatch()" type="submit"
+                    ng-disabled="matchForm.$invalid"><i class="fa fa-plus"></i> Create
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!--/col-9-->
+  </div>
+  <!--/row-->
 </div>
 
 
