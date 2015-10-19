@@ -10,6 +10,20 @@
 module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
+  // Imports
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+
+  // Variables
+  var BOWER_DIR = "components",
+    WEBAPP_DIR = "app/scripts",
+
+  INTERNAL_JS_FILES = [
+    WEBAPP_DIR + "/**/*.js",
+    "!" + WEBAPP_DIR + "/built/**/*.js"
+  ];
 
   grunt.initConfig({
     yeoman: {
@@ -17,6 +31,9 @@ module.exports = function (grunt) {
       app: require('./bower.json').appPath || 'app',
       dist: 'public',
       views: 'views'
+    },
+    concat: {
+      "app/built/internal.js": INTERNAL_JS_FILES
     },
     express: {
         options: {
@@ -104,10 +121,10 @@ module.exports = function (grunt) {
           src: [
             'heroku/*',
             '!heroku/.git*',
-            '!heroku/Procfile'                 
+            '!heroku/Procfile'
           ]
         }]
-      }, 
+      },
       server: '.tmp'
     },
     jshint: {
@@ -291,7 +308,7 @@ module.exports = function (grunt) {
             'lib/**/*'
           ]
         }]
-      },  
+      },
       styles: {
         expand: true,
         cwd: '<%= yeoman.app %>/styles',
@@ -355,6 +372,8 @@ module.exports = function (grunt) {
     this.async();
   });
 
+  grunt.registerTask('compile', ['copy', 'concat', 'less']);
+
   grunt.registerTask('server', function (target) {
     if (target === 'dist') {
       return grunt.task.run(['build', 'express:prod', 'open', 'express-keepalive']);
@@ -395,7 +414,7 @@ module.exports = function (grunt) {
   grunt.registerTask('heroku', [
     'build',
     'clean:heroku',
-    'copy:heroku'    
+    'copy:heroku'
   ]);
 
   grunt.registerTask('default', [
