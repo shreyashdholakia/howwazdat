@@ -37,8 +37,7 @@ module.exports = function (grunt) {
     ],
 
     INTERNAL_JS_FILES = [
-      WEBAPP_DIR + "/**/*.js",
-      "!" + WEBAPP_DIR + "/built/**/*.js"
+      WEBAPP_DIR + "/**/*.js"
     ],
   EXTERNAL_JS_FILES = [
     BOWER_DIR + "/jquery/dist/jquery.js",
@@ -48,7 +47,7 @@ module.exports = function (grunt) {
     BOWER_DIR + "/angular-cookies/angular-cookies.js",
     BOWER_DIR + "/angular-sanitize/angular-sanitize.js",
     BOWER_DIR + "/angular-route/angular-route.js",
-    BOWER_DIR + "/angular-bootstrap/*.js",
+    BOWER_DIR + "/angular-bootstrap/ui-bootstrap-tpls.min.js",
     BOWER_DIR + "/angular-http-auth/src/http-auth-interceptor.js",
     BOWER_DIR + "/angular-ui-calendar/src/calendar.js",
     BOWER_DIR + "/angular-file-upload/angular-file-upload.js",
