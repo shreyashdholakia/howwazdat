@@ -18,43 +18,46 @@ module.exports = function (grunt) {
 
   // Variables
   var BOWER_DIR = "app/bower_components",
-    WEBAPP_DIR = "app/scripts",
-    BOOTSTRAP_JS_DIR = BOWER_DIR + "/bootstrap/js/",
-    BOOTSTRAP_JS_FILES = [
-      BOOTSTRAP_JS_DIR + "bootstrap-transition.js",
-      BOOTSTRAP_JS_DIR + "bootstrap-alert.js",
-      BOOTSTRAP_JS_DIR + "bootstrap-button.js",
-      BOOTSTRAP_JS_DIR + "bootstrap-carousel.js",
-      BOOTSTRAP_JS_DIR + "bootstrap-collapse.js",
-      BOOTSTRAP_JS_DIR + "bootstrap-dropdown.js",
-      BOOTSTRAP_JS_DIR + "bootstrap-modal.js",
-      BOOTSTRAP_JS_DIR + "bootstrap-tooltip.js",
-      BOOTSTRAP_JS_DIR + "bootstrap-popover.js",
-      BOOTSTRAP_JS_DIR + "bootstrap-scrollspy.js",
-      BOOTSTRAP_JS_DIR + "bootstrap-tab.js",
-      BOOTSTRAP_JS_DIR + "bootstrap-typeahead.js",
-      BOOTSTRAP_JS_DIR + "bootstrap-affix.js"
-    ],
-
-    INTERNAL_JS_FILES = [
-      WEBAPP_DIR + "/**/*.js"
-    ],
-  EXTERNAL_JS_FILES = [
-    BOWER_DIR + "/jquery/dist/jquery.js",
-    BOWER_DIR + "/angular/angular.js",
-    BOWER_DIR + "/moment/min/moment.min.js",
-    BOWER_DIR + "/angular-resource/angular-resource.js",
-    BOWER_DIR + "/angular-cookies/angular-cookies.js",
-    BOWER_DIR + "/angular-sanitize/angular-sanitize.js",
-    BOWER_DIR + "/angular-route/angular-route.js",
-    BOWER_DIR + "/angular-bootstrap/ui-bootstrap-tpls.min.js",
-    BOWER_DIR + "/angular-http-auth/src/http-auth-interceptor.js",
-    BOWER_DIR + "/angular-ui-calendar/src/calendar.js",
-    BOWER_DIR + "/angular-file-upload/angular-file-upload.js",
-    BOWER_DIR + "/fullcalendar/dist/fullcalendar.js",
-    BOWER_DIR + "/fullcalendar/dist/gcal.js",
-    BOWER_DIR + "/toastr/*.js"
-  ].concat(BOOTSTRAP_JS_FILES);
+      WEBAPP_DIR = "app/scripts",
+      BOOTSTRAP_JS_DIR = BOWER_DIR + "/bootstrap/js/",
+      BOOTSTRAP_JS_FILES = [
+        BOOTSTRAP_JS_DIR + "bootstrap-transition.js",
+        BOOTSTRAP_JS_DIR + "bootstrap-alert.js",
+        BOOTSTRAP_JS_DIR + "bootstrap-button.js",
+        BOOTSTRAP_JS_DIR + "bootstrap-carousel.js",
+        BOOTSTRAP_JS_DIR + "bootstrap-collapse.js",
+        BOOTSTRAP_JS_DIR + "bootstrap-dropdown.js",
+        BOOTSTRAP_JS_DIR + "bootstrap-modal.js",
+        BOOTSTRAP_JS_DIR + "bootstrap-tooltip.js",
+        BOOTSTRAP_JS_DIR + "bootstrap-popover.js",
+        BOOTSTRAP_JS_DIR + "bootstrap-scrollspy.js",
+        BOOTSTRAP_JS_DIR + "bootstrap-tab.js",
+        BOOTSTRAP_JS_DIR + "bootstrap-typeahead.js",
+        BOOTSTRAP_JS_DIR + "bootstrap-affix.js"
+      ],
+      INTERNAL_JS_FILES = [
+        WEBAPP_DIR + "/**/*.js"
+      ],
+      EXTERNAL_JS_FILES = [
+        BOWER_DIR + "/jquery/dist/jquery.js",
+        BOWER_DIR + "/angular/angular.js",
+        BOWER_DIR + "/moment/min/moment.min.js",
+        BOWER_DIR + "/angular-resource/angular-resource.js",
+        BOWER_DIR + "/angular-cookies/angular-cookies.js",
+        BOWER_DIR + "/angular-sanitize/angular-sanitize.js",
+        BOWER_DIR + "/angular-route/angular-route.js",
+        BOWER_DIR + "/angular-bootstrap/ui-bootstrap-tpls.min.js",
+        BOWER_DIR + "/angular-http-auth/src/http-auth-interceptor.js",
+        BOWER_DIR + "/angular-ui-calendar/src/calendar.js",
+        BOWER_DIR + "/angular-file-upload/angular-file-upload.js",
+        BOWER_DIR + "/fullcalendar/dist/fullcalendar.js",
+        BOWER_DIR + "/fullcalendar/dist/gcal.js",
+        BOWER_DIR + "/toastr/*.js"
+    ].concat(BOOTSTRAP_JS_FILES),
+    EXTERNAL_CSS_FILES = [
+      BOWER_DIR + "/fullcalendar/dist/fullcalendar.css",
+      BOWER_DIR + "/toastr/toastr.css"
+    ];
 
   grunt.initConfig({
     yeoman: {
@@ -65,7 +68,8 @@ module.exports = function (grunt) {
     },
     concat: {
       "app/built/internal.js": INTERNAL_JS_FILES,
-      "app/built/external.js": EXTERNAL_JS_FILES
+      "app/built/external.js": EXTERNAL_JS_FILES,
+      "app/built/external.css": EXTERNAL_CSS_FILES
     },
     express: {
         options: {
@@ -122,6 +126,10 @@ module.exports = function (grunt) {
       },
       gruntfile: {
         files: ['Gruntfile.js']
+      },
+      js: {
+        files: EXTERNAL_JS_FILES.concat(INTERNAL_JS_FILES),
+        tasks: 'concat'
       }
     },
     autoprefixer: {
@@ -404,7 +412,7 @@ module.exports = function (grunt) {
     this.async();
   });
 
-  grunt.registerTask('compile', ['copy', 'concat', 'less']);
+  grunt.registerTask('compile', ['concat']);
 
   grunt.registerTask('server', function (target) {
     if (target === 'dist') {
