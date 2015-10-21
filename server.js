@@ -2,6 +2,7 @@
 
 // Module dependencies.
 var express = require('express'),
+    nodemailer = require('nodemailer'),
     http = require('http'),
     passport = require('passport'),
     path = require('path'),
