@@ -402,6 +402,18 @@ angular.module('howWasThat')
 
     };
 
+    function getStatisticsDetails () {
+      var tournamentName = $routeParams.tournamentName;
+      tournamentService.stats(tournamentName).success(function (data) {
+        console.log(data);
+      }).error(function (status, data) {
+        alertService.displayErrorMessage("There was an error! Please try again.");
+      });
+
+    }
+
+    getStatisticsDetails();
+
 
     $scope.teamsFilter = function (team) {
       var i = $.inArray(team, $scope.filteredTeams);
