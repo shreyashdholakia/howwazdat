@@ -67,6 +67,7 @@ app.use(app.router);
 //Bootstrap routes
 require('./lib/config/routes')(app);
 
+app.use(express.static(__dirname + '/'))
 // Start server
 var port = process.env.PORT || 3000;
 app.listen(port, function () {
