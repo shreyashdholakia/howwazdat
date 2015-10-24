@@ -21,6 +21,9 @@ angular.module('howWasThat')
 		},
     all: function() {
       return $http.get(options.api.base_url  + '/api/tournaments')
+    },
+    stats: function(tournament) {
+      return $http.get(options.api.base_url + '/api/statistics/' + tournament)
     }
 	};
 });

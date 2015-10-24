@@ -28,7 +28,9 @@
                 <th  ng-click="sortType='createdDate'; sortReverse = !sortReverse">Start Date <i class="fa fa-sort"></i></th>
               </tr>
               </thead>
+
               <tbody>
+
               <tr ng-repeat="tournament in tournamentList | orderBy:sortType:sortReverse">
                 <td>{{$index + 1}}</td>
                 <td><a href="/tournament/{{tournament.tournamentName}}">{{tournament.tournamentName}}</a></td>
@@ -36,6 +38,9 @@
               </tr>
               </tbody>
             </table>
+            <div class="bs-callout bs-callout-info" ng-show="tournamentList == 0">
+              No Tournaments Created!
+            </div>
             <hr>
             <div class="row">
               <div class="col-md-4 col-md-offset-4 text-center">
