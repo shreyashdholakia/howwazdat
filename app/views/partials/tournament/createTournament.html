@@ -151,10 +151,7 @@
         </div>
         <!--/tab-pane-->
         <div class="tab-pane" ng-class="{'active':isActiveTab('points')}" id="points">
-          <br>
-          <div class="alert alert-danger" ng-hide="tournamentTeams.length > 0">
-            <span class="fa fa-info-circle"></span> No Teams added. Please add teams and start playing!!
-          </div>
+
           <form class="form">
             <div class="form-group">
               <div class="col-xs-6">
@@ -205,6 +202,9 @@
               </tr>
               </tbody>
             </table>
+            <div class="bs-callout bs-callout-info" ng-hide="tournamentTeams.length > 0">
+              <span class="fa fa-info-circle"></span> No Teams added. Please add teams and start playing!!
+            </div>
           </div>
         </div>
         <div class="tab-pane" ng-class="{'active':isActiveTab('calendar')}">
@@ -227,19 +227,22 @@
                 <th>W</th>
               </tr>
               </thead>
-              <tbody id="items" ng-repeat="team in tournamentTeams">
+              <tbody id="items" ng-repeat="stats in statistics">
               <tr>
                 <td>{{$index + 1}}</td>
-                <td><a href="/team/{{team.teamName}}">{{team.teamName}}</a></td>
-                <td>{{team.captain}}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{stats.player}}</td>
+                <td><a href="/team/{{stats.team}}">{{stats.team}}</a></td>
+                <td>{{stats.matches}}</td>
+                <td>{{stats.innings}}</td>
+                <td>{{stats.runs || 0}}</td>
+                <td>{{stats.highestScore}}</td>
+                <td>{{stats.wickets}}</td>
               </tr>
               </tbody>
             </table>
+            <div class="bs-callout bs-callout-info" ng-hide="statistics.length > 0">
+              <span class="fa fa-info-circle"></span> No Teams added. Please add teams to see tournament records!!
+            </div>
           </div>
         </div>
         <!--/tab-pane-->

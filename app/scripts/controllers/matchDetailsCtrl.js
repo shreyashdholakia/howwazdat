@@ -160,7 +160,7 @@ angular.module('howWasThat')
     }
 
     function visitingTeamPlayers(players) {
-      players.forEach(function (player)    // check if the team is already added
+      players.forEach(function (player)
       {
         var fullName = player.firstName + ' ' + player.lastName;
         $scope.visitingTeamPlayerList.push({

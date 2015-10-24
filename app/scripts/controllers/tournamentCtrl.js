@@ -404,8 +404,8 @@ angular.module('howWasThat')
 
     function getStatisticsDetails () {
       var tournamentName = $routeParams.tournamentName;
-      tournamentService.stats(tournamentName).success(function (data) {
-        console.log(data);
+      tournamentService.stats(tournamentName).success(function (response) {
+        $scope.statistics = response.data.teams;
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.");
       });
