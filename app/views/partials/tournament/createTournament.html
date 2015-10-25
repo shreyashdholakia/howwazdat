@@ -224,7 +224,11 @@
                 <th>Inn</th>
                 <th>R</th>
                 <th>HS</th>
+                <th>50's</th>
+                <th>100's</th>
                 <th>W</th>
+                <th>BB</th>
+                <th>Points</th>
               </tr>
               </thead>
               <tbody id="items" ng-repeat="stats in statistics">
@@ -232,11 +236,15 @@
                 <td>{{$index + 1}}</td>
                 <td>{{stats.player}}</td>
                 <td><a href="/team/{{stats.team}}">{{stats.team}}</a></td>
-                <td>{{stats.matches}}</td>
-                <td>{{stats.innings}}</td>
+                <td>{{stats.matches || 0}}</td>
+                <td>{{stats.innings || 0}}</td>
                 <td>{{stats.runs || 0}}</td>
-                <td>{{stats.highestScore}}</td>
-                <td>{{stats.wickets}}</td>
+                <td>{{stats.highestScore || 0}}</td>
+                <td>{{stats.fifties || 0}}</td>
+                <td>{{stats.hundreds || 0}}</td>
+                <td>{{stats.wickets || 0}}</td>
+                <td>{{stats.bestBowling || 0}}</td>
+                <td>{{stats.bestBowling || 0}}</td>
               </tr>
               </tbody>
             </table>

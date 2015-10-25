@@ -193,6 +193,7 @@ angular.module('howWasThat')
       getPointsTable();
       getTournamentList();
       getTeamList();
+      getStatisticsDetails();
     }
 
     getAllDetails();
@@ -411,9 +412,6 @@ angular.module('howWasThat')
       });
 
     }
-
-    getStatisticsDetails();
-
 
     $scope.teamsFilter = function (team) {
       var i = $.inArray(team, $scope.filteredTeams);
