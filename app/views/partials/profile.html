@@ -1,7 +1,11 @@
 <hr>
 <div class="container">
 	<div class="row">
-  		<div class="col-sm-10"><h1>{{user.firstname}} {{user.lastname}}</h1></div>
+  		<div class="col-sm-10"><h1>{{user.firstname}} {{user.lastname}}</h1>
+        <div class="bs-callout bs-callout-info" ng-show="!user">
+          Please update your profile!
+        </div>
+      </div>
     	<div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="http://www.gravatar.com/avatar/28fd20ccec6865e2d5f0e1f4446eb7bf?s=100"></a></div>
     </div>
     <hr>
@@ -21,7 +25,7 @@
                 </div>
                 <hr>
     <div class="row">
-  		<div class="col-sm-3"><!--left col-->
+  		<div class="col-sm-3" ng-show="user"><!--left col-->
 
           <div class="panel panel-primary">
             <div class="panel-heading text-center">Profile <i class="fa fa-user fa-1x"></i></div>
@@ -83,7 +87,6 @@
              <div class="tab-pane" ng-class="{'active':isActiveTab('profile')}">
 
 
-                  <hr>
                   <form class="form" id="registrationForm">
                       <div class="form-group">
 
