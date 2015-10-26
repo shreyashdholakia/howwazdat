@@ -9,10 +9,10 @@
     "ejs": "~0.8.4",
     "underscore": "~1.5.2",
     "connect-mongo": "~0.4.0",
-    "nodemailer": "1.0.0"
+    "nodemailer": "1.0.0",
+    "bower": "~1.6.4"
   },
   "devDependencies": {
-    "bower": "~1.6.4",
     "grunt": "~0.4.1",
     "grunt-autoprefixer": "~0.4.0",
     "grunt-concurrent": "~0.4.1",
