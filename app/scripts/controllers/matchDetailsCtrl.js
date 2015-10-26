@@ -304,7 +304,19 @@ angular.module('howWasThat')
           strikeRate: calculateStrikeRate($scope.runsTeam2, $scope.ballsTeam2)
         });
 
-        addBattingToTournament($scope.visitingTeamBattingDetails, 'visiting', null);
+        $scope.newBatterVisitingTeam.push({
+          player: $scope.homeTeamPlayer.name,
+          outNotOut: createHowOut($scope.howOutTeam2.name, $scope.homeTeamFielder.name, $scope.homeTeamBowler.name),
+          fielder: $scope.homeTeamFielder.name || '--',
+          bowler: $scope.homeTeamBowler.name || '--',
+          runs: $scope.runsTeam2 || 0,
+          balls: $scope.ballsTeam2 || 0,
+          fours: $scope.foursTeam2 || 0,
+          sixes: $scope.sixesTeam2 || 0,
+          strikeRate: calculateStrikeRate($scope.runsTeam2, $scope.ballsTeam2)
+        });
+
+        addBattingToTournament($scope.visitingTeamBattingDetails, 'visiting', $scope.newBatterVisitingTeam);
 
         resetAddPlayerForm();
       } else {
@@ -397,10 +409,6 @@ angular.module('howWasThat')
 
     function addBattingToTournament(battingInfo, team, newBatter) {
       if (team == 'home') {
-        //$scope.homeTeamBattingScores.push({
-        //  team: $scope.matchDetails.homeTeam,
-        //  battingScores: battingInfo
-        //});
 
         $scope.tournamentMatches.forEach(function (match) {
           if (match.matchNumber === $scope.matchNumber) {
@@ -410,10 +418,6 @@ angular.module('howWasThat')
           }
         });
       } else {
-        //$scope.visitingTeamBattingScore.push({
-        //  team: $scope.matchDetails.visitingTeam,
-        //  battingScores: battingInfo
-        //});
 
         $scope.tournamentMatches.forEach(function (match) {
           if (match.matchNumber === $scope.matchNumber) {
@@ -503,9 +507,7 @@ angular.module('howWasThat')
           $scope.match = match;
         }
       });
-
       submitMatchResult($scope.match);
-
     };
 
     function submitMatchScores(match, team, newBatter) {
