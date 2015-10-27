@@ -32,14 +32,14 @@ angular.module('howWasThat')
         }
 
         if ($scope.matchDetails.visitingTeamBatting) {
-          $scope.visitingTeamBattingDetails = $scope.matchDetails.visitingTeamBatting[0].battingScores;
+          $scope.visitingTeamBattingDetails = $scope.matchDetails.visitingTeamBatting;
         }
 
         if ($scope.matchDetails.visitingTeamBowling) {
-          $scope.visitingTeamBowlingDetails = $scope.matchDetails.visitingTeamBowling[0].bowlingCard;
+          $scope.visitingTeamBowlingDetails = $scope.matchDetails.visitingTeamBowling;
         }
         if ($scope.matchDetails.homeTeamBowling) {
-          $scope.homeTeamBowlingDetails = $scope.matchDetails.homeTeamBowling[0].bowlingCard;
+          $scope.homeTeamBowlingDetails = $scope.matchDetails.homeTeamBowling;
         }
         if ($scope.matchDetails.status) {
           $scope.editMatchStatus = true;
@@ -231,8 +231,10 @@ angular.module('howWasThat')
     $scope.homeTeamFielder = [];
 
     $scope.visitingTeamBowlingDetails = [];
+    $scope.visitingTeamNewBowler = [];
     $scope.newBatterVisitingTeam = [];
     $scope.homeTeamBowlingDetails = [];
+    $scope.homeTeamNewBowler = [];
     $scope.visitingTeamBowlingScores = [];
     $scope.homeTeamBowlingScores = [];
 
@@ -311,7 +313,7 @@ angular.module('howWasThat')
       });
 
       if (!playerExists) {
-        $scope.visitingTeamBowlingDetails.push({
+        $scope.visitingTeamNewBowler.push({
           player: $scope.visitingTeamBowler.name,
           overs: $scope.visitingTeamBowlerOvers || 0,
           maiden: $scope.visitingTeamBowlerMaiden || 0,
@@ -320,7 +322,9 @@ angular.module('howWasThat')
           econ: calculateBowlingEconomy($scope.visitingTeamBowlerRuns, $scope.visitingTeamBowlerOvers)
         });
 
-        addBowlingToTournament($scope.visitingTeamBowlingDetails, 'visiting');
+        $scope.visitingTeamBowlingDetails.push($scope.visitingTeamNewBowler[0]);
+
+        addBowlingToTournament($scope.visitingTeamBowlingDetails, 'visitingBowling', $scope.visitingTeamNewBowler);
 
         resetAddPlayerForm();
       } else {
@@ -341,7 +345,8 @@ angular.module('howWasThat')
       });
 
       if (!playerExists) {
-        $scope.homeTeamBowlingDetails.push({
+
+        $scope.homeTeamNewBowler.push({
           player: $scope.homeTeamBowler.name,
           overs: $scope.homeTeamBowlerOvers || 0,
           maiden: $scope.homeTeamBowlerMaiden || 0,
@@ -350,7 +355,9 @@ angular.module('howWasThat')
           econ: calculateBowlingEconomy($scope.homeTeamBowlerRuns, $scope.homeTeamBowlerOvers)
         });
 
-        addBowlingToTournament($scope.homeTeamBowlingDetails, 'home');
+        $scope.homeTeamBowlingDetails.push($scope.homeTeamNewBowler[0]);
+
+        addBowlingToTournament($scope.homeTeamBowlingDetails, 'homeBowling', $scope.homeTeamNewBowler);
 
         resetAddPlayerForm();
       } else {
@@ -376,6 +383,21 @@ angular.module('howWasThat')
       $scope.ballsTeam2 = "";
       $scope.foursTeam2 = "";
       $scope.sixesTeam2 = "";
+      $scope.homeTeamBattingDetails = [];
+      $scope.newBatterHomeTeam = [];
+      $scope.visitingTeamBattingDetails = [];
+      $scope.visitingTeamFielder = [];
+      $scope.visitingTeamBowler = [];
+      $scope.homeTeamBowler = [];
+      $scope.homeTeamFielder = [];
+      $scope.visitingTeamBowlingDetails = [];
+      $scope.visitingTeamNewBowler = [];
+      $scope.newBatterVisitingTeam = [];
+      $scope.homeTeamBowlingDetails = [];
+      $scope.homeTeamNewBowler = [];
+      $scope.visitingTeamBowlingScores = [];
+      $scope.homeTeamBowlingScores = [];
+      $scope.matches = [];
     }
 
     $scope.homeTeamBattingScores = [];
@@ -404,7 +426,7 @@ angular.module('howWasThat')
       submitMatchScores($scope.match, team, newBatter);
     }
 
-    function addBowlingToTournament(bowling, team) {
+    function addBowlingToTournament(bowling, team, newBowler) {
       if (team == 'visiting') {
         $scope.visitingTeamBowlingScores.push({
           bowlingCard: bowling
@@ -430,7 +452,7 @@ angular.module('howWasThat')
           }
         });
       }
-      submitMatchScores($scope.match, team, null);
+      submitMatchScores($scope.match, team, newBowler);
     }
 
     function getLosingTeam(result, team) {
@@ -484,14 +506,14 @@ angular.module('howWasThat')
       submitMatchResult($scope.match);
     };
 
-    function submitMatchScores(match, team, newBatter) {
+    function submitMatchScores(match, team, newBatterBowler) {
 
       $scope.matches.push(
         {
           all: $scope.tournamentMatches,
           single: match,
-          batting: team,
-          batter: newBatter
+          battingBowling: team,
+          batterBowler: newBatterBowler
         }
       );
 
