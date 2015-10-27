@@ -117,6 +117,10 @@ angular.module('howWasThat')
 
     };
 
+    $scope.getPoints = function (stats) {
+      return ((stats.runs * 1) + (stats.wickets * 10))
+    };
+
     $scope.tournamentPage = ($routeParams.tournamentName) ? true : false;
 
     $scope.checkProfileCreated();
