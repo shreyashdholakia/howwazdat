@@ -110,10 +110,15 @@ angular.module('howWasThat')
       ProfileService.findProfile($rootScope.currentUser.username).success(function (response) {
         $scope.profileExists = response.exists;
         $scope.user = response.data;
+        $scope.organizer = $scope.user.firstname + ' ' + $scope.user.lastname;
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.");
       });
 
+    };
+
+    $scope.getPoints = function (stats) {
+      return ((stats.runs * 1) + (stats.wickets * 10))
     };
 
     $scope.tournamentPage = ($routeParams.tournamentName) ? true : false;
@@ -261,7 +266,7 @@ angular.module('howWasThat')
         var joiningDate = new Date();
         $scope.tournamentDetails.push({
           tournamentName: $scope.tournament.name,
-          organizer: $scope.tournament.organizer,
+          organizer: $scope.organizer,
           owner: $scope.user.email,
           createdDate: joiningDate,
           updatedBy: $rootScope.currentUser.username,
@@ -285,6 +290,7 @@ angular.module('howWasThat')
 
     $scope.tab = "calendar";
     $scope.isEmail = true;
+    $scope.isOrganizer = true;
     $('#calendar').fullCalendar('render');
 
     $scope.setTab = function (newTab) {

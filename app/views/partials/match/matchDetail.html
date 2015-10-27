@@ -17,9 +17,10 @@
         ng-show="matchDetails.tossDecision == 'Batting'">bat</strong></em> <i class="fa fa-pencil"
                                                                               ng-click="editMatchStatus = !editMatchStatus"></i></span>
       <span ng-show="matchDetails.result == 'Completed'"><br><em><strong class=" text-info"><u>{{matchDetails.winningTeam}}</u></strong>
-      won by 125 runs </em> <i class="fa fa-pencil" ng-click="editMatchStatus = !editMatchStatus"></i></span>
-      <span ng-show="matchDetails.result != 'Completed'"><br><em><strong class=" text-info"><u>The game was a {{matchDetails.result}}</u></strong>
-        </em> <i class="fa fa-pencil" ng-click="editMatchStatus = !editMatchStatus"></i></span>
+        won by 125 runs </em> <i class="fa fa-pencil" ng-click="editMatchStatus = !editMatchStatus"></i></span>
+      <span ng-show="matchDetails.result == 'Tie' || matchDetails.result == 'Abandoned' || matchDetails.result == 'Washed Out'"><br><em><strong class=" text-info"><u>The game was a
+        {{matchDetails.result}}</u></strong>
+      </em> <i class="fa fa-pencil" ng-click="editMatchStatus = !editMatchStatus"></i></span>
       <br><span ng-show="matchDetails.status == 'Submitted'"><em><strong
       class="text-info"><u>{{matchDetails.mom}}</u></strong> is the Man of the match </em> <i class="fa fa-pencil"
                                                                                               ng-click="editMatchStatus = !editMatchStatus"></i></span>
@@ -35,7 +36,7 @@
     <form class="form" id="matchStatusForm" novalidate name="matchStatusForm">
       <div class="form-group">
         <div class="col-xs-2">
-          <label for="toss"><h4><i class="fa fa-dot-circle-o"></i> Toss*</h4></label>
+          <label><h4><i class="fa fa-dot-circle-o"></i> Toss*</h4></label>
 
           <div>
             <select id="umpire" class="form-control" ng-model="toss" ng-change="setToss()"
@@ -46,7 +47,7 @@
       </div>
       <div class="form-group">
         <div class="col-xs-2">
-          <label for="decision"><h4><i class="fa fa-star-o"></i> Decision*</h4></label>
+          <label><h4><i class="fa fa-star-o"></i> Decision*</h4></label>
 
           <div>
             <select class="form-control" ng-model="decision" ng-change="setDecision()"
@@ -57,7 +58,7 @@
       </div>
       <div class="form-group">
         <div class="col-xs-2">
-          <label for="winner"><h4><i class="fa fa-star-o"></i> Result*</h4></label>
+          <label><h4><i class="fa fa-star-o"></i> Result*</h4></label>
 
           <div>
             <select class="form-control" ng-model="result" ng-change="setWinningTeam()"
@@ -68,17 +69,19 @@
       </div>
       <div class="form-group">
         <div class="col-xs-2">
-          <label for="winner"><h4><i class="fa fa-star-o"></i> Winner*</h4></label>
+          <label><h4><i class="fa fa-star-o"></i> Winner*</h4></label>
+
           <div>
             <select class="form-control" ng-model="winningTeam" ng-change="setWinningTeam()"
-                    ng-options="team.name for team in teams" ng-disabled="result.name == 'Tie' || result.name == 'Abandoned' || result.name == 'Washed Out'">
+                    ng-options="team.name for team in teams"
+                    ng-disabled="result.name == 'Tie' || result.name == 'Abandoned' || result.name == 'Washed Out'">
             </select>
           </div>
         </div>
       </div>
       <div class="form-group">
         <div class="col-xs-2">
-          <label for="last_name"><h4>Man Of The Match*</h4></label>
+          <label><h4>Man Of The Match*</h4></label>
           <input type="text" class="form-control" name="playerName" ng-model="mom" id="mom"
                  placeholder="Man of the match" title="home team details"
                  typeahead="player as player.name for player in manOfMatch | filter:{name:$viewValue} | limitTo:8"
@@ -87,7 +90,7 @@
       </div>
       <div class="form-group">
         <div class="col-xs-2">
-          <label for="last_name" class="text-center"><h4><i class="fa fa-floppy-o"></i></h4></label>
+          <label class="text-center"><h4><i class="fa fa-floppy-o"></i></h4></label>
           <br>
           <button class="btn btn-default btn-primary" ng-click="update()" type="submit"
                   ng-disabled="matchStatusForm.$invalid"><i class="fa fa-check"></i> Update
@@ -97,547 +100,566 @@
     </form>
   </div>
   <hr>
-  <div ng-show="matchDetails.status">
-    <div class="row">
-      <h4>Batting {{matchDetails.homeTeam}} <strong ng-show="homeTeamRuns" class="text-info"><em><u> :
-        {{homeTeamRuns}}/{{homeTeamWickets}} ({{homeTeamOvers}} ov) (RR {{homeTeamRunRate | number: 2}} runs per
-        over)</u></em></strong></h4>
+  <ul class="nav nav-tabs" id="myTab">
+    <li ng-class="{'active':isActiveTab('home')}"><a href
+                                                     ng-click="setTab('home')"><strong>{{matchDetails.homeTeam}}</strong></a>
+    </li>
+    <li ng-class="{'active':isActiveTab('visiting')}"><a href ng-click="setTab('visiting')"><strong>{{matchDetails.visitingTeam}}</strong></a>
+    </li>
+  </ul>
 
-      <div class="table-responsive">
-        <table class="table table-hover table-striped">
-          <thead>
-          <tr>
-            <th>#</th>
-            <th>Player</th>
-            <th></th>
-            <th>R</th>
-            <th>B</th>
-            <th>4s</th>
-            <th>6s</th>
-            <th>SR</th>
-            <th><i class="fa fa-cog"></i></th>
-          </tr>
-          </thead>
-          <tbody ng-repeat="stats in homeTeamBattingDetails">
-          <tr>
-            <td>{{$index + 1}}</td>
-            <td>{{stats.player}}</td>
-            <td>{{stats.outNotOut}}</td>
-            <td>{{stats.runs}}</td>
-            <td>{{stats.balls}}</td>
-            <td>{{stats.fours}}</td>
-            <td>{{stats.sixes}}</td>
-            <td>{{stats.strikeRate | number:2 || 0}}</td>
-            <td></td>
-          </tr>
-          </tbody>
-        </table>
+  <div class="tab-content">
+    <div class="tab-pane" ng-class="{'active':isActiveTab('home')}" id="home">
+      <br>
+
+      <div>
+        <h4>Batting {{matchDetails.homeTeam}} <strong ng-show="homeTeamRuns" class="text-info"><em><u> :
+          {{homeTeamRuns}}/{{homeTeamWickets}} ({{homeTeamOvers}} ov) (RR {{homeTeamRunRate | number: 2}} runs per
+          over)</u></em></strong></h4>
+
+        <div class="table-responsive">
+          <table class="table table-hover table-striped">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Player</th>
+              <th></th>
+              <th>R</th>
+              <th>B</th>
+              <th>4s</th>
+              <th>6s</th>
+              <th>SR</th>
+              <th><i class="fa fa-cog"></i></th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="stats in homeTeamBattingDetails">
+            <tr>
+              <td>{{$index + 1}}</td>
+              <td>{{stats.player}}</td>
+              <td>{{stats.outNotOut}}</td>
+              <td>{{stats.runs}}</td>
+              <td>{{stats.balls}}</td>
+              <td>{{stats.fours}}</td>
+              <td>{{stats.sixes}}</td>
+              <td>{{stats.strikeRate | number:2 || 0}}</td>
+              <td></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-    <hr>
-    <div class="row">
-      <form class="form" novalidate name="matchDetailsForm">
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="playerName"><h4>Player name</h4></label>
-            <!--<input type="text" class="form-control" name="playerName" ng-model="playerName" id="playerName"-->
-            <!--title="player name">-->
-            <input type="text" class="form-control" name="playerName" ng-model="visitingTeamPlayer"
-                   placeholder="{{matchDetails.homeTeam}}" title="home team details"
-                   typeahead="player as player.name for player in playerList | filter:{name:$viewValue} | limitTo:8"
-                   required>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="howOut"><h4>How Out</h4></label>
-
-            <div>
-              <select class="form-control" name="howOut" ng-model="howOut" ng-change="setHowOut()"
-                      ng-options="out.name for out in outs">
-              </select>
+      <hr>
+      <div class="row">
+        <form class="form" novalidate name="matchDetailsForm">
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="playerName"><h4>Player name</h4></label>
+              <!--<input type="text" class="form-control" name="playerName" ng-model="playerName" id="playerName"-->
+              <!--title="player name">-->
+              <input type="text" class="form-control" name="playerName" ng-model="visitingTeamPlayer"
+                     placeholder="{{matchDetails.homeTeam}}" title="home team details"
+                     typeahead="player as player.name for player in playerList | filter:{name:$viewValue} | limitTo:8"
+                     required>
             </div>
           </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="fielder"><h4>Fielder</h4></label>
-            <input type="text" class="form-control" name="visitingTeamFielder" ng-model="visitingTeamFielder"
-                   placeholder="{{matchDetails.visitingTeam}}" title="home team details"
-                   typeahead="player as player.name for player in visitingTeamPlayerList | filter:{name:$viewValue} | limitTo:8"
-                   ng-disabled="howOut.name == 'Not Out' || howOut.name == 'Did not bat' || howOut.name == 'LBW'">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="bowler"><h4>Bowler</h4></label>
-            <!--<input type="text" class="form-control" name="bowler" ng-model="bowler" id="bowler"-->
-            <!--title="bowler">-->
-            <input type="text" class="form-control" name="visitingTeamPlayer" ng-model="visitingTeamBowler"
-                   placeholder="{{matchDetails.visitingTeam}}" title="home team details"
-                   typeahead="player as player.name for player in visitingTeamPlayerList | filter:{name:$viewValue} | limitTo:8"
-                   ng-disabled="howOut.name == 'Not Out' || howOut.name == 'Did not bat'">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-1">
-            <label for="runs"><h4>Runs</h4></label>
-            <input type="text" class="form-control" name="runs" ng-model="runs" title="runs">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-1">
-            <label for="balls"><h4>Balls</h4></label>
-            <input type="text" class="form-control" name="balls" ng-model="balls" title="balls">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-1">
-            <label for="fours"><h4>4s</h4></label>
-            <input type="text" class="form-control" name="fours" ng-model="fours" title="fours">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-md-1">
-            <label for="sixes"><h4>6s</h4></label>
-            <input type="text" class="form-control" name="sixes" ng-model="sixes" title="sixes">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-12">
-            <button class="btn btn-primary form-control" name="addDetails"
-                    ng-click="addHomeTeamBatting()" type="submit"><i class="fa fa-check"></i> Add
-            </button>
-          </div>
-        </div>
-      </form>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="howOut"><h4>How Out</h4></label>
 
-      <form class="form" novalidate name="homeTeamTotalsForm">
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="totalRuns"><h4>Total Runs</h4></label>
-            <input type="text" class="form-control" name="first_name" ng-model="homeTeamRuns" placeholder="Total Runs"
-                   title="enter total runs">
+              <div>
+                <select class="form-control" name="howOut" ng-model="howOut" ng-change="setHowOut()"
+                        ng-options="out.name for out in outs">
+                </select>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="overs"><h4>Overs</h4></label>
-            <input type="text" class="form-control" ng-model="homeTeamOvers" placeholder="Overs" title="enter overs">
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="fielder"><h4>Fielder</h4></label>
+              <input type="text" class="form-control" name="visitingTeamFielder" ng-model="visitingTeamFielder"
+                     placeholder="{{matchDetails.visitingTeam}}" title="home team details"
+                     typeahead="player as player.name for player in visitingTeamPlayerList | filter:{name:$viewValue} | limitTo:8"
+                     ng-disabled="howOut.name == 'Not Out' || howOut.name == 'Did not bat' || howOut.name == 'LBW'">
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="wides"><h4>Wickets</h4></label>
-            <input type="text" class="form-control" ng-model="homeTeamWickets" placeholder="Wickets">
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="bowler"><h4>Bowler</h4></label>
+              <!--<input type="text" class="form-control" name="bowler" ng-model="bowler" id="bowler"-->
+              <!--title="bowler">-->
+              <input type="text" class="form-control" name="visitingTeamPlayer" ng-model="visitingTeamBowler"
+                     placeholder="{{matchDetails.visitingTeam}}" title="home team details"
+                     typeahead="player as player.name for player in visitingTeamPlayerList | filter:{name:$viewValue} | limitTo:8"
+                     ng-disabled="howOut.name == 'Not Out' || howOut.name == 'Did not bat'">
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-1">
-            <label for="wides"><h4>Wides</h4></label>
-            <input type="text" class="form-control" ng-model="homeTeamWides" placeholder="Wides">
+          <div class="form-group">
+            <div class="col-xs-1">
+              <label for="runs"><h4>Runs</h4></label>
+              <input type="text" class="form-control" name="runs" ng-model="runs" title="runs">
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-1">
-            <label for="nb"><h4>NB</h4></label>
-            <input type="text" class="form-control" ng-model="homeTeamNoBalls" placeholder="NB">
+          <div class="form-group">
+            <div class="col-xs-1">
+              <label for="balls"><h4>Balls</h4></label>
+              <input type="text" class="form-control" name="balls" ng-model="balls" title="balls">
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-1">
-            <label for="byes"><h4>Byes</h4></label>
-            <input type="text" class="form-control" ng-model="homeTeamByes" placeholder="Byes">
+          <div class="form-group">
+            <div class="col-xs-1">
+              <label for="fours"><h4>4s</h4></label>
+              <input type="text" class="form-control" name="fours" ng-model="fours" title="fours">
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-1">
-            <label for="lb"><h4>LB</h4></label>
-            <input type="text" class="form-control" ng-model="homeTeamLegByes" placeholder="LB">
+          <div class="form-group">
+            <div class="col-md-1">
+              <label for="sixes"><h4>6s</h4></label>
+              <input type="text" class="form-control" name="sixes" ng-model="sixes" title="sixes">
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="email"><h4> Add Total</h4></label>
-            <button class="btn btn-primary form-control" ng-click="addHomeTeamTotal()" type="submit"><i
-              class="fa fa-plus"></i></button>
+          <div class="form-group">
+            <div class="col-xs-12">
+              <button class="btn btn-primary form-control" name="addDetails"
+                      ng-click="addHomeTeamBatting()" type="submit"><i class="fa fa-check"></i> Add
+              </button>
+            </div>
           </div>
-        </div>
-      </form>
-    </div>
-    <hr>
-    <div class="row">
-      <h3>Bowling {{matchDetails.visitingTeam}}</h3>
+        </form>
 
-      <div class="table-responsive">
-        <table class="table table-hover table-striped">
-          <thead>
-          <tr>
-            <th>#</th>
-            <th>Bowling</th>
-            <th>O</th>
-            <th>M</th>
-            <th>W</th>
-            <th>R</th>
-            <th>Econ</th>
-            <th><i class="fa fa-cog"></i></th>
-          </tr>
-          </thead>
-          <tbody ng-repeat="stats in visitingTeamBowlingDetails">
-          <tr>
-            <td>{{$index + 1}}</td>
-            <td>{{stats.player}}</td>
-            <td>{{stats.overs}}</td>
-            <td>{{stats.maiden}}</td>
-            <td>{{stats.runs}}</td>
-            <td>{{stats.wickets}}</td>
-            <td>{{stats.econ | number:2 || 0}}</td>
-            <td></td>
-          </tr>
-          </tbody>
-        </table>
+        <form class="form" novalidate name="homeTeamTotalsForm">
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="totalRuns"><h4>Total Runs</h4></label>
+              <input type="text" class="form-control" name="first_name" ng-model="homeTeamRuns" placeholder="Total Runs"
+                     title="enter total runs">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="overs"><h4>Overs</h4></label>
+              <input type="text" class="form-control" ng-model="homeTeamOvers" placeholder="Overs" title="enter overs">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="wides"><h4>Wickets</h4></label>
+              <input type="text" class="form-control" ng-model="homeTeamWickets" placeholder="Wickets">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-1">
+              <label for="wides"><h4>Wides</h4></label>
+              <input type="text" class="form-control" ng-model="homeTeamWides" placeholder="Wides">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-1">
+              <label for="nb"><h4>NB</h4></label>
+              <input type="text" class="form-control" ng-model="homeTeamNoBalls" placeholder="NB">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-1">
+              <label for="byes"><h4>Byes</h4></label>
+              <input type="text" class="form-control" ng-model="homeTeamByes" placeholder="Byes">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-1">
+              <label for="lb"><h4>LB</h4></label>
+              <input type="text" class="form-control" ng-model="homeTeamLegByes" placeholder="LB">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="email"><h4> Add Total</h4></label>
+              <button class="btn btn-primary form-control" ng-click="addHomeTeamTotal()" type="submit"><i
+                class="fa fa-plus"></i></button>
+            </div>
+          </div>
+        </form>
       </div>
-    </div>
-    <hr>
-    <div class="row">
-      <form class="form" novalidate name="matchDetailsForm">
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="playerName"><h4>Bowler name</h4></label>
-            <!--<input type="text" class="form-control" name="playerName" ng-model="playerName" id="playerName"-->
-            <!--title="player name">-->
-            <input type="text" class="form-control" name="playerName" ng-model="visitingTeamBowler"
-                   placeholder="{{matchDetails.visitingTeam}}" title="home team details"
-                   typeahead="player as player.name for player in visitingTeamPlayerList | filter:{name:$viewValue} | limitTo:8"
-                   required>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="howOut"><h4>Overs</h4></label>
+      <hr>
+      <div>
+        <h4>Bowling {{matchDetails.visitingTeam}}</h4>
 
-            <div>
-              <input type="text" class="form-control" name="runs" ng-model="visitingTeamBowlerOvers"
-                     title="overs">
-            </div>
-          </div>
+        <div class="table-responsive">
+          <table class="table table-hover table-striped">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Bowling</th>
+              <th>O</th>
+              <th>M</th>
+              <th>W</th>
+              <th>R</th>
+              <th>Econ</th>
+              <th><i class="fa fa-cog"></i></th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="stats in visitingTeamBowlingDetails">
+            <tr>
+              <td>{{$index + 1}}</td>
+              <td>{{stats.player}}</td>
+              <td>{{stats.overs}}</td>
+              <td>{{stats.maiden}}</td>
+              <td>{{stats.runs}}</td>
+              <td>{{stats.wickets}}</td>
+              <td>{{stats.econ | number:2 || 0}}</td>
+              <td></td>
+            </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="howOut"><h4>Maiden</h4></label>
-
-            <div>
-              <input type="text" class="form-control" name="runs" ng-model="visitingTeamBowlerMaiden"
-                     title="maiden">
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="runs"><h4>Runs</h4></label>
-            <input type="text" class="form-control" name="runs" ng-model="visitingTeamBowlerRuns"
-                   title="runs">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="howOut"><h4>Wickets</h4></label>
-
-            <div>
-              <input type="text" class="form-control" name="runs" ng-model="visitingTeamBowlerWickets"
-                     title="wickets">
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="addBowling"><h4>Add</h4></label>
-            <button class="btn btn-primary form-control" name="addDetails"
-                    ng-click="addVisingTeamBowlingDetails()" type="submit"><i class="fa fa-check"></i> Add
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-    <hr>
-    <div class="row">
-      <h4>Batting {{matchDetails.visitingTeam}} <strong ng-show="visitingTeamRuns" class="text-info"><em><u> :
-        {{visitingTeamRuns}}/{{visitingTeamWickets}} ({{visitingTeamOvers}} ov) (RR {{visitingTeamRunRate | number: 2}}
-        runs per over)</u></em></strong></h4>
-
-      <div class="table-responsive">
-        <table class="table table-hover table-striped">
-          <thead>
-          <tr>
-            <th>#</th>
-            <th>Player</th>
-            <th></th>
-            <th>R</th>
-            <th>B</th>
-            <th>4s</th>
-            <th>6s</th>
-            <th>SR</th>
-            <th><i class="fa fa-cog"></i></th>
-          </tr>
-          </thead>
-          <tbody ng-repeat="stats in visitingTeamBattingDetails">
-          <tr>
-            <td>{{$index + 1}}</td>
-            <td>{{stats.player}}</td>
-            <td>{{stats.outNotOut}}</td>
-            <td>{{stats.runs}}</td>
-            <td>{{stats.balls}}</td>
-            <td>{{stats.fours}}</td>
-            <td>{{stats.sixes}}</td>
-            <td>{{stats.strikeRate | number:2 || 0}}</td>
-            <td></td>
-          </tr>
-          </tbody>
-        </table>
       </div>
-    </div>
-    <div class="row">
-      <form class="form" id="matchDetailsForm" novalidate name="matchDetailsForm">
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="playerName"><h4>Player name</h4></label>
-            <!--<input type="text" class="form-control" name="playerName" ng-model="playerName" id="playerName"-->
-            <!--title="player name">-->
-            <input type="text" class="form-control" name="playerName" ng-model="homeTeamPlayer" id="playerName"
-                   placeholder="{{matchDetails.visitingTeam}}" title="home team details"
-                   typeahead="player as player.name for player in visitingTeamPlayerList | filter:{name:$viewValue} | limitTo:8"
-                   required>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="howOut"><h4>How Out</h4></label>
-
-            <div>
-              <select class="form-control" name="howOut" ng-model="howOutTeam2" ng-change="setHowOut()"
-                      ng-options="out.name for out in outs">
-              </select>
+      <hr>
+      <div class="row">
+        <form class="form" novalidate name="matchDetailsForm">
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="playerName"><h4>Bowler name</h4></label>
+              <!--<input type="text" class="form-control" name="playerName" ng-model="playerName" id="playerName"-->
+              <!--title="player name">-->
+              <input type="text" class="form-control" name="playerName" ng-model="visitingTeamBowler"
+                     placeholder="{{matchDetails.visitingTeam}}" title="home team details"
+                     typeahead="player as player.name for player in visitingTeamPlayerList | filter:{name:$viewValue} | limitTo:8"
+                     required>
             </div>
           </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="fielder"><h4>Fielder</h4></label>
-            <input type="text" class="form-control" name="visitingTeamFielder" ng-model="homeTeamFielder"
-                   id="visitingTeamFielder" placeholder="{{matchDetails.homeTeam}}" title="home team details"
-                   typeahead="player as player.name for player in playerList | filter:{name:$viewValue} | limitTo:8"
-                   ng-disabled="howOutTeam2.name == 'Not Out' || howOutTeam2.name == 'Did not bat' || howOutTeam2.name == 'LBW'">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="bowler"><h4>Bowler</h4></label>
-            <!--<input type="text" class="form-control" name="bowler" ng-model="bowler" id="bowler"-->
-            <!--title="bowler">-->
-            <input type="text" class="form-control" name="visitingTeamPlayer" ng-model="homeTeamBowler"
-                   id="visitingTeamPlayer" placeholder="{{matchDetails.homeTeam}}" title="home team details"
-                   typeahead="player as player.name for player in playerList | filter:{name:$viewValue} | limitTo:8"
-                   ng-disabled="howOutTeam2.name == 'Not Out' || howOutTeam2.name == 'Did not bat'">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-1">
-            <label for="runs"><h4>Runs</h4></label>
-            <input type="text" class="form-control" name="runs" ng-model="runsTeam2" id="runs"
-                   title="runs">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-1">
-            <label for="balls"><h4>Balls</h4></label>
-            <input type="text" class="form-control" name="balls" ng-model="ballsTeam2" id="balls"
-                   title="balls">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-1">
-            <label for="fours"><h4>4s</h4></label>
-            <input type="text" class="form-control" name="fours" ng-model="foursTeam2" id="fours"
-                   title="fours">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-md-1">
-            <label for="sixes"><h4>6s</h4></label>
-            <input type="text" class="form-control" name="sixes" ng-model="sixesTeam2" id="sixes"
-                   title="sixes">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-md-12">
-            <button class="btn btn-primary form-control" name="addDetails"
-                    ng-click="addVisitingTeamBatting()" type="submit"><i class="fa fa-check"></i> Add
-            </button>
-          </div>
-        </div>
-      </form>
-      <form class="form" novalidate name="visitingTeamTotalsForm">
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="totalRuns"><h4>Total Runs</h4></label>
-            <input type="text" class="form-control" name="first_name" ng-model="visitingTeamRuns"
-                   placeholder="Total Runs" title="enter total runs">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="overs"><h4>Overs</h4></label>
-            <input type="text" class="form-control" ng-model="visitingTeamOvers" placeholder="Overs"
-                   title="enter overs">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="wides"><h4>Wickets</h4></label>
-            <input type="text" class="form-control" ng-model="visitingTeamWickets" placeholder="Wickets">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-1">
-            <label for="wides"><h4>Wides</h4></label>
-            <input type="text" class="form-control" ng-model="visitingTeamWides" placeholder="Wides">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-1">
-            <label for="nb"><h4>NB</h4></label>
-            <input type="text" class="form-control" ng-model="visitingTeamNoBalls" placeholder="NB">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-1">
-            <label for="byes"><h4>Byes</h4></label>
-            <input type="text" class="form-control" ng-model="visitingTeamByes" placeholder="Byes">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-1">
-            <label for="lb"><h4>LB</h4></label>
-            <input type="text" class="form-control" ng-model="visitingTeamLegByes" placeholder="LB">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="email"><h4> Add Total</h4></label>
-            <button class="btn btn-primary form-control" ng-click="addVisitingTeamTotal()" type="submit"><i
-              class="fa fa-plus"></i></button>
-          </div>
-        </div>
-      </form>
-    </div>
-    <hr>
-    <div class="row">
-      <h3>Bowling {{matchDetails.homeTeam}}</h3>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="howOut"><h4>Overs</h4></label>
 
-      <div class="table-responsive">
-        <table class="table table-hover table-striped">
-          <thead>
-          <tr>
-            <th>#</th>
-            <th>Bowling</th>
-            <th>O</th>
-            <th>M</th>
-            <th>W</th>
-            <th>R</th>
-            <th>Econ</th>
-            <th><i class="fa fa-cog"></i></th>
-          </tr>
-          </thead>
-          <tbody id="items" ng-repeat="stats in homeTeamBowlingDetails">
-          <tr>
-            <td>{{$index + 1}}</td>
-            <td>{{stats.player}}</td>
-            <td>{{stats.overs}}</td>
-            <td>{{stats.maiden}}</td>
-            <td>{{stats.runs}}</td>
-            <td>{{stats.wickets}}</td>
-            <td>{{stats.econ | number:2 || 0}}</td>
-            <td></td>
-          </tr>
-          </tbody>
-        </table>
+              <div>
+                <input type="text" class="form-control" name="runs" ng-model="visitingTeamBowlerOvers"
+                       title="overs">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="howOut"><h4>Maiden</h4></label>
+
+              <div>
+                <input type="text" class="form-control" name="runs" ng-model="visitingTeamBowlerMaiden"
+                       title="maiden">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="runs"><h4>Runs</h4></label>
+              <input type="text" class="form-control" name="runs" ng-model="visitingTeamBowlerRuns"
+                     title="runs">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="howOut"><h4>Wickets</h4></label>
+
+              <div>
+                <input type="text" class="form-control" name="runs" ng-model="visitingTeamBowlerWickets"
+                       title="wickets">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="addBowling"><h4>Add</h4></label>
+              <button class="btn btn-primary form-control" name="addDetails"
+                      ng-click="addVisingTeamBowlingDetails()" type="submit"><i class="fa fa-check"></i> Add
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
+      <hr>
     </div>
-    <hr>
-    <div class="row">
-      <form class="form" id="firstTeamBowlingForm" novalidate name="matchDetailsForm">
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="playerName"><h4>Bowler name</h4></label>
-            <!--<input type="text" class="form-control" name="playerName" ng-model="playerName" id="playerName"-->
-            <!--title="player name">-->
-            <input type="text" class="form-control" name="playerName" ng-model="homeTeamBowler"
-                   placeholder="{{matchDetails.homeTeam}}" title="home team details"
-                   typeahead="player as player.name for player in playerList | filter:{name:$viewValue} | limitTo:8"
-                   required>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="howOut"><h4>Overs</h4></label>
+  </div>
+  <div class="tab-content">
+    <div class="tab-pane" ng-class="{'active':isActiveTab('visiting')}">
+      <div ng-show="matchDetails.status">
+        <h4>Batting {{matchDetails.visitingTeam}} <strong ng-show="visitingTeamRuns" class="text-info"><em><u> :
+          {{visitingTeamRuns}}/{{visitingTeamWickets}} ({{visitingTeamOvers}} ov) (RR {{visitingTeamRunRate | number:
+          2}}
+          runs per over)</u></em></strong></h4>
 
-            <div>
-              <input type="text" class="form-control" name="runs" ng-model="homeTeamBowlerOvers" title="overs">
-            </div>
-          </div>
+        <div class="table-responsive">
+          <table class="table table-hover table-striped">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Player</th>
+              <th></th>
+              <th>R</th>
+              <th>B</th>
+              <th>4s</th>
+              <th>6s</th>
+              <th>SR</th>
+              <th><i class="fa fa-cog"></i></th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="stats in visitingTeamBattingDetails">
+            <tr>
+              <td>{{$index + 1}}</td>
+              <td>{{stats.player}}</td>
+              <td>{{stats.outNotOut}}</td>
+              <td>{{stats.runs}}</td>
+              <td>{{stats.balls}}</td>
+              <td>{{stats.fours}}</td>
+              <td>{{stats.sixes}}</td>
+              <td>{{stats.strikeRate | number:2 || 0}}</td>
+              <td></td>
+            </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="howOut"><h4>Maiden</h4></label>
-
-            <div>
-              <input type="text" class="form-control" name="runs" ng-model="homeTeamBowlerMaiden" title="maiden">
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="runs"><h4>Runs</h4></label>
-            <input type="text" class="form-control" name="runs" ng-model="homeTeamBowlerRuns" title="runs">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="howOut"><h4>Wickets</h4></label>
-
-            <div>
-              <input type="text" class="form-control" name="runs" ng-model="homeTeamBowlerWickets"
-                     title="wickets">
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-2">
-            <label for="addBowling"><h4>Add</h4></label>
-            <button class="btn btn-primary form-control" name="addDetails"
-                    ng-click="addHomeTeamBowlingDetails()" type="submit"><i class="fa fa-check"></i> Add
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-    <div class="form-group pull-right">
-      <div class="col-xs-12">
-        <br><br>
-        <button class="btn btn-default btn-default" ng-click="return()" type="submit"><i
-          class="fa fa-reply"></i> Return
-        </button>
       </div>
-    </div>
-    <div class="form-group pull-right">
-      <div class="col-xs-12">
-        <br><br>
-        <button class="btn btn-primary" ng-click="open()" type="submit" ng-disabled="matchForm.$invalid"><i
-          class="fa fa-plus"></i> Submit
-        </button>
+      <div class="row">
+        <form class="form" id="matchDetailsForm" novalidate name="matchDetailsForm">
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="playerName"><h4>Player name</h4></label>
+              <!--<input type="text" class="form-control" name="playerName" ng-model="playerName" id="playerName"-->
+              <!--title="player name">-->
+              <input type="text" class="form-control" name="playerName" ng-model="homeTeamPlayer" id="playerName"
+                     placeholder="{{matchDetails.visitingTeam}}" title="home team details"
+                     typeahead="player as player.name for player in visitingTeamPlayerList | filter:{name:$viewValue} | limitTo:8"
+                     required>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="howOut"><h4>How Out</h4></label>
+
+              <div>
+                <select class="form-control" name="howOut" ng-model="howOutTeam2" ng-change="setHowOut()"
+                        ng-options="out.name for out in outs">
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="fielder"><h4>Fielder</h4></label>
+              <input type="text" class="form-control" name="visitingTeamFielder" ng-model="homeTeamFielder"
+                     id="visitingTeamFielder" placeholder="{{matchDetails.homeTeam}}" title="home team details"
+                     typeahead="player as player.name for player in playerList | filter:{name:$viewValue} | limitTo:8"
+                     ng-disabled="howOutTeam2.name == 'Not Out' || howOutTeam2.name == 'Did not bat' || howOutTeam2.name == 'LBW'">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="bowler"><h4>Bowler</h4></label>
+              <!--<input type="text" class="form-control" name="bowler" ng-model="bowler" id="bowler"-->
+              <!--title="bowler">-->
+              <input type="text" class="form-control" name="visitingTeamPlayer" ng-model="homeTeamBowler"
+                     id="visitingTeamPlayer" placeholder="{{matchDetails.homeTeam}}" title="home team details"
+                     typeahead="player as player.name for player in playerList | filter:{name:$viewValue} | limitTo:8"
+                     ng-disabled="howOutTeam2.name == 'Not Out' || howOutTeam2.name == 'Did not bat'">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-1">
+              <label for="runs"><h4>Runs</h4></label>
+              <input type="text" class="form-control" name="runs" ng-model="runsTeam2" id="runs"
+                     title="runs">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-1">
+              <label for="balls"><h4>Balls</h4></label>
+              <input type="text" class="form-control" name="balls" ng-model="ballsTeam2" id="balls"
+                     title="balls">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-1">
+              <label for="fours"><h4>4s</h4></label>
+              <input type="text" class="form-control" name="fours" ng-model="foursTeam2" id="fours"
+                     title="fours">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-1">
+              <label for="sixes"><h4>6s</h4></label>
+              <input type="text" class="form-control" name="sixes" ng-model="sixesTeam2" id="sixes"
+                     title="sixes">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-12">
+              <button class="btn btn-primary form-control" name="addDetails"
+                      ng-click="addVisitingTeamBatting()" type="submit"><i class="fa fa-check"></i> Add
+              </button>
+            </div>
+          </div>
+        </form>
+        <form class="form" novalidate name="visitingTeamTotalsForm">
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="totalRuns"><h4>Total Runs</h4></label>
+              <input type="text" class="form-control" name="first_name" ng-model="visitingTeamRuns"
+                     placeholder="Total Runs" title="enter total runs">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="overs"><h4>Overs</h4></label>
+              <input type="text" class="form-control" ng-model="visitingTeamOvers" placeholder="Overs"
+                     title="enter overs">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="wides"><h4>Wickets</h4></label>
+              <input type="text" class="form-control" ng-model="visitingTeamWickets" placeholder="Wickets">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-1">
+              <label for="wides"><h4>Wides</h4></label>
+              <input type="text" class="form-control" ng-model="visitingTeamWides" placeholder="Wides">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-1">
+              <label for="nb"><h4>NB</h4></label>
+              <input type="text" class="form-control" ng-model="visitingTeamNoBalls" placeholder="NB">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-1">
+              <label for="byes"><h4>Byes</h4></label>
+              <input type="text" class="form-control" ng-model="visitingTeamByes" placeholder="Byes">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-1">
+              <label for="lb"><h4>LB</h4></label>
+              <input type="text" class="form-control" ng-model="visitingTeamLegByes" placeholder="LB">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="email"><h4> Add Total</h4></label>
+              <button class="btn btn-primary form-control" ng-click="addVisitingTeamTotal()" type="submit"><i
+                class="fa fa-plus"></i></button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <hr>
+      <div>
+        <h4>Bowling {{matchDetails.homeTeam}}</h4>
+
+        <div class="table-responsive">
+          <table class="table table-hover table-striped">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Bowling</th>
+              <th>O</th>
+              <th>M</th>
+              <th>W</th>
+              <th>R</th>
+              <th>Econ</th>
+              <th><i class="fa fa-cog"></i></th>
+            </tr>
+            </thead>
+            <tbody id="items" ng-repeat="stats in homeTeamBowlingDetails">
+            <tr>
+              <td>{{$index + 1}}</td>
+              <td>{{stats.player}}</td>
+              <td>{{stats.overs}}</td>
+              <td>{{stats.maiden}}</td>
+              <td>{{stats.runs}}</td>
+              <td>{{stats.wickets}}</td>
+              <td>{{stats.econ | number:2 || 0}}</td>
+              <td></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <form class="form" id="firstTeamBowlingForm" novalidate name="matchDetailsForm">
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="playerName"><h4>Bowler name</h4></label>
+              <!--<input type="text" class="form-control" name="playerName" ng-model="playerName" id="playerName"-->
+              <!--title="player name">-->
+              <input type="text" class="form-control" name="playerName" ng-model="homeTeamBowler"
+                     placeholder="{{matchDetails.homeTeam}}" title="home team details"
+                     typeahead="player as player.name for player in playerList | filter:{name:$viewValue} | limitTo:8"
+                     required>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="howOut"><h4>Overs</h4></label>
+
+              <div>
+                <input type="text" class="form-control" name="runs" ng-model="homeTeamBowlerOvers" title="overs">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="howOut"><h4>Maiden</h4></label>
+
+              <div>
+                <input type="text" class="form-control" name="runs" ng-model="homeTeamBowlerMaiden" title="maiden">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="runs"><h4>Runs</h4></label>
+              <input type="text" class="form-control" name="runs" ng-model="homeTeamBowlerRuns" title="runs">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="howOut"><h4>Wickets</h4></label>
+
+              <div>
+                <input type="text" class="form-control" name="runs" ng-model="homeTeamBowlerWickets"
+                       title="wickets">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label for="addBowling"><h4>Add</h4></label>
+              <button class="btn btn-primary form-control" name="addDetails"
+                      ng-click="addHomeTeamBowlingDetails()" type="submit"><i class="fa fa-check"></i> Add
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
+
+  <div class="form-group pull-right">
+    <div class="col-xs-12">
+      <br><br>
+      <button class="btn btn-default btn-default" ng-click="return()" type="submit"><i
+        class="fa fa-reply"></i> Return
+      </button>
+    </div>
+  </div>
+  <div class="form-group pull-right">
+    <div class="col-xs-12">
+      <br><br>
+      <button class="btn btn-primary" ng-click="open()" type="submit" ng-disabled="matchForm.$invalid"><i
+        class="fa fa-plus"></i> Submit
+      </button>
+    </div>
+  </div>
+</div>
 </div>
 
 
