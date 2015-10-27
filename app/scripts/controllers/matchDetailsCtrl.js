@@ -11,6 +11,15 @@ angular.module('howWasThat')
       {name: 'Bowling'}];
     $scope.tossInfo = [];
 
+    $scope.tab = "home";
+    $scope.setTab = function (newTab) {
+      $scope.tab = newTab;
+    };
+
+    $scope.isActiveTab = function (tab) {
+      return $scope.tab === tab;
+    };
+
     $scope.urlParams = $location.search();
     $scope.editMatchStatus = false;
 
@@ -398,6 +407,14 @@ angular.module('howWasThat')
       $scope.visitingTeamBowlingScores = [];
       $scope.homeTeamBowlingScores = [];
       $scope.matches = [];
+      $scope.visitingTeamBowlerOvers = "";
+      $scope.visitingTeamBowlerMaiden = "";
+      $scope.visitingTeamBowlerRuns = "";
+      $scope.visitingTeamBowlerWickets = "";
+      $scope.homeTeamBowlerOvers = "";
+      $scope.homeTeamBowlerMaiden = "";
+      $scope.homeTeamBowlerRuns = "";
+      $scope.homeTeamBowlerWickets = "";
     }
 
     $scope.homeTeamBattingScores = [];
@@ -434,7 +451,6 @@ angular.module('howWasThat')
 
         $scope.tournamentMatches.forEach(function (match) {
           if (match.matchNumber === $scope.matchNumber) {
-            match.visitingTeamBowling = $scope.visitingTeamBowlingScores;
             match.bowlingCard = bowling;
             $scope.match = match;
           }
@@ -446,7 +462,6 @@ angular.module('howWasThat')
 
         $scope.tournamentMatches.forEach(function (match) {
           if (match.matchNumber === $scope.matchNumber) {
-            match.homeTeamBowling = $scope.homeTeamBowlingScores;
             match.bowlingCard = bowling;
             $scope.match = match;
           }
