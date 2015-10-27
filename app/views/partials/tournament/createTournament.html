@@ -214,7 +214,7 @@
         <div class="tab-pane" ng-class="{'active':isActiveTab('stats')}">
           <br>
           <div class="alert alert-info text-center">
-            <span class="fa fa-info-circle"></span> <strong class="text-muted"><b>Points: 1 Run = 1Pt, 50 Runs: 50Pts, 100 Runs: 100Pts, 1 Wicket: 10Pts </b></strong>
+            <span class="fa fa-info-circle"></span><strong class="text-muted"><b>Points: 1 Run = 1Pt, 50 Runs: 50Pts, 100 Runs: 100Pts, 1 Wicket: 10Pts </b></strong>
           </div>
           <div class="table-responsive">
             <table class="table table-hover table-striped">
@@ -226,6 +226,7 @@
                 <th>M</th>
                 <th>Inn</th>
                 <th>R</th>
+                <th>BF</th>
                 <th>HS</th>
                 <th>50's</th>
                 <th>100's</th>
@@ -242,12 +243,13 @@
                 <td>{{stats.matches || 0}}</td>
                 <td>{{stats.innings || 0}}</td>
                 <td>{{stats.runs || 0}}</td>
+                <td>{{stats.ballsFaced || 0}}</td>
                 <td>{{stats.highestScore || 0}}</td>
                 <td>{{stats.fifties || 0}}</td>
                 <td>{{stats.hundreds || 0}}</td>
                 <td>{{stats.wickets || 0}}</td>
                 <td>{{stats.bestBowling || 0}}</td>
-                <td>{{stats.bestBowling || 0}}</td>
+                <td>{{getPoints(stats)}}</td>
               </tr>
               </tbody>
             </table>
