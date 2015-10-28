@@ -12,7 +12,8 @@
     "nodemailer": "1.0.0",
     "bower": "~1.6.4",
     "grunt": "~0.4.1",
-    "grunt-cli": "0.1.13"
+    "grunt-cli": "0.1.13",
+    "load-grunt-tasks": "~0.2.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
