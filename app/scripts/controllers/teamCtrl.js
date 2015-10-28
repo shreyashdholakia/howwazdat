@@ -58,6 +58,10 @@ angular.module('howWasThat')
     });
 	};
 
+  $scope.cloneToTeam = function (team) {
+    console.log(team.teamName);
+  };
+
 	$scope.teamUpdate = function() {
     alertService.clearLastToast();
 		teamService.update($scope.teamName, $scope.newPlayer).success(function(data) {
@@ -188,6 +192,15 @@ angular.module('howWasThat')
 	      scope:$scope
 	    });
   };
+
+  $scope.clone = function (player) {
+      $scope.playerToClone = player;
+      $scope.modalInstance = $modal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: 'copyPlayer.html',
+        scope:$scope
+      });
+    };
 
   $scope.close = function () {
   	$scope.modalInstance.dismiss('cancel');
