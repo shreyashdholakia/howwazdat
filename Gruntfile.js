@@ -67,9 +67,9 @@ module.exports = function (grunt) {
       views: 'views'
     },
     concat: {
-      "app/built/internal.js": INTERNAL_JS_FILES,
-      "app/built/external.js": EXTERNAL_JS_FILES,
-      "app/built/external.css": EXTERNAL_CSS_FILES
+      "app/scripts/built/internal.js": INTERNAL_JS_FILES,
+      "app/scripts/built/external.js": EXTERNAL_JS_FILES,
+      "app/scripts/built/external.css": EXTERNAL_CSS_FILES
     },
     express: {
         options: {
