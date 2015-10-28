@@ -33,10 +33,11 @@ app.configure('development', function(){
 });
 
 app.configure('production', function(){
-  app.use(express.favicon(path.join(__dirname, 'public', 'favicon.ico')));
-  app.use(express.static(path.join(__dirname, 'public')));
-  console.log("dir" + __dirname);
-  app.set('views', __dirname + '/app/views');
+  app.use(express.static(path.join(__dirname, '.tmp')));
+    app.use(express.static(path.join(__dirname, 'app')));
+    app.use(express.errorHandler());
+    console.log("dir" + __dirname);
+    app.set('views', __dirname + '/app/views');
 });
 
 app.engine('html', require('ejs').renderFile);
