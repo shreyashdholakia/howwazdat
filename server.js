@@ -39,7 +39,7 @@ app.configure('production', function(){
     app.use(express.static(path.join(__dirname, 'app/styles')));
     app.use(express.errorHandler());
     console.log("dir" + __dirname);
-    app.set('views', __dirname + '/app/views');
+    app.set('views', __dirname + '/views');
 });
 
 app.engine('html', require('ejs').renderFile);
