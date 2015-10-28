@@ -15,6 +15,9 @@ angular.module('howWasThat')
 		},
 		getTeams: function () {
 			return $http.get(options.api.base_url + '/api/team');
-		}
+		},
+    deletePlayer: function (team, player) {
+      return $http.put(options.api.base_url + '/api/team/player/' + team, {'player': player});
+    }
 	};
 });

@@ -49,10 +49,16 @@ angular.module('howWasThat')
 
 	$scope.deletePlayer = function () {
 		$scope.modalInstance.dismiss('cancel');
-		var index = $scope.playerList.indexOf($scope.playerToDelete);
-		$scope.playerList.splice(index, 1);
-		$scope.teamUpdate();
+    teamService.deletePlayer($scope.teamName, $scope.playerToDelete).success(function(data) {
+      $location.path("/team/" + $scope.teamName);
+      $scope.playerList = data.data.players;
+      alertService.displaySaveMessage("Success");
+    }).error(function(status, data) {
+      alertService.displayErrorMessage("There was an error! Please try again");
+    });
 	};
+
+
 
 	$scope.teamUpdate = function() {
     alertService.clearLastToast();
