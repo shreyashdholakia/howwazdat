@@ -35,6 +35,7 @@ app.configure('development', function(){
 app.configure('production', function(){
     app.use(express.static(path.join(__dirname, 'app')));
     app.use(express.static(path.join(__dirname, 'app/scripts')));
+    app.use(express.static(path.join(__dirname, 'app/scripts/built')));
     app.use(express.static(path.join(__dirname, 'app/styles')));
     app.use(express.errorHandler());
     console.log("dir" + __dirname);
