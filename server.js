@@ -33,10 +33,6 @@ app.configure('development', function(){
 });
 
 app.configure('production', function(){
-  app.use(express.static(path.join(__dirname, '.tmp')));
-    app.use(express.static(path.join(__dirname, 'app')));
-    app.use(express.errorHandler());
-    console.log("dir" + __dirname);
     app.set('views', __dirname + '/app/views');
 });
 
