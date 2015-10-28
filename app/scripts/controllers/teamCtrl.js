@@ -58,8 +58,6 @@ angular.module('howWasThat')
     });
 	};
 
-
-
 	$scope.teamUpdate = function() {
     alertService.clearLastToast();
 		teamService.update($scope.teamName, $scope.newPlayer).success(function(data) {
