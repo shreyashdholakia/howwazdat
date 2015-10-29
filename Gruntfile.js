@@ -40,6 +40,7 @@ module.exports = function (grunt) {
       ],
       EXTERNAL_JS_FILES = [
         BOWER_DIR + "/jquery/dist/jquery.js",
+        BOWER_DIR + "/jquery-ui/jquery-ui.js",
         BOWER_DIR + "/angular/angular.js",
         BOWER_DIR + "/moment/min/moment.min.js",
         BOWER_DIR + "/angular-resource/angular-resource.js",

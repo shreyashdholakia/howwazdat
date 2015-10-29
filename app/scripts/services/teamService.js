@@ -18,6 +18,9 @@ angular.module('howWasThat')
 		},
     deletePlayer: function (team, player) {
       return $http.put(options.api.base_url + '/api/team/player/' + team, {'player': player});
+    },
+    clonePlayer: function (team, player) {
+      return $http.post(options.api.base_url + '/api/team/clone/player/' + team, {'player': player});
     }
 	};
 });

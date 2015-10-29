@@ -13,11 +13,8 @@ angular.module('howWasThat')
 	$scope.confirmModal = false;
 
 	$scope.confirmDelete = function(playerToDelete) {
-
 		$scope.confirmModal = !$scope.confirmModal;
-
 		$scope.playerToDelete = playerToDelete;
-
 	};
 
 	$scope.userList = [];
@@ -58,8 +55,15 @@ angular.module('howWasThat')
     });
 	};
 
-  $scope.cloneToTeam = function (team) {
-    console.log(team.teamName);
+  $scope.cloneToTeam = function (team, player) {
+    $scope.modalInstance.dismiss('cancel');
+    teamService.clonePlayer(team.teamName, player).success(function(data) {
+      $location.path("/team/" + data.data.teamName);
+      $scope.playerList = data.data.players;
+      alertService.displaySaveMessage("Success");
+    }).error(function(status, data) {
+      alertService.displayErrorMessage("There was an error! Please try again");
+    });
   };
 
 	$scope.teamUpdate = function() {
