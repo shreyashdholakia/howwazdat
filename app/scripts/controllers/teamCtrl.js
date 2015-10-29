@@ -17,6 +17,9 @@ angular.module('howWasThat')
 		$scope.playerToDelete = playerToDelete;
 	};
 
+  $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+  });
 	$scope.userList = [];
 	$scope.users = [];
 
