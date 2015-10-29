@@ -10,20 +10,16 @@ angular.module('howWasThat')
 
 	$scope.roleSelected = $scope.roles[0];
 
-	//$scope.setRole = function () {
-	//	console.log($scope.roleSelected);
-	//};
-
 	$scope.confirmModal = false;
 
 	$scope.confirmDelete = function(playerToDelete) {
-
 		$scope.confirmModal = !$scope.confirmModal;
-
 		$scope.playerToDelete = playerToDelete;
-
 	};
 
+  $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+  });
 	$scope.userList = [];
 	$scope.users = [];
 
@@ -53,14 +49,29 @@ angular.module('howWasThat')
 
 	$scope.deletePlayer = function () {
 		$scope.modalInstance.dismiss('cancel');
-		var index = $scope.playerList.indexOf($scope.playerToDelete);
-		$scope.playerList.splice(index, 1);
-		$scope.teamUpdate();
+    teamService.deletePlayer($scope.teamName, $scope.playerToDelete).success(function(data) {
+      $location.path("/team/" + $scope.teamName);
+      $scope.playerList = data.data.players;
+      alertService.displaySaveMessage("Success");
+    }).error(function(status, data) {
+      alertService.displayErrorMessage("There was an error! Please try again");
+    });
 	};
+
+  $scope.cloneToTeam = function (team, player) {
+    $scope.modalInstance.dismiss('cancel');
+    teamService.clonePlayer(team.teamName, player).success(function(data) {
+      $location.path("/team/" + data.data.teamName);
+      $scope.playerList = data.data.players;
+      alertService.displaySaveMessage("Success");
+    }).error(function(status, data) {
+      alertService.displayErrorMessage("There was an error! Please try again");
+    });
+  };
 
 	$scope.teamUpdate = function() {
     alertService.clearLastToast();
-		teamService.update($scope.teamName, $scope.playerList).success(function(data) {
+		teamService.update($scope.teamName, $scope.newPlayer).success(function(data) {
 			$location.path("/team/" + data.data.teamName);
 			$scope.playerList = data.data.players;
 			alertService.displaySaveMessage("Success");
@@ -72,6 +83,7 @@ angular.module('howWasThat')
 
 	$scope.playerList = [];
 	$scope.teamDetails = [];
+  $scope.newPlayer = [];
 
 	$scope.addPlayer = function (action) {
 		if($scope.isCaptain) {
@@ -81,19 +93,29 @@ angular.module('howWasThat')
 		}
 
 		if(action === 'user') {
-		  console.log("here");
 		  $scope.firstName = $scope.player.firstName;
 		  $scope.lastName = $scope.player.lastName;
 		  $scope.email = $scope.player.email;
 		}
 
-		$scope.playerList.push({
-			firstName: $scope.firstName,
-			lastName: $scope.lastName,
-			role: $scope.roleSelected.name,
-			captain: $scope.captain,
-      email: $scope.email
-		});
+    $scope.newPlayer.push({
+      firstName: $scope.firstName,
+      lastName: $scope.lastName,
+      role: $scope.roleSelected.name,
+      captain: $scope.captain,
+      email: $scope.email,
+      matches: Number(0),
+      runs: Number(0),
+      ballFaced: Number(0),
+      wickets: Number(0),
+      ballBowled: Number(0),
+      fifties: Number(0),
+      hundreds: Number(0),
+      fiveWicket: Number(0)
+    });
+
+		$scope.playerList.push($scope.newPlayer[0]);
+
 		if(action === 'U' || action === 'user') {
 			$scope.teamUpdate();
 		} else {
@@ -103,14 +125,11 @@ angular.module('howWasThat')
 		$scope.firstName = "";
 		$scope.lastName = "";
 		$scope.isCaptain = false;
+    $scope.newPlayer = [];
 	};
 
 	$scope.checkInputField = function () {
-		if($scope.firstName.length > 1 && $scope.lastName.length > 1) {
-			return true;
-		} else {
-			return false;
-		}
+		return ($scope.firstName.length > 1 && $scope.lastName.length > 1);
 	};
 
 	$scope.getTeamDetails = function() {
@@ -128,7 +147,7 @@ angular.module('howWasThat')
         alertService.displayErrorMessage("There was an error! Please try again");
 			});
 		}
-	}
+	};
 
 	$scope.getTeamDetails();
 
@@ -180,6 +199,15 @@ angular.module('howWasThat')
 	      scope:$scope
 	    });
   };
+
+  $scope.clone = function (player) {
+      $scope.playerToClone = player;
+      $scope.modalInstance = $modal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: 'copyPlayer.html',
+        scope:$scope
+      });
+    };
 
   $scope.close = function () {
   	$scope.modalInstance.dismiss('cancel');

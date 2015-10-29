@@ -31,7 +31,7 @@
             <th>Last Name</th>
             <th>Role</th>
             <th>Captain</th>
-            <th><i class="glyphicon glyphicon-cog"></i></th>
+            <th><i class="fa fa-cog"></i></th>
           </tr>
         </thead>
         <tbody id="items">
@@ -40,10 +40,10 @@
             <td>{{players.firstName}}</td>
             <td>{{players.lastName}}</td>
             <td>{{players.role}}</td>
-            <td>
-              {{players.captain}}
-            </td>
-            <td><i class="glyphicon glyphicon-trash" ng-click="open(players)"></i></td>
+            <td>{{players.captain}}</td>
+            <td><i class="fa fa-trash" ng-click="open(players)"></i> | <i class="fa fa-files-o" ng-click="clone(players)" tooltip
+                                                                          data-original-title="Add player to a different team"
+                                                                          data-placement="top" data-trigger="hover"></i></td>
           </tr>
         </tbody>
       </table>
@@ -58,7 +58,7 @@
           <div class="form-group">
             <div class="col-xs-3">
               <div >
-                <select id="company" class="form-control" ng-model="roleSelected" ng-change="setRole()" ng-options="role.name for role in roles" >
+                <select class="form-control" ng-model="roleSelected" ng-change="setRole()" ng-options="role.name for role in roles" >
                 </select>
               </div>
             </div>
@@ -79,7 +79,6 @@
             <button class="btn btn-primary form-control col-sm-2" ng-click="addPlayerForm = !addPlayerForm" type="submit"><i class="fa fa-plus"></i> Create a Player</button>
           </div>
         </div>
-
     <br><br>
   </div>
   <form class="form" ng-show="addPlayerForm">
@@ -101,7 +100,7 @@
     <div class="form-group">
 
       <div class="col-xs-3">
-        <label for="email"><h4>Role</h4></label>
+        <label><h4>Role</h4></label>
         <div >
           <select id="company" class="form-control" ng-model="roleSelected" ng-change="setRole()" ng-options="role.name for role in roles" >
           </select>
@@ -111,13 +110,13 @@
     <div class="form-group">
 
       <div class="col-xs-2">
-        <label for="email"><h4>Captain</h4></label>
+        <label><h4>Captain</h4></label>
         <button type="button" class="btn form-control" ng-class="{'active btn-success': isCaptain}" ng-click="isCaptain = !isCaptain"><i class="glyphicon glyphicon-check"></i></button>
       </div>
     </div>
     <div class="form-group">
      <div class="col-xs-1">
-      <label for="email"><h4>Add</h4></label>
+      <label><h4>Add</h4></label>
       <button class="btn btn-primary form-control" ng-disabled="!firstname && !lastName && roleSelected" ng-click="addPlayer('U')" type="submit"><i class="glyphicon glyphicon-plus"></i></button>
     </div>
   </div>
@@ -134,9 +133,29 @@
             Remove '<strong>{{playerToDelete.firstName}} {{playerToDelete.lastName}}</strong>' from the team?
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="deletePlayer()">OK</button>
+            <button class="btn btn-primary" type="button" ng-click="deletePlayer()"><i class="fa fa-check"></i> OK</button>
             <button class="btn btn-warning" type="button" ng-click="close()">Cancel</button>
         </div>
+</script>
+
+<script type="text/ng-template" id="copyPlayer.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Add Player <i class="fa fa-files-o"></i></h3>
+  </div>
+  <div class="modal-body">
+    Add Player '<strong>{{playerToClone.firstName}} {{playerToClone.lastName}}</strong>' to a different Team?
+    <br><br>
+    <div class="form-group">
+      <div class="col-md-6">
+        <input type="text" class="form-control" ng-model="team" placeholder="Please select a Team" title="Teams" typeahead="team as team.teamName for team in allTeams | filter:{teamName:$viewValue} | limitTo:8">
+      </div>
+    </div>
+    <br>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="cloneToTeam(team, playerToClone)"> <i class="fa fa-plus"></i> Add</button>
+    <button class="btn btn-warning" type="button" ng-click="close()">Cancel</button>
+  </div>
 </script>
 
 
