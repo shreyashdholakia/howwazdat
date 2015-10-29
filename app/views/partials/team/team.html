@@ -76,7 +76,6 @@
       <div class="col-sm-10"><h4><strong>Add Player</strong>:</h4></div>
     <div ng-hide="addPlayerForm">
       <div class="form-group">
-
         <div class="col-sm-3">
           <input type="text" class="form-control" name="playerName" ng-model="player" id="mom" placeholder="Search Player.." title="home team details" typeahead="player as player.name for player in userList | filter:{name:$viewValue} | limitTo:8" required>
         </div>
