@@ -76,9 +76,12 @@ angular.module('howWasThat')
       $scope.modalInstance.dismiss('cancel');
       var resetPlayer = resetStats(player);
       teamService.clonePlayer(team.teamName, resetPlayer).success(function (data) {
-        $location.path("/team/" + data.data.teamName);
-        $scope.playerList = data.data.players;
-        alertService.displaySaveMessage("Success");
+        $location.path("/team/" + team.teamName);
+        if(data.status === 'Not Found'){
+          alertService.displayWarningMessage(data.statusText);
+        } else {
+          alertService.displaySaveMessage("Success");
+        }
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again");
       });
