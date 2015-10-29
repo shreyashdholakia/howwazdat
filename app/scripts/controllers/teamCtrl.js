@@ -74,7 +74,8 @@ angular.module('howWasThat')
 
     $scope.cloneToTeam = function (team, player) {
       $scope.modalInstance.dismiss('cancel');
-      teamService.clonePlayer(team.teamName, player).success(function (data) {
+      var resetPlayer = resetStats(player);
+      teamService.clonePlayer(team.teamName, resetPlayer).success(function (data) {
         $location.path("/team/" + data.data.teamName);
         $scope.playerList = data.data.players;
         alertService.displaySaveMessage("Success");
@@ -82,6 +83,18 @@ angular.module('howWasThat')
         alertService.displayErrorMessage("There was an error! Please try again");
       });
     };
+
+    function resetStats (player) {
+      player.matches = Number(0);
+      player.runs = Number(0);
+      player.ballFaced = Number(0);
+      player.wickets = Number(0);
+      player.ballBowled =  Number(0);
+      player.fifties = Number(0);
+      player.hundreds = Number(0);
+      player.fiveWicket = Number(0);
+      return player;
+    }
 
     $scope.teamUpdate = function () {
       alertService.clearLastToast();
