@@ -13,7 +13,7 @@ angular.module('howWasThat')
     $scope.pageSize = 10;
     $scope.numberOfPages = function () {
       return Math.ceil($scope.tournamentMatches.length / $scope.pageSize);
-    }
+    };
 
     $scope.sortType = 'matchDate';
     $scope.sortReverse = true;
@@ -55,7 +55,7 @@ angular.module('howWasThat')
 
     $scope.createTeam = function () {
       $location.path("/createTeam");
-    }
+    };
 
     $scope.events = [];
 
