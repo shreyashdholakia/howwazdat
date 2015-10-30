@@ -3,27 +3,29 @@
     <div class="col-sm-10"><h1><strong>{{teamName}}</strong></h1>
     </div>
     <br>
+    <br>
+    <!--<div class="btn-group btn-group-justified">-->
+      <!--<a href="#" class="btn alert-info col-sm-4">-->
+        <!--<strong>{{tournaments.length}}</strong><br>-->
+        <!--<h4>Tournaments</h4>-->
+      <!--</a>-->
+      <!--<a href="#" class="btn alert-info col-sm-4">-->
+        <!--<strong>{{teamGames}}</strong><br>-->
+        <!--<h4>Games</h4>-->
+      <!--</a>-->
+      <!--<a href="#" class="btn alert-success col-sm-4">-->
+        <!--<strong>{{teamWins.length}}</strong><br>-->
+        <!--<h4>Wins</h4>-->
+      <!--</a>-->
+      <!--<a href="#" class="btn alert-info col-sm-3">-->
+        <!--<strong>{{teamLosses.length}}</strong><br>-->
+        <!--<h4>Loss</h4>-->
+      <!--</a>-->
+    <!--</div>-->
 
-    <div class="btn-group btn-group-justified">
-      <a href="#" class="btn alert-info col-sm-4">
-        <strong>{{tournaments.length}}</strong><br>
-        <h4>Tournaments</h4>
-      </a>
-      <a href="#" class="btn alert-info col-sm-4">
-        <strong>{{teamGames}}</strong><br>
-        <h4>Games</h4>
-      </a>
-      <a href="#" class="btn alert-success col-sm-4">
-        <strong>{{teamWins.length}}</strong><br>
-        <h4>Wins</h4>
-      </a>
-      <a href="#" class="btn alert-info col-sm-3">
-        <strong>{{teamLosses.length}}</strong><br>
-        <h4>Loss</h4>
-      </a>
-    </div>
-    <hr>
     <div class="row">
+      <br>
+      <hr>
       <div class="col-sm-3"><!--left col-->
         <div class="panel panel-primary">
           <div class="panel-heading text-center"><i class="fa fa-user fa-1x"></i> Profile</div>
@@ -184,29 +186,45 @@
         <div class="panel panel-primary">
           <div class="panel-heading text-center text-info"><i class="fa fa-trophy fa-1x"></i> Tournaments <span class="badge">{{tournaments.length}}</span></div>
           <div class="panel-body">
-            <div class="row">
-              <div class="col-md-6 active" ng-repeat="tournament in tournaments"><a class="active" href="/tournament/{{tournament}}"><i class="fa fa-angle-double-right"></i> {{tournament}}</a></div>
-            </div>
+            <ul class="col-md-6 list-group" ng-repeat="tournament in tournaments">
+              <li class="list-group-item">
+                  <div class="text-center"><a href="/tournament/{{tournament}}"><i class="fa fa-angle-double-right"></i> {{tournament}}</a></div>
+              </li>
+            </ul>
           </div>
         </div>
       </div><!--/col-->
       <div class="col-sm-4">
-        <div class="panel panel-default">
-          <div class="panel-heading">Title</div>
+        <div class="panel panel-primary">
+          <div class="panel-heading text-center"><i class="fa fa-users"></i> Team Records</div>
           <div class="panel-body">
-            Content here..
-            Duis elementum auctor accumsan.
-            Aliquam in felis sit amet augue.
+            <ul class="list-group">
+              <li class="list-group-item">
+                <span class="badge">{{teamGames || 0}}</span>
+                Games
+              </li>
+              <li class="list-group-item">
+                <span class="badge">{{teamWins.length || 0}} / {{teamLosses.length || 0}}</span>
+                Wins/Loss
+              </li>
+            </ul>
           </div>
         </div>
       </div><!--/col-->
       <div class="col-sm-4">
-        <div class="panel panel-default">
-          <div class="panel-heading">Title</div>
+        <div class="panel panel-primary">
+          <div class="panel-heading text-center"><i class="fa fa-users"></i> Best Players</div>
           <div class="panel-body">
-            Content here..
-            Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.
-            Aliquam in felis sit amet augue.
+            <ul class="list-group">
+              <li class="list-group-item">
+                <span class="badge">{{teamGames || 0}}</span>
+                Batsman
+              </li>
+              <li class="list-group-item">
+                <span class="badge">{{teamWins.length || 0}} / {{teamLosses.length || 0}}</span>
+                Bowler
+              </li>
+            </ul>
           </div>
         </div>
       </div><!--/col-->
