@@ -154,6 +154,7 @@ angular.module('howWasThat')
 
       $scope.firstName = "";
       $scope.lastName = "";
+      $scope.email = "";
       $scope.isCaptain = false;
       $scope.newPlayer = [];
     };
