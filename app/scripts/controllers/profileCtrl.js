@@ -5,7 +5,10 @@ angular.module('howWasThat')
 
     $scope.isProfileCreated = false;
     $scope.currentPage = 0;
-    $scope.pageSize = 10;
+    $scope.pageSize = 5;
+    $scope.numberOfPages = function () {
+      return Math.ceil($scope.matches.length / $scope.pageSize);
+    };
     $scope.userProfile = false;
     $scope.email = $rootScope.currentUser.email;
 

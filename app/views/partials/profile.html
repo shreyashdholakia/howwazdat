@@ -48,7 +48,7 @@
                     <th><i class="fa fa-cog"></i></th>
                   </tr>
                 </thead>
-                <tbody ng-repeat="match in matches | orderBy:sortType:sortReverse">
+                <tbody ng-repeat="match in matches | orderBy:sortType:sortReverse | startFrom:currentPage*pageSize | limitTo:pageSize">
                   <tr>
                     <td>{{$index + 1}}</td>
                     <td>{{match.matchDate | date:'MM/dd/yyyy @ h:mma'}}</td>
@@ -62,10 +62,16 @@
                 </tbody>
               </table>
               <hr>
-              <div class="row">
-                <div class="col-md-4 col-md-offset-4 text-center">
-                  <ul class="pagination" id="myPager"></ul>
-                </div>
+              <nav>
+                <ul class="pager">
+                  <li class="previous" ng-hide="currentPage == 0"><a
+                    ng-click="currentPage=currentPage-1"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                  <li class="next" ng-hide="currentPage >= (matches.length/pageSize - 1) || matches.length == 5"><a
+                    ng-click="currentPage=currentPage+1">Next <span aria-hidden="true">&rarr;</span></a></li>
+                </ul>
+              </nav>
+              <div class="bs-callout bs-callout-info" ng-show="matches.length == 0">
+                No Games played yet.
               </div>
             </div>
             <!--/table-resp-->
@@ -121,7 +127,7 @@
     <div class="row">
       <div class="col-sm-6">
         <div class="panel panel-primary">
-          <div class="panel-heading text-center text-info"><i class="fa fa-users fa-1x"></i> Teams <span class="badge">{{playerTeams.length}}</span></div>
+          <div class="panel-heading text-center text-info"><i class="fa fa-users fa-1x"></i> Teams <span class="badge"> {{playerTeams.length}}</span></div>
           <div class="panel-body">
             <div class="bs-callout bs-callout-info" ng-show="playerTeams.length == 0">
               Your are not part of any teams

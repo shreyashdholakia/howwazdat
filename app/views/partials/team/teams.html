@@ -29,22 +29,25 @@
           </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="team in allTeams | orderBy:sortType:sortReverse">
+            <tr ng-repeat="team in allTeams | orderBy:sortType:sortReverse | startFrom:currentPage*pageSize | limitTo:pageSize">
               <td>{{$index + 1}}</td>
               <td><a href="/team/{{team.teamName}}">{{team.teamName}}</a></td>
               <td>{{team.joiningDate | date:'MMM d, y'}}</td>
             </tr>
           </tbody>
         </table>
-        <div class="bs-callout bs-callout-info" ng-show="allTeams == 0">
-          No Tournaments Created!
+        <div class="bs-callout bs-callout-info" ng-show="allTeams.length == 0">
+          No Teams Created!
         </div>
         <hr>
-        <div class="row">
-          <div class="col-md-4 col-md-offset-4 text-center">
-            <ul class="pagination" id="myPager"></ul>
-          </div>
-        </div>
+        <nav>
+          <ul class="pager">
+            <li class="previous" ng-hide="currentPage == 0"><a
+              ng-click="currentPage=currentPage-1"><span aria-hidden="true">&larr;</span> Previous</a></li>
+            <li class="next" ng-hide="currentPage >= (allTeams.length/pageSize - 1) || allTeams.length == 5"><a
+              ng-click="currentPage=currentPage+1">Next <span aria-hidden="true">&rarr;</span></a></li>
+          </ul>
+        </nav>
       </div><!--/table-resp-->
     </div><!--/column-->
   </div>
