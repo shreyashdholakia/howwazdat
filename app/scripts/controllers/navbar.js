@@ -11,6 +11,10 @@ angular.module('howWasThat')
       {
         "title": "Tournaments",
         "link": "tournaments"
+      },
+      {
+        "title": "Teams",
+        "link": "teams"
       }];
 
     $scope.logout = function() {

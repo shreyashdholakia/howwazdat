@@ -10,10 +10,10 @@ angular.module('howWasThat')
     $scope.umpireType = $scope.umpires[0];
 
     $scope.currentPage = 0;
-    $scope.pageSize = 10;
+    $scope.pageSize = 5;
     $scope.numberOfPages = function () {
       return Math.ceil($scope.tournamentMatches.length / $scope.pageSize);
-    }
+    };
 
     $scope.sortType = 'matchDate';
     $scope.sortReverse = true;
@@ -55,7 +55,7 @@ angular.module('howWasThat')
 
     $scope.createTeam = function () {
       $location.path("/createTeam");
-    }
+    };
 
     $scope.events = [];
 
@@ -249,7 +249,6 @@ angular.module('howWasThat')
 
     };
 
-
     $scope.getTournamentDetails();
 
     $scope.createTournament = function (tournament) {
@@ -412,7 +411,9 @@ angular.module('howWasThat')
     function getStatisticsDetails () {
       var tournamentName = $routeParams.tournamentName;
       tournamentService.stats(tournamentName).success(function (response) {
-        $scope.statistics = response.data.teams;
+        if(response.data.teams && response.data.teams.length > 0) {
+          $scope.statistics = response.data.teams;
+        }
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.");
       });
@@ -506,13 +507,7 @@ angular.module('howWasThat')
   });
 
 
-angular.module('howWasThat')
-  .filter('startFrom', function () {
-    return function (input, start) {
-      start = +start; //parse to int
-      return input.slice(start);
-    }
-  });
+
 
 
 

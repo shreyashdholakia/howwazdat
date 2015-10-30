@@ -1,141 +1,255 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-10"><h1><strong>{{teamName}}</strong>: <i class="fa fa-users"></i> Players </h1>
+    <div class="col-sm-10"><h1><strong>{{teamName}}</strong></h1>
     </div>
     <br>
-    <div class="btn-group btn-group-justified">
-      <a href="#" class="btn alert-info col-sm-4">
-        <strong>{{tournaments.length}}</strong><br>
-        <h4>Tournaments</h4>
-      </a>
-      <a href="#" class="btn alert-info col-sm-4">
-        <strong>{{teamGames}}</strong><br>
-        <h4>Games</h4>
-      </a>
-      <a href="#" class="btn alert-success col-sm-4">
-        <strong>{{teamWins.length}}</strong><br>
-        <h4>Wins</h4>
-      </a>
-      <a href="#" class="btn alert-info col-sm-3">
-        <strong>{{teamLosses.length}}</strong><br>
-        <h4>Loss</h4>
-      </a>
-    </div>
-    <hr>
-    <div class="table-responsive table-striped">
-      <table class="table table-hover">
-        <thead>
-          <tr class="text-center">
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Role</th>
-            <th>Captain</th>
-            <th><i class="fa fa-cog"></i></th>
-          </tr>
-        </thead>
-        <tbody id="items">
-          <tr ng-repeat="players in playerList" ng-class="{'active text-primary': players.captain == 'C'}">
-            <td>{{$index + 1}}</td>
-            <td>{{players.firstName}}</td>
-            <td>{{players.lastName}}</td>
-            <td>{{players.role}}</td>
-            <td>{{players.captain}}</td>
-            <td><i class="fa fa-trash" ng-click="open(players)"></i> | <i class="fa fa-files-o" ng-click="clone(players)" tooltip
-                                                                          data-original-title="Add player to a different team"
-                                                                          data-placement="top" data-trigger="hover"></i></td>
-          </tr>
-        </tbody>
-      </table>
+    <br>
+    <!--<div class="btn-group btn-group-justified">-->
+      <!--<a href="#" class="btn alert-info col-sm-4">-->
+        <!--<strong>{{tournaments.length}}</strong><br>-->
+        <!--<h4>Tournaments</h4>-->
+      <!--</a>-->
+      <!--<a href="#" class="btn alert-info col-sm-4">-->
+        <!--<strong>{{teamGames}}</strong><br>-->
+        <!--<h4>Games</h4>-->
+      <!--</a>-->
+      <!--<a href="#" class="btn alert-success col-sm-4">-->
+        <!--<strong>{{teamWins.length}}</strong><br>-->
+        <!--<h4>Wins</h4>-->
+      <!--</a>-->
+      <!--<a href="#" class="btn alert-info col-sm-3">-->
+        <!--<strong>{{teamLosses.length}}</strong><br>-->
+        <!--<h4>Loss</h4>-->
+      <!--</a>-->
+    <!--</div>-->
+
+    <div class="row">
+      <br>
       <hr>
+      <div class="col-sm-3"><!--left col-->
+        <div class="panel panel-primary">
+          <div class="panel-heading text-center"><i class="fa fa-user fa-1x"></i> Profile</div>
+          <ul class="list-group">
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Full name</strong></span>
+              {{user.firstname}} {{user.lastname}}
+            </li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Joined</strong></span>
+              {{user.joiningDate | date:'mediumDate'}}
+            </li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>My Tournaments</strong></span>
+              {{tournaments.length}}
+            </li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Recent Matches</strong></span> <i
+              class="fa fa-bar-chart"></i></li>
+          </ul>
+        </div>
+      </div>
+      <!--/col-3-->
+      <div class="col-sm-9">
+        <div class="table-responsive table-striped">
+          <table class="table table-hover">
+            <thead>
+            <tr class="text-center">
+              <th>#</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Role</th>
+              <th>Captain</th>
+              <th><i class="fa fa-cog"></i></th>
+            </tr>
+            </thead>
+            <tbody id="items">
+            <tr ng-repeat="players in playerList" ng-class="{'active text-primary': players.captain == 'C'}">
+              <td>{{$index + 1}}</td>
+              <td>{{players.firstName}}</td>
+              <td>{{players.lastName}}</td>
+              <td>{{players.role}}</td>
+              <td>{{players.captain}}</td>
+              <td><i class="fa fa-trash text-danger" ng-click="open(players)" tooltip
+                     data-original-title="Remove player from team"
+                     data-placement="top" data-trigger="hover"></i> |
+                <i class="fa fa-files-o" ng-click="clone(players)" tooltip
+                   data-original-title="Add player to a different team"
+                   data-placement="top" data-trigger="hover"></i>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+    <!--/row-->
+    <hr>
+    <div class="row">
+      <div class="col-sm-10"><h4><strong>Add Player</strong>:</h4></div>
       <div ng-hide="addPlayerForm">
-          <div class="form-group">
-
-            <div class="col-sm-3">
-              <input type="text" class="form-control" name="playerName" ng-model="player" id="mom" placeholder="Search Player.." title="home team details" typeahead="player as player.name for player in userList | filter:{name:$viewValue} | limitTo:8" required>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-xs-3">
-              <div >
-                <select class="form-control" ng-model="roleSelected" ng-change="setRole()" ng-options="role.name for role in roles" >
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-xs-2">
-              <button type="button" class="btn form-control" ng-class="{'active btn-success': isCaptain}" ng-click="isCaptain = !isCaptain"><i class="glyphicon glyphicon-check"></i></button>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-sm-2">
-              <button class="btn btn-success form-control col-sm-2" ng-click="addPlayer('user')"type="submit"><i class="fa fa-plus"></i> Add </button>
-            </div>
-          </div>
-      </div>
-          <div class="form-group">
-           <div class="col-sm-2 pull-right">
-            <button class="btn btn-primary form-control col-sm-2" ng-click="addPlayerForm = !addPlayerForm" type="submit"><i class="fa fa-plus"></i> Create a Player</button>
+        <div class="form-group">
+          <div class="col-sm-3">
+            <input type="text" class="form-control" name="playerName" ng-model="player" id="mom"
+                   placeholder="Search Player.." title="home team details"
+                   typeahead="player as player.name for player in userList | filter:{name:$viewValue} | limitTo:8"
+                   required>
           </div>
         </div>
-    <br><br>
-  </div>
-  <form class="form" ng-show="addPlayerForm">
-    <div class="form-group">
-
-      <div class="col-xs-3">
-        <label for="first_name"><h4>First name</h4></label>
-        <input type="text" class="form-control" name="first_name" ng-model="firstName" id="first_name" placeholder="First name" title="enter your first name if any.">
-      </div>
-    </div>
-
-    <div class="form-group">
-
-      <div class="col-xs-3">
-        <label for="last_name"><h4>Last name</h4></label>
-        <input type="text" class="form-control" name="last_name" ng-model="lastName" id="last_name" placeholder="Last name" title="enter your last name if any.">
-      </div>
-    </div>
-    <div class="form-group">
-
-      <div class="col-xs-3">
-        <label><h4>Role</h4></label>
-        <div >
-          <select id="company" class="form-control" ng-model="roleSelected" ng-change="setRole()" ng-options="role.name for role in roles" >
-          </select>
+        <div class="form-group">
+          <div class="col-xs-3">
+            <div>
+              <select class="form-control" ng-model="roleSelected" ng-change="setRole()"
+                      ng-options="role.name for role in roles">
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-2">
+            <button type="button" class="btn form-control" ng-class="{'active btn-success': isCaptain}"
+                    ng-click="isCaptain = !isCaptain">Captain <i class="fa fa-check"></i></button>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-2">
+            <button class="btn btn-success form-control col-sm-2" ng-click="addPlayer('user')" type="submit"><i
+              class="fa fa-plus"></i> Add
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="form-group">
-
-      <div class="col-xs-2">
-        <label><h4>Captain</h4></label>
-        <button type="button" class="btn form-control" ng-class="{'active btn-success': isCaptain}" ng-click="isCaptain = !isCaptain"><i class="glyphicon glyphicon-check"></i></button>
+      <div class="form-group">
+        <div class="col-sm-2 pull-right">
+          <button class="btn btn-primary form-control col-sm-2" ng-click="addPlayerForm = !addPlayerForm" type="submit">
+            <i class="fa fa-plus"></i> Create a Player
+          </button>
+        </div>
       </div>
+      <br><br>
+
+    <form class="form" ng-show="addPlayerForm">
+      <div class="form-group">
+
+        <div class="col-xs-2">
+          <label><h4>First name</h4></label>
+          <input type="text" class="form-control" name="first_name" ng-model="firstName" placeholder="First name"
+                 title="enter your first name if any.">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-xs-2">
+          <label><h4>Last name</h4></label>
+          <input type="text" class="form-control" name="last_name" ng-model="lastName" placeholder="Last name"
+                 title="enter your last name if any.">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-3">
+          <label><h4>Email</h4></label>
+          <input type="text" class="form-control" name="last_name" ng-model="email" placeholder="Email"
+                 title="enter your email.">
+        </div>
+      </div>
+      <div class="form-group">
+
+        <div class="col-xs-3">
+          <label><h4>Role</h4></label>
+
+          <div>
+            <select id="company" class="form-control" ng-model="roleSelected" ng-change="setRole()"
+                    ng-options="role.name for role in roles">
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+
+        <div class="col-xs-1">
+          <label><h4>Captain</h4></label>
+          <button type="button" class="btn form-control" ng-class="{'active btn-success': isCaptain}"
+                  ng-click="isCaptain = !isCaptain"><i class="fa fa-check"></i></button>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-1">
+          <label><h4>Add</h4></label>
+          <button class="btn btn-primary form-control" ng-disabled="!firstname && !lastName && roleSelected && !email"
+                  ng-click="addPlayer('U')" type="submit"><i class="fa fa-plus"></i></button>
+        </div>
+      </div>
+    </form>
     </div>
-    <div class="form-group">
-     <div class="col-xs-1">
-      <label><h4>Add</h4></label>
-      <button class="btn btn-primary form-control" ng-disabled="!firstname && !lastName && roleSelected" ng-click="addPlayer('U')" type="submit"><i class="glyphicon glyphicon-plus"></i></button>
+    <br>
+    <hr>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="panel panel-primary">
+          <div class="panel-heading text-center text-info"><i class="fa fa-trophy fa-1x"></i> Tournaments <span class="badge">{{tournaments.length}}</span></div>
+          <div class="panel-body">
+            <div class="bs-callout bs-callout-info" ng-show="tournaments == 0">
+              Your team not part of any tournaments
+            </div>
+            <ul class="col-md-6 list-group" ng-repeat="tournament in tournaments">
+              <li class="list-group-item">
+                  <div class="text-center"><a href="/tournament/{{tournament}}"><i class="fa fa-angle-double-right"></i> {{tournament}}</a></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div><!--/col-->
+      <div class="col-sm-4">
+        <div class="panel panel-primary">
+          <div class="panel-heading text-center"><i class="fa fa-users"></i> Team Records</div>
+          <div class="panel-body">
+            <ul class="list-group">
+              <li class="list-group-item">
+                <span class="badge">{{teamGames || 0}}</span>
+                Games
+              </li>
+              <li class="list-group-item">
+                <span class="badge">{{teamWins.length || 0}} / {{teamLosses.length || 0}}</span>
+                Wins/Loss
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div><!--/col-->
+      <div class="col-sm-4">
+        <div class="panel panel-primary">
+          <div class="panel-heading text-center"><i class="fa fa-users"></i> Best Players</div>
+          <div class="panel-body">
+            <ul class="list-group">
+              <li class="list-group-item">
+                <span class="pull-right" ng-show="bestBatsman.runs == 0">--</span>
+                <span class="pull-right" ng-show="bestBatsman.runs > 0">{{bestBatsman.firstName}} {{bestBatsman.lastName}} <span class="badge">{{bestBatsman.runs || 0}} Runs</span></span>
+                Batsman
+              </li>
+              <li class="list-group-item">
+                <span class="pull-right" ng-show="bestBatsman.wickets == 0">--</span>
+                <span class="pull-right" ng-show="bestBowler.wickets > 0">{{bestBowler.firstName}} {{bestBowler.lastName}} <span class="badge">{{bestBowler.wickets || 0}} Wkts</span></span>
+                Bowler
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div><!--/col-->
     </div>
   </div>
-</form>
-</div><!--/row-->
 
-</div><!--/container-->
+</div>
+
 
 <script type="text/ng-template" id="delete.html">
-        <div class="modal-header">
-            <h3 class="modal-title">Delete <i class="glyphicon glyphicon-trash"></i></h3>
-        </div>
-        <div class="modal-body">
-            Remove '<strong>{{playerToDelete.firstName}} {{playerToDelete.lastName}}</strong>' from the team?
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="deletePlayer()"><i class="fa fa-check"></i> OK</button>
-            <button class="btn btn-warning" type="button" ng-click="close()">Cancel</button>
-        </div>
+  <div class="modal-header">
+    <h3 class="modal-title">Delete <i class="fa fa-trash"></i></h3>
+  </div>
+  <div class="modal-body">
+    Remove '<strong>{{playerToDelete.firstName}} {{playerToDelete.lastName}}</strong>' from the team?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="deletePlayer()"><i class="fa fa-check"></i> OK</button>
+    <button class="btn btn-warning" type="button" ng-click="close()">Cancel</button>
+  </div>
 </script>
 
 <script type="text/ng-template" id="copyPlayer.html">
@@ -145,15 +259,19 @@
   <div class="modal-body">
     Add Player '<strong>{{playerToClone.firstName}} {{playerToClone.lastName}}</strong>' to a different Team?
     <br><br>
+
     <div class="form-group">
       <div class="col-md-6">
-        <input type="text" class="form-control" ng-model="team" placeholder="Please select a Team" title="Teams" typeahead="team as team.teamName for team in allTeams | filter:{teamName:$viewValue} | limitTo:8">
+        <input type="text" class="form-control" ng-model="team" placeholder="Please select a Team" title="Teams"
+               typeahead="team as team.teamName for team in allTeams | filter:{teamName:$viewValue} | limitTo:8">
       </div>
     </div>
     <br>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="cloneToTeam(team, playerToClone)"> <i class="fa fa-plus"></i> Add</button>
+    <button class="btn btn-primary" type="button" ng-click="cloneToTeam(team, playerToClone)"><i class="fa fa-plus"></i>
+      Add
+    </button>
     <button class="btn btn-warning" type="button" ng-click="close()">Cancel</button>
   </div>
 </script>
