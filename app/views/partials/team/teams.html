@@ -25,17 +25,15 @@
           <tr>
             <th>#</th>
             <th ng-click="sortType='teamName'; sortReverse = !sortReverse">Team <i class="fa fa-sort"></i></th>
-            <th  ng-click="sortType='joiningDate'; sortReverse = !sortReverse">Start Date <i class="fa fa-sort"></i></th>
+            <th ng-click="sortType='joiningDate'; sortReverse = !sortReverse">Start Date <i class="fa fa-sort"></i></th>
           </tr>
           </thead>
-
           <tbody>
-
-          <tr ng-repeat="team in allTeams | orderBy:sortType:sortReverse">
-            <td>{{$index + 1}}</td>
-            <td><a href="/team/{{team.teamName}}">{{team.teamName}}</a></td>
-            <td>{{team.joiningDate | date:'MMM d, y'}}</td>
-          </tr>
+            <tr ng-repeat="team in allTeams | orderBy:sortType:sortReverse">
+              <td>{{$index + 1}}</td>
+              <td><a href="/team/{{team.teamName}}">{{team.teamName}}</a></td>
+              <td>{{team.joiningDate | date:'MMM d, y'}}</td>
+            </tr>
           </tbody>
         </table>
         <div class="bs-callout bs-callout-info" ng-show="allTeams == 0">
@@ -49,7 +47,7 @@
         </div>
       </div><!--/table-resp-->
     </div><!--/column-->
-  </div><!--/row-->
+  </div>
 </div><!--/container-->
 
 
