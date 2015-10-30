@@ -186,6 +186,9 @@
         <div class="panel panel-primary">
           <div class="panel-heading text-center text-info"><i class="fa fa-trophy fa-1x"></i> Tournaments <span class="badge">{{tournaments.length}}</span></div>
           <div class="panel-body">
+            <div class="bs-callout bs-callout-info" ng-show="tournaments == 0">
+              Your team not part of any tournaments
+            </div>
             <ul class="col-md-6 list-group" ng-repeat="tournament in tournaments">
               <li class="list-group-item">
                   <div class="text-center"><a href="/tournament/{{tournament}}"><i class="fa fa-angle-double-right"></i> {{tournament}}</a></div>
@@ -217,11 +220,13 @@
           <div class="panel-body">
             <ul class="list-group">
               <li class="list-group-item">
-                <span class="pull-right">{{bestBatsman.firstName}} {{bestBatsman.lastName}} <span class="badge">{{bestBatsman.runs || 0}} Runs</span></span>
+                <span class="pull-right" ng-show="bestBatsman.runs == 0">--</span>
+                <span class="pull-right" ng-show="bestBatsman.runs > 0">{{bestBatsman.firstName}} {{bestBatsman.lastName}} <span class="badge">{{bestBatsman.runs || 0}} Runs</span></span>
                 Batsman
               </li>
               <li class="list-group-item">
-                <span class="pull-right">{{bestBowler.firstName}} {{bestBowler.lastName}} <span class="badge">{{bestBowler.wickets || 0}} Wkts</span></span>
+                <span class="pull-right" ng-show="bestBatsman.wickets == 0">--</span>
+                <span class="pull-right" ng-show="bestBowler.wickets > 0">{{bestBowler.firstName}} {{bestBowler.lastName}} <span class="badge">{{bestBowler.wickets || 0}} Wkts</span></span>
                 Bowler
               </li>
             </ul>

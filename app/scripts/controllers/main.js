@@ -1,20 +1,16 @@
 'use strict';
 
 angular.module('howWasThat')
-  .controller('MainCtrl', function ($scope, $rootScope, tournamentService, alertService, ProfileService) {
+  .controller('MainCtrl', function ($scope, $rootScope, tournamentService, alertService, ProfileService, teamService) {
 
-
-    $scope.checkProfileCreated = function () {
+    function checkProfileCreated () {
       ProfileService.findProfile($rootScope.currentUser.username).success(function(response) {
         $scope.profileExists = response.exists;
         $scope.user = response.data;
       }).error(function(status, data) {
         console.log(status);
       });
-
-    };
-
-    $scope.checkProfileCreated();
+    }
 
     function getTournamentList() {
       tournamentService.all().success(function (response) {
@@ -24,6 +20,16 @@ angular.module('howWasThat')
       });
     }
 
+    function getAllTeams() {
+      teamService.getTeams().success(function (response) {
+        $scope.allTeams = response.data;
+      }).error(function (status, data) {
+        alertService.displayErrorMessage("There was an error! Please try again");
+      });
+    }
+
+    checkProfileCreated();
+    getAllTeams();
     getTournamentList();
 
   });
