@@ -3,6 +3,12 @@
 angular.module('howWasThat')
   .controller('MainCtrl', function ($scope, $rootScope, tournamentService, alertService, ProfileService, teamService) {
 
+    $scope.currentPage = 0;
+    $scope.pageSize = 5;
+    $scope.numberOfPages = function () {
+      return Math.ceil($scope.tournamentList.length / $scope.pageSize);
+    };
+
     function checkProfileCreated () {
       ProfileService.findProfile($rootScope.currentUser.username).success(function(response) {
         $scope.profileExists = response.exists;

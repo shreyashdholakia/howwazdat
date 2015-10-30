@@ -31,13 +31,21 @@
 
               <tbody>
 
-              <tr ng-repeat="tournament in tournamentList | orderBy:sortType:sortReverse">
+              <tr ng-repeat="tournament in tournamentList | orderBy:sortType:sortReverse | startFrom:currentPage*pageSize | limitTo:pageSize">
                 <td>{{$index + 1}}</td>
                 <td><a href="/tournament/{{tournament.tournamentName}}">{{tournament.tournamentName}}</a></td>
                 <td>{{tournament.createdDate | date:'MMM d, y'}}</td>
               </tr>
               </tbody>
             </table>
+            <nav>
+              <ul class="pager">
+                <li class="previous" ng-hide="currentPage == 0"><a
+                  ng-click="currentPage=currentPage-1"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                <li class="next" ng-hide="currentPage >= (tournamentList.length/pageSize - 1) || tournamentList.length == 5"><a
+                  ng-click="currentPage=currentPage+1">Next <span aria-hidden="true">&rarr;</span></a></li>
+              </ul>
+            </nav>
             <div class="bs-callout bs-callout-info" ng-show="tournamentList == 0">
               No Tournaments Created!
             </div>
