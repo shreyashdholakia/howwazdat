@@ -217,11 +217,11 @@
           <div class="panel-body">
             <ul class="list-group">
               <li class="list-group-item">
-                <span class="badge">{{teamGames || 0}}</span>
+                <span class="pull-right">{{bestBatsman.firstName}} {{bestBatsman.lastName}} <span class="badge">{{bestBatsman.runs || 0}} Runs</span></span>
                 Batsman
               </li>
               <li class="list-group-item">
-                <span class="badge">{{teamWins.length || 0}} / {{teamLosses.length || 0}}</span>
+                <span class="pull-right">{{bestBowler.firstName}} {{bestBowler.lastName}} <span class="badge">{{bestBowler.wickets || 0}} Wkts</span></span>
                 Bowler
               </li>
             </ul>

@@ -54,7 +54,8 @@ module.exports = function (grunt) {
         BOWER_DIR + "/angular-file-upload/angular-file-upload.js",
         BOWER_DIR + "/fullcalendar/dist/fullcalendar.js",
         BOWER_DIR + "/fullcalendar/dist/gcal.js",
-        BOWER_DIR + "/toastr/*.js"
+        BOWER_DIR + "/toastr/*.js",
+        BOWER_DIR + "/underscore/underscore.js",
     ].concat(BOOTSTRAP_JS_FILES),
     EXTERNAL_CSS_FILES = [
       BOWER_DIR + "/fullcalendar/dist/fullcalendar.css",

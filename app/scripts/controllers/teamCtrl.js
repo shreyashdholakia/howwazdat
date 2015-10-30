@@ -170,6 +170,8 @@ angular.module('howWasThat')
           $scope.players = response.exists;
           $scope.teamName = response.data.teamName;
           $scope.playerList = response.data.players;
+          $scope.bestBatsman = _.max($scope.playerList, function(player){ return player.runs; });
+          $scope.bestBowler = _.max($scope.playerList, function(player){ return player.wickets; });
           $scope.teamWins = response.data.won;
           $scope.teamGames = response.data.matches;
           $scope.teamLosses = response.data.lost;
