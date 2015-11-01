@@ -10,7 +10,7 @@ angular.module('howWasThat')
       return Math.ceil($scope.matches.length / $scope.pageSize);
     };
     $scope.userProfile = false;
-    $scope.email = $rootScope.currentUser.email;
+//    $scope.email = $rootScope.currentUser.email;
 
     function checkProfileCreated() {
       ProfileService.findProfile($rootScope.currentUser.username).success(function (response) {
@@ -54,6 +54,7 @@ angular.module('howWasThat')
 
     $scope.create = function (user) {
       user.username = $rootScope.currentUser.username;
+      $scope.email = $rootScope.currentUser.email;
       user.email = $scope.email;
       user.joiningDate = new Date();
       ProfileService.create(user).success(function (data) {
