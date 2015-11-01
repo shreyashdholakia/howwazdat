@@ -18,8 +18,10 @@
 
 
   body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #333;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333;
+    background: #e8eff5 url("../img/noise.png");
+    box-sizing: border-box;
   }
 
   .signup-well {
@@ -295,6 +297,11 @@
   .team-badge {
     background-color: #428bca;
     border-color: #FDFDFD;
+  }
+
+  .fixed-panel {
+    height:130px;
+    overflow-y: scroll;
   }
 
 

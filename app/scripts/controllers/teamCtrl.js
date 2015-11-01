@@ -138,6 +138,7 @@ angular.module('howWasThat')
         runs: Number(0),
         ballFaced: Number(0),
         wickets: Number(0),
+        runsGiven: Number(0),
         ballBowled: Number(0),
         fifties: Number(0),
         hundreds: Number(0),
@@ -168,6 +169,7 @@ angular.module('howWasThat')
       if (teamName) {
         teamService.teamDetails(teamName).success(function (response) {
           $scope.players = response.exists;
+          console.log(response.data);
           $scope.teamName = response.data.teamName;
           $scope.playerList = response.data.players;
           $scope.bestBatsman = _.max($scope.playerList, function(player){ return player.runs; });
