@@ -185,9 +185,9 @@
       <div class="col-sm-4">
         <div class="panel panel-primary">
           <div class="panel-heading text-center text-info"><i class="fa fa-trophy fa-1x"></i> Tournaments <span class="badge">{{tournaments.length}}</span></div>
-          <div class="panel-body">
+          <div class="panel-body fixed-panel">
             <div class="bs-callout bs-callout-info" ng-show="tournaments == 0">
-              Your team not part of any tournaments
+              Your team not part of any tournaments. <a href="/tournaments">Join a Tournament</a>
             </div>
             <ul class="col-md-6 list-group" ng-repeat="tournament in tournaments">
               <li class="list-group-item">

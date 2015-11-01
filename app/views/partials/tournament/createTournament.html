@@ -52,7 +52,7 @@
   <br>
 
   <div class="row" ng-show="tournamentPage">
-
+   <div class="row">
     <div class="col-sm-4"><!--left col-->
       <div class="panel panel-primary">
         <div class="panel-heading text-center"><i class="fa fa-trophy fa-1x"></i> Tournament Details</div>
@@ -195,7 +195,7 @@
                 <td>{{team.won || 0}}</td>
                 <td>{{team.lost || 0}}</td>
                 <td>{{team.tied || 0}}</td>
-                <td>{{((team.runs/team.overs) - (team.runsAgainst/team.oversAgainst)) | number:'2' || 0}}</td>
+                <td>{{((team.runs/team.overs) - (team.runsAgainst/team.oversAgainst) | number:'2') || 0}}</td>
                 <td>{{team.points|| 0}}</td>
               </tr>
               </tbody>
@@ -213,7 +213,7 @@
           <br>
           <div class="alert alert-info text-center">
             <span class="fa fa-info-circle"></span><strong class="text-muted"><b> &nbsp;Points: 1 Run = 1Pt, 50 Runs: 50Pts, 100 Runs: 100Pts, 1 Wicket: 10Pts </b></strong>
-          </div>
+      </div>
           <div class="table-responsive">
             <table class="table table-hover table-striped">
               <thead>
@@ -247,7 +247,7 @@
                 <td>{{stats.hundreds || 0}}</td>
                 <td>{{stats.wickets || 0}}</td>
                 <td>{{stats.bestBowling || 0}}</td>
-                <td>{{getPoints(stats)}}</td>
+                <td>{{stats.points}}</td>
               </tr>
               </tbody>
             </table>
@@ -360,7 +360,54 @@
       </form>
     </div>
     <!--/col-9-->
+
   </div>
+  <hr>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="panel panel-primary">
+        <div class="panel-heading text-center text-info"><i class="fa fa-trophy fa-1x"></i> Batsman - Top 3</div>
+        <div class="panel-body">
+          <div class="bs-callout bs-callout-info" ng-show="tournaments == 0">
+            Your team not part of any tournaments
+          </div>
+          <ul class="list-group" ng-repeat="player in statistics | orderBy:'runs':sortTopBatsman | limitTo:'3'">
+            <li class="list-group-item">
+              <span class="badge">{{player.runs}} Runs</span>
+              <strong class="text-info">{{player.player}} / {{player.team}}</strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div><!--/col-->
+    <div class="col-sm-4">
+      <div class="panel panel-primary">
+        <div class="panel-heading text-center"><i class="fa fa-users"></i> Bowler - Top 3</div>
+        <div class="panel-body">
+          <ul class="list-group" ng-repeat="player in statistics | orderBy:'wickets':sortTopBowler | limitTo:'3'">
+            <li class="list-group-item">
+              <span class="badge">{{player.wickets}} Wickets</span>
+              <strong class="text-info">{{player.player}} / {{player.team}}</strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div><!--/col-->
+    <div class="col-sm-4">
+      <div class="panel panel-primary">
+        <div class="panel-heading text-center"><i class="fa fa-users"></i> MVP - Top 3 </div>
+        <div class="panel-body">
+          <ul class="list-group" ng-repeat="player in statistics | orderBy:'points':sortMVP | limitTo:'3'">
+            <li class="list-group-item">
+              <span class="badge">{{player.points}} Points</span>
+              <strong class="text-info">{{player.player}} / {{player.team}}</strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div><!--/col-->
+  </div>
+    </div>
   <!--/row-->
 </div>
 

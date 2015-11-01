@@ -17,6 +17,9 @@ angular.module('howWasThat')
 
     $scope.sortType = 'matchDate';
     $scope.sortReverse = true;
+    $scope.sortTopBatsman = true;
+    $scope.sortTopBowler = true;
+    $scope.sortMVP = true;
 
     $scope.today = function () {
       $scope.matchDate = new Date();
@@ -118,11 +121,19 @@ angular.module('howWasThat')
     };
 
     $scope.getPoints = function (stats) {
-      return ((stats.runs * 1) + (stats.wickets * 10))
+      return $scope.playerPoints = ((stats.runs * 1) + (stats.wickets * 10));
     };
 
-    $scope.tournamentPage = ($routeParams.tournamentName) ? true : false;
+    function calculatePlayerPoints(statistics) {
+      statistics.forEach(function (playerInfo) {
+        playerInfo.points =  ((playerInfo.runs * 1) + (playerInfo.wickets * 10));
+      });
 
+
+
+    }
+
+    $scope.tournamentPage = ($routeParams.tournamentName) ? true : false;
     $scope.checkProfileCreated();
     $scope.tournamentDetails = [];
 
@@ -413,6 +424,7 @@ angular.module('howWasThat')
       tournamentService.stats(tournamentName).success(function (response) {
         if(response.data.teams && response.data.teams.length > 0) {
           $scope.statistics = response.data.teams;
+          calculatePlayerPoints($scope.statistics);
         }
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.");

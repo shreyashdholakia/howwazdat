@@ -163,7 +163,8 @@ angular.module('howWasThat')
       players.forEach(function (player) {
         var fullName = player.firstName + ' ' + player.lastName;
         $scope.playerList.push({
-          name: fullName
+          name: fullName,
+          email: player.email
         })
       });
       createManOfMatch($scope.playerList);
@@ -174,7 +175,8 @@ angular.module('howWasThat')
       {
         var fullName = player.firstName + ' ' + player.lastName;
         $scope.visitingTeamPlayerList.push({
-          name: fullName
+          name: fullName,
+          email: player.email
         })
       });
       createManOfMatch($scope.visitingTeamPlayerList);
@@ -265,6 +267,7 @@ angular.module('howWasThat')
           outNotOut: createHowOut($scope.howOut.name, $scope.visitingTeamFielder.name, $scope.visitingTeamBowler.name),
           fielder: $scope.visitingTeamFielder.name || '--',
           bowler: $scope.visitingTeamBowler.name || '--',
+          email: $scope.visitingTeamPlayer.email,
           runs: $scope.runs || 0,
           balls: $scope.balls || 0,
           fours: $scope.fours || 0,
@@ -293,6 +296,7 @@ angular.module('howWasThat')
         $scope.newBatterVisitingTeam = [];
         $scope.newBatterVisitingTeam.push({
           player: $scope.homeTeamPlayer.name,
+          email: $scope.homeTeamPlayer.email,
           outNotOut: createHowOut($scope.howOutTeam2.name, $scope.homeTeamFielder.name, $scope.homeTeamBowler.name),
           fielder: $scope.homeTeamFielder.name || '--',
           bowler: $scope.homeTeamBowler.name || '--',
@@ -324,6 +328,7 @@ angular.module('howWasThat')
       if (!playerExists) {
         $scope.visitingTeamNewBowler.push({
           player: $scope.visitingTeamBowler.name,
+          email: $scope.visitingTeamBowler.email,
           overs: $scope.visitingTeamBowlerOvers || 0,
           maiden: $scope.visitingTeamBowlerMaiden || 0,
           runs: $scope.visitingTeamBowlerRuns || 0,
@@ -357,6 +362,7 @@ angular.module('howWasThat')
 
         $scope.homeTeamNewBowler.push({
           player: $scope.homeTeamBowler.name,
+          email: $scope.homeTeamBowler.email,
           overs: $scope.homeTeamBowlerOvers || 0,
           maiden: $scope.homeTeamBowlerMaiden || 0,
           runs: $scope.homeTeamBowlerRuns || 0,
