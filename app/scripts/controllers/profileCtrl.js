@@ -25,9 +25,21 @@ angular.module('howWasThat')
       });
     }
 
-    console.log($routeParams.player);
+    function getProfile() {
+      if($routeParams.player) {
+        getPlayerUserName($routeParams.player);
+      } else {
+        console.log("logged in");
+        checkProfileCreated($rootScope.currentUser.username)
+      }
+    }
 
-    checkProfileCreated();
+    getProfile();
+    //checkProfileCreated();
+
+    function getPlayerUserName(name) {
+      console.log("hre" + name);
+    }
 
     function getMatches(fullName) {
       matchDetailsService.getUserMatches(fullName).success(function (response) {

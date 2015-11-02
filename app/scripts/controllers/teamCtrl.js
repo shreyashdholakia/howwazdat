@@ -169,7 +169,6 @@ angular.module('howWasThat')
       if (teamName) {
         teamService.teamDetails(teamName).success(function (response) {
           $scope.players = response.exists;
-          console.log(response.data);
           $scope.teamName = response.data.teamName;
           $scope.playerList = response.data.players;
           $scope.bestBatsman = _.max($scope.playerList, function(player){ return player.runs; });
