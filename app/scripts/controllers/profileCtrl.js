@@ -107,7 +107,6 @@ angular.module('howWasThat')
     function getUserTeams(name) {
       statisticService.userTeams(name).success(function (response) {
         $scope.playerTeams = response.data;
-        console.log($scope.playerTeams);
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.");
       });

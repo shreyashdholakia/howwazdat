@@ -243,6 +243,10 @@ angular.module('howWasThat')
       });
     };
 
+    $scope.profile = function (player) {
+      $location.path('/profile/:' + player.firstName + ' ' + player.lastName);
+    }
+
     $scope.close = function () {
       $scope.modalInstance.dismiss('cancel');
     };
