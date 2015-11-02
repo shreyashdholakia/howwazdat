@@ -10,7 +10,6 @@ angular.module('howWasThat')
       return Math.ceil($scope.matches.length / $scope.pageSize);
     };
     $scope.userProfile = false;
-//    $scope.email = $rootScope.currentUser.email;
 
     function checkProfileCreated() {
       ProfileService.findProfile($rootScope.currentUser.username).success(function (response) {
@@ -25,6 +24,8 @@ angular.module('howWasThat')
         alertService.displayErrorMessage("There was an error! Please try again.");
       });
     }
+
+    console.log($routeParams.player);
 
     checkProfileCreated();
 

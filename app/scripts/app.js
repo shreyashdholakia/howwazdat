@@ -62,6 +62,10 @@ options.api.base_url = "http://localhost:3000";
         templateUrl: 'partials/profile.html',
         controller: 'ProfileCtrl'
       })
+      .when('/profile/:player', {
+        templateUrl: 'partials/profile.html',
+        controller: 'ProfileCtrl'
+      })
       .when('/blogs/create', {
         templateUrl: 'partials/blogs/create.html',
         controller: 'BlogsCtrl'

@@ -244,7 +244,7 @@ angular.module('howWasThat')
     };
 
     $scope.profile = function (player) {
-      $location.path('/profile/:' + player.firstName + ' ' + player.lastName);
+      $location.path('/profile/' + player.firstName + ' ' + player.lastName);
     }
 
     $scope.close = function () {
