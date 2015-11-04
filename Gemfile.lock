@@ -1,11 +1,15 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    sass (3.4.5)
     compass (1.0.3)
+    sass (3.4.5)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  compass
   sass
+
+BUNDLED WITH
+   1.10.6
