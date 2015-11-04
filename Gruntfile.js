@@ -460,21 +460,6 @@ module.exports = function (grunt) {
     'copy:heroku'
   ]);
 
-  grunt.registerTask('heroku:production', [
-      'clean:dist',
-      'useminPrepare',
-          'concurrent:dist',
-          'autoprefixer',
-          'concat',
-          'ngmin',
-          'copy:dist',
-          'cdnify',
-          'cssmin',
-          'uglify',
-          'rev',
-          'usemin'
-  ]);
-
   grunt.registerTask('default', [
     'jshint',
     'test',
