@@ -29,7 +29,6 @@ angular.module('howWasThat')
       if($routeParams.player) {
         getPlayerUserName($routeParams.player);
       } else {
-        console.log("logged in");
         checkProfileCreated($rootScope.currentUser.username)
       }
     }
