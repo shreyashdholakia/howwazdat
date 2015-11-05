@@ -515,7 +515,7 @@ angular.module('howWasThat')
           match.losingTeam = getLosingTeam($scope.result.name, $scope.winningTeam.name);
           match.tossDecision = $scope.decision.name;
           match.mom = $scope.mom.name;
-          match.updatedBy = $rootScope.currentUser.username;
+          match.updatedBy = $rootScope.currentUser.email;
           match.lastUpdated = new Date();
           match.status = 'Submitted';
           match.previousResult = $scope.matchDetails.result;
@@ -621,7 +621,7 @@ angular.module('howWasThat')
           if (match.matchNumber === $scope.matchNumber) {
             match.homeTeamTotal = $scope.homeTeamScoreDetails;
             match.scoreCard = 'unchanged';
-            match.updatedBy = $rootScope.currentUser.username;
+            match.updatedBy = $rootScope.currentUser.email;
             match.lastUpdated = new Date();
             match.whichTeamTotal = team;
             $scope.match = match;
@@ -632,7 +632,7 @@ angular.module('howWasThat')
           if (match.matchNumber === $scope.matchNumber) {
             match.visitingTeamTotal = $scope.visitingTeamScoreDetails;
             match.scoreCard = 'unchanged';
-            match.updatedBy = $rootScope.currentUser.username;
+            match.updatedBy = $rootScope.currentUser.email;
             match.lastUpdated = new Date();
             match.whichTeamTotal = team;
             $scope.match = match;

@@ -19,7 +19,7 @@ angular.module('howWasThat')
     };
 
     $scope.checkProfileCreated = function () {
-      ProfileService.findProfile($rootScope.currentUser.username).success(function (response) {
+      ProfileService.findProfile($rootScope.currentUser.email).success(function (response) {
         $scope.profileExists = response.exists;
         $scope.user = response.data;
         $scope.organizer = $scope.user.firstname + ' ' + $scope.user.lastname;
@@ -199,7 +199,7 @@ angular.module('howWasThat')
         var joiningDate = new Date();
         $scope.teamDetails.push({
           teamName: $scope.teamName,
-          owner: $rootScope.currentUser.username,
+          owner: $rootScope.currentUser.email,
           joiningDate: joiningDate,
           players: $scope.playerList
         });

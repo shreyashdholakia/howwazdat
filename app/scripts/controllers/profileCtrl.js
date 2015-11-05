@@ -12,7 +12,7 @@ angular.module('howWasThat')
     $scope.userProfile = false;
 
     function checkProfileCreated() {
-      ProfileService.findProfile($rootScope.currentUser.username).success(function (response) {
+      ProfileService.findProfile($rootScope.currentUser.email).success(function (response) {
         $scope.profileExists = response.exists;
         $scope.userProfile = true;
         $scope.user = response.data;
