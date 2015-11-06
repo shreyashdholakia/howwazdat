@@ -374,7 +374,7 @@
           <ul class="list-group" ng-repeat="player in statistics | orderBy:'runs':sortTopBatsman | limitTo:'3'">
             <li class="list-group-item">
               <span class="badge">{{player.runs}} Runs</span>
-              <strong class="text-info">{{player.player}} / {{player.team}}</strong>
+              <strong class="text-info">{{player.player}} / <small>{{player.team}}</small></strong>
             </li>
           </ul>
         </div>
@@ -387,7 +387,7 @@
           <ul class="list-group" ng-repeat="player in statistics | orderBy:'wickets':sortTopBowler | limitTo:'3'">
             <li class="list-group-item">
               <span class="badge">{{player.wickets}} Wickets</span>
-              <strong class="text-info">{{player.player}} / {{player.team}}</strong>
+              <strong class="text-info">{{player.player}} / <small>{{player.team}}</small></strong>
             </li>
           </ul>
         </div>
@@ -400,7 +400,7 @@
           <ul class="list-group" ng-repeat="player in statistics | orderBy:'points':sortMVP | limitTo:'3'">
             <li class="list-group-item">
               <span class="badge">{{player.points}} Points</span>
-              <strong class="text-info">{{player.player}} / {{player.team}}</strong>
+              <strong class="text-info">{{player.player}} / <small><u>{{player.team}}</u></small></strong>
             </li>
           </ul>
         </div>

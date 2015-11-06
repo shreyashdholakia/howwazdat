@@ -65,7 +65,7 @@ angular.module('howWasThat')
       $scope.modalInstance.dismiss('cancel');
       teamService.deletePlayer($scope.teamName, $scope.playerToDelete).success(function (data) {
         $location.path("/team/" + $scope.teamName);
-        $scope.playerList = data.data.players;
+        $scope.getTeamDetails();
         alertService.displaySaveMessage("Success");
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again");
@@ -116,6 +116,7 @@ angular.module('howWasThat')
     $scope.newPlayer = [];
 
     $scope.addPlayer = function (action) {
+      $scope.newUser = true;
       if ($scope.isCaptain) {
         $scope.captain = 'C';
       } else {
@@ -126,6 +127,7 @@ angular.module('howWasThat')
         $scope.firstName = $scope.player.firstName;
         $scope.lastName = $scope.player.lastName;
         $scope.email = $scope.player.email;
+        $scope.newUser = false;
       }
 
       $scope.newPlayer.push({
@@ -142,7 +144,8 @@ angular.module('howWasThat')
         ballBowled: Number(0),
         fifties: Number(0),
         hundreds: Number(0),
-        fiveWicket: Number(0)
+        fiveWicket: Number(0),
+        newUser: $scope.newUser
       });
 
       $scope.playerList.push($scope.newPlayer[0]);
