@@ -116,6 +116,7 @@ angular.module('howWasThat')
     $scope.newPlayer = [];
 
     $scope.addPlayer = function (action) {
+      var playerExists = false;
       $scope.newUser = true;
       if ($scope.isCaptain) {
         $scope.captain = 'C';
@@ -130,30 +131,39 @@ angular.module('howWasThat')
         $scope.newUser = false;
       }
 
-      $scope.newPlayer.push({
-        firstName: $scope.firstName,
-        lastName: $scope.lastName,
-        role: $scope.roleSelected.name,
-        captain: $scope.captain,
-        email: $scope.email,
-        matches: Number(0),
-        runs: Number(0),
-        ballFaced: Number(0),
-        wickets: Number(0),
-        runsGiven: Number(0),
-        ballBowled: Number(0),
-        fifties: Number(0),
-        hundreds: Number(0),
-        fiveWicket: Number(0),
-        newUser: $scope.newUser
+      $scope.playerList.forEach(function (player) {
+        if (player.email === $scope.email) {
+          alertService.displayErrorMessage("Player already added to the team. Please add a different player");
+          playerExists = true;
+        }
       });
 
-      $scope.playerList.push($scope.newPlayer[0]);
+      if(!playerExists) {
+        $scope.newPlayer.push({
+          firstName: $scope.firstName,
+          lastName: $scope.lastName,
+          role: $scope.roleSelected.name,
+          captain: $scope.captain,
+          email: $scope.email,
+          matches: Number(0),
+          runs: Number(0),
+          ballFaced: Number(0),
+          wickets: Number(0),
+          runsGiven: Number(0),
+          ballBowled: Number(0),
+          fifties: Number(0),
+          hundreds: Number(0),
+          fiveWicket: Number(0),
+          newUser: $scope.newUser
+        });
 
-      if (action === 'U' || action === 'user') {
-        $scope.teamUpdate();
-      } else {
-        $scope.addTeam(); //save the added new players
+        $scope.playerList.push($scope.newPlayer[0]);
+
+        if (action === 'U' || action === 'user') {
+          $scope.teamUpdate();
+        } else {
+          $scope.addTeam(); //save the added new players
+        }
       }
 
       $scope.firstName = "";
@@ -161,6 +171,7 @@ angular.module('howWasThat')
       $scope.email = "";
       $scope.isCaptain = false;
       $scope.newPlayer = [];
+      $scope.player = "";
     };
 
     $scope.checkInputField = function () {
