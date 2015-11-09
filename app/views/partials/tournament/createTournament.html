@@ -7,7 +7,6 @@
   <div class="row" ng-show="!tournamentPage">
     <form class="form" id="registrationForm" novalidate name="tournamentForm">
       <div class="form-group">
-
         <div class="col-xs-6">
           <label for="first_name"><h4>Tournament Name</h4></label>
           <input type="text" class="form-control" name="name" ng-model="tournament.name" id="name" placeholder="Tournament Name" title="enter your tournament name if any." required>
@@ -15,7 +14,6 @@
         </div>
       </div>
       <div class="form-group">
-
         <div class="col-xs-6">
           <label for="last_name"><h4>Organizer</h4></label>
           <input type="text" class="form-control" name="last_name" ng-model="organizer" placeholder="Organizer" title="enter organizer." ng-disabled="isOrganizer" required>
@@ -42,7 +40,6 @@
       </div>
     </div>
   </form>
-
   </div><!--/col-9-->
   <div class="row" ng-show="tournamentPage">
     <div class="col-sm-10"><h1>{{tournamentInfo.tournamentName}}</h1>
@@ -138,6 +135,9 @@
               </tr>
               </tbody>
             </table>
+            <div class="bs-callout bs-callout-info" ng-show="tournamentMatches.length == 0">
+              No matches scheduled. Please add teams and create a match.
+            </div>
             <nav>
               <ul class="pager">
                 <li class="previous" ng-hide="currentPage == 0"><a
@@ -261,7 +261,6 @@
       <!--/tab-content-->
       <form class="form" id="matchForm" name="matchForm" ng-show="createMatch">
         <div class="form-group">
-
           <div class="col-xs-6">
             <label><h4>Home Team</h4></label>
             <input type="text" class="form-control" name="first_name" ng-model="homeTeam" id="first_name"
@@ -360,7 +359,6 @@
       </form>
     </div>
     <!--/col-9-->
-
   </div>
   <hr>
   <div class="row">
@@ -374,7 +372,7 @@
           <ul class="list-group" ng-repeat="player in statistics | orderBy:'runs':sortTopBatsman | limitTo:'3'">
             <li class="list-group-item">
               <span class="badge">{{player.runs}} Runs</span>
-              <strong class="text-info">{{player.player}} / <small>{{player.team}}</small></strong>
+              <strong class="text-info">{{player.player}} / <small class="text-muted"><em>{{player.team}}</em></small></strong>
             </li>
           </ul>
         </div>
@@ -387,7 +385,7 @@
           <ul class="list-group" ng-repeat="player in statistics | orderBy:'wickets':sortTopBowler | limitTo:'3'">
             <li class="list-group-item">
               <span class="badge">{{player.wickets}} Wickets</span>
-              <strong class="text-info">{{player.player}} / <small>{{player.team}}</small></strong>
+              <strong class="text-info">{{player.player}} / <small class="text-muted"><em>{{player.team}}</em></small></strong>
             </li>
           </ul>
         </div>
@@ -400,7 +398,7 @@
           <ul class="list-group" ng-repeat="player in statistics | orderBy:'points':sortMVP | limitTo:'3'">
             <li class="list-group-item">
               <span class="badge">{{player.points}} Points</span>
-              <strong class="text-info">{{player.player}} / <small><u>{{player.team}}</u></small></strong>
+              <strong class="text-info">{{player.player}} / <small class="text-muted"><em>{{player.team}}</em></small></strong>
             </li>
           </ul>
         </div>

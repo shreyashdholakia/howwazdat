@@ -298,6 +298,7 @@ angular.module('howWasThat')
           player: $scope.homeTeamPlayer.name,
           email: $scope.homeTeamPlayer.email,
           outNotOut: createHowOut($scope.howOutTeam2.name, $scope.homeTeamFielder.name, $scope.homeTeamBowler.name),
+          howOut: $scope.howOutTeam2.name,
           fielder: $scope.homeTeamFielder.name || '--',
           bowler: $scope.homeTeamBowler.name || '--',
           runs: $scope.runsTeam2 || 0,
@@ -670,13 +671,31 @@ angular.module('howWasThat')
       });
     }
 
-    $scope.open = function () {
+    $scope.submitMatchForApproval = function () {
       $scope.modalInstance = $modal.open({
         animation: $scope.animationsEnabled,
         templateUrl: 'matchSubmit.html',
         scope:$scope
       });
     };
+
+    $scope.deletePlayerFromScoreSheet = function (player) {
+      $scope.playerToRemove = player;
+      $scope.modalInstance = $modal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: 'deletePlayerFromScoreSheet.html',
+        scope:$scope
+      });
+    };
+
+    $scope.editPlayerScoreSheet = function (player) {
+      $scope.playerScoreToEdit = player;
+      $scope.modalInstance = $modal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: 'editPlayerFromScoreSheet.html',
+        scope:$scope
+      });
+    }
 
     $scope.close = function () {
       $scope.modalInstance.dismiss('cancel');
