@@ -10,10 +10,9 @@ angular.module('howWasThat')
       return Math.ceil($scope.matches.length / $scope.pageSize);
     };
     $scope.userProfile = false;
-//    $scope.email = $rootScope.currentUser.email;
 
     function checkProfileCreated() {
-      ProfileService.findProfile($rootScope.currentUser.username).success(function (response) {
+      ProfileService.findProfile($rootScope.currentUser.email).success(function (response) {
         $scope.profileExists = response.exists;
         $scope.userProfile = true;
         $scope.user = response.data;
@@ -26,7 +25,20 @@ angular.module('howWasThat')
       });
     }
 
-    checkProfileCreated();
+    function getProfile() {
+      if($routeParams.player) {
+        getPlayerUserName($routeParams.player);
+      } else {
+        checkProfileCreated($rootScope.currentUser.username)
+      }
+    }
+
+    getProfile();
+    //checkProfileCreated();
+
+    function getPlayerUserName(name) {
+      console.log("hre" + name);
+    }
 
     function getMatches(fullName) {
       matchDetailsService.getUserMatches(fullName).success(function (response) {
@@ -107,7 +119,6 @@ angular.module('howWasThat')
     function getUserTeams(name) {
       statisticService.userTeams(name).success(function (response) {
         $scope.playerTeams = response.data;
-        console.log($scope.playerTeams);
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.");
       });

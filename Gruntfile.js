@@ -72,7 +72,7 @@ module.exports = function (grunt) {
     concat: {
       "app/built/internal.js": INTERNAL_JS_FILES,
       "app/built/external.js": EXTERNAL_JS_FILES,
-      "app/built/external.css": EXTERNAL_CSS_FILES
+      "app/built/css/external.css": EXTERNAL_CSS_FILES
     },
     express: {
         options: {
@@ -332,6 +332,16 @@ module.exports = function (grunt) {
             'generated/*'
           ]
         }]
+      },
+      "font-awesome-files": {
+        files: [
+          {
+            cwd: BOWER_DIR + "/fontawesome/fonts/",
+            src: ['**'],
+            dest: "app/built/fonts/",
+            expand: true
+          }
+        ]
       },
       heroku: {
         files: [{

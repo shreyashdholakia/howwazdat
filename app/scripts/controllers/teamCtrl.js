@@ -19,7 +19,7 @@ angular.module('howWasThat')
     };
 
     $scope.checkProfileCreated = function () {
-      ProfileService.findProfile($rootScope.currentUser.username).success(function (response) {
+      ProfileService.findProfile($rootScope.currentUser.email).success(function (response) {
         $scope.profileExists = response.exists;
         $scope.user = response.data;
         $scope.organizer = $scope.user.firstname + ' ' + $scope.user.lastname;
@@ -65,7 +65,7 @@ angular.module('howWasThat')
       $scope.modalInstance.dismiss('cancel');
       teamService.deletePlayer($scope.teamName, $scope.playerToDelete).success(function (data) {
         $location.path("/team/" + $scope.teamName);
-        $scope.playerList = data.data.players;
+        $scope.getTeamDetails();
         alertService.displaySaveMessage("Success");
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again");
@@ -116,6 +116,8 @@ angular.module('howWasThat')
     $scope.newPlayer = [];
 
     $scope.addPlayer = function (action) {
+      var playerExists = false;
+      $scope.newUser = true;
       if ($scope.isCaptain) {
         $scope.captain = 'C';
       } else {
@@ -126,31 +128,42 @@ angular.module('howWasThat')
         $scope.firstName = $scope.player.firstName;
         $scope.lastName = $scope.player.lastName;
         $scope.email = $scope.player.email;
+        $scope.newUser = false;
       }
 
-      $scope.newPlayer.push({
-        firstName: $scope.firstName,
-        lastName: $scope.lastName,
-        role: $scope.roleSelected.name,
-        captain: $scope.captain,
-        email: $scope.email,
-        matches: Number(0),
-        runs: Number(0),
-        ballFaced: Number(0),
-        wickets: Number(0),
-        runsGiven: Number(0),
-        ballBowled: Number(0),
-        fifties: Number(0),
-        hundreds: Number(0),
-        fiveWicket: Number(0)
+      $scope.playerList.forEach(function (player) {
+        if (player.email === $scope.email) {
+          alertService.displayErrorMessage("Player already added to the team. Please add a different player");
+          playerExists = true;
+        }
       });
 
-      $scope.playerList.push($scope.newPlayer[0]);
+      if(!playerExists) {
+        $scope.newPlayer.push({
+          firstName: $scope.firstName,
+          lastName: $scope.lastName,
+          role: $scope.roleSelected.name,
+          captain: $scope.captain,
+          email: $scope.email,
+          matches: Number(0),
+          runs: Number(0),
+          ballFaced: Number(0),
+          wickets: Number(0),
+          runsGiven: Number(0),
+          ballBowled: Number(0),
+          fifties: Number(0),
+          hundreds: Number(0),
+          fiveWicket: Number(0),
+          newUser: $scope.newUser
+        });
 
-      if (action === 'U' || action === 'user') {
-        $scope.teamUpdate();
-      } else {
-        $scope.addTeam(); //save the added new players
+        $scope.playerList.push($scope.newPlayer[0]);
+
+        if (action === 'U' || action === 'user') {
+          $scope.teamUpdate();
+        } else {
+          $scope.addTeam(); //save the added new players
+        }
       }
 
       $scope.firstName = "";
@@ -158,6 +171,7 @@ angular.module('howWasThat')
       $scope.email = "";
       $scope.isCaptain = false;
       $scope.newPlayer = [];
+      $scope.player = "";
     };
 
     $scope.checkInputField = function () {
@@ -169,7 +183,6 @@ angular.module('howWasThat')
       if (teamName) {
         teamService.teamDetails(teamName).success(function (response) {
           $scope.players = response.exists;
-          console.log(response.data);
           $scope.teamName = response.data.teamName;
           $scope.playerList = response.data.players;
           $scope.bestBatsman = _.max($scope.playerList, function(player){ return player.runs; });
@@ -200,7 +213,7 @@ angular.module('howWasThat')
         var joiningDate = new Date();
         $scope.teamDetails.push({
           teamName: $scope.teamName,
-          owner: $rootScope.currentUser.username,
+          owner: $rootScope.currentUser.email,
           joiningDate: joiningDate,
           players: $scope.playerList
         });
@@ -242,6 +255,10 @@ angular.module('howWasThat')
         scope: $scope
       });
     };
+
+    $scope.profile = function (player) {
+      $location.path('/profile/' + player.firstName + ' ' + player.lastName);
+    }
 
     $scope.close = function () {
       $scope.modalInstance.dismiss('cancel');

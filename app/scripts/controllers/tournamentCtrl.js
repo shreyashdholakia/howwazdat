@@ -110,7 +110,7 @@ angular.module('howWasThat')
     };
 
     $scope.checkProfileCreated = function () {
-      ProfileService.findProfile($rootScope.currentUser.username).success(function (response) {
+      ProfileService.findProfile($rootScope.currentUser.email).success(function (response) {
         $scope.profileExists = response.exists;
         $scope.user = response.data;
         $scope.organizer = $scope.user.firstname + ' ' + $scope.user.lastname;
@@ -140,7 +140,7 @@ angular.module('howWasThat')
     $scope.updateProfile = function (user) {
 
       if ($scope.profileExists) {
-        user.username = $rootScope.currentUser.username;
+        user.username = $rootScope.currentUser.email;
         user.updatedDate = new Date();
         ProfileService.update(user).success(function (data) {
           $location.path("/profile");
@@ -279,7 +279,7 @@ angular.module('howWasThat')
           organizer: $scope.organizer,
           owner: $scope.user.email,
           createdDate: joiningDate,
-          updatedBy: $rootScope.currentUser.username,
+          updatedBy: $rootScope.currentUser.email,
           lastUpdated: new Date(),
           address: $scope.tournament.address,
           addressLatitude: $scope.chosenPlaceDetails.geometry.location.lat(),
@@ -464,7 +464,7 @@ angular.module('howWasThat')
             homeTeam: $scope.homeTeam.teamName,
             visitingTeam: $scope.visitingTeam.teamName,
             matchDate: $scope.matchDate,
-            updatedBy: $rootScope.currentUser.username,
+            updatedBy: $rootScope.currentUser.email,
             lastUpdated: new Date(),
             startTime: $scope.matchStartTime,
             endTime: $scope.matchEndTime,
@@ -479,7 +479,7 @@ angular.module('howWasThat')
             homeTeam: $scope.homeTeam.teamName,
             visitingTeam: $scope.visitingTeam.teamName,
             matchDate: $scope.matchDate,
-            updatedBy: $rootScope.currentUser.username,
+            updatedBy: $rootScope.currentUser.email,
             lastUpdated: new Date(),
             startTime: $scope.matchStartTime,
             endTime: $scope.matchEndTime,

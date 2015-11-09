@@ -34,6 +34,7 @@
         </ul>
         <div class="tab-content">
           <div class="tab-pane" ng-class="{'active':isActiveTab('activity')}" id="home">
+            <br>
             <div class="table-responsive">
               <table class="table table-hover table-striped">
                 <thead>
@@ -127,7 +128,7 @@
     <div class="row">
       <div class="col-sm-6">
         <div class="panel panel-primary">
-          <div class="panel-heading text-center text-info"><i class="fa fa-users fa-1x"></i> Teams <span class="badge"> {{playerTeams.length}}</span></div>
+          <div class="panel-heading text-center text-info"><i class="fa fa-users fa-1x"></i> Teams <span class="badge"> {{playerTeams.length || 0}}</span></div>
           <div class="panel-body">
             <div class="bs-callout bs-callout-info" ng-show="playerTeams.length == 0">
               Your are not part of any teams. <a href="/teams">Join a Team</a>
@@ -158,7 +159,7 @@
             </ul>
             <ul class=" col-md-4 list-group">
               <li class="list-group-item">
-                <span class="badge"><strong>{{playerWickets}}</strong></span>
+                <span class="badge"><strong>{{playerWickets || 0}}</strong></span>
                 <strong>Wickets</strong>
               </li>
             </ul>
