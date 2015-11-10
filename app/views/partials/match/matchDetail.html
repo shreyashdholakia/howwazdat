@@ -142,7 +142,7 @@
               <td>{{stats.fours}}</td>
               <td>{{stats.sixes}}</td>
               <td>{{stats.strikeRate | number:2 || 0}}</td>
-              <td><i class="fa fa-pencil" ng-click="editPlayerBattingScoreSheet(matchDetails.homeTeam, stats)" tooltip
+              <td><i class="fa fa-pencil" ng-click="editPlayerBattingScoreSheet(matchDetails.homeTeam, stats, 'home')" tooltip
                    data-original-title="Edit player score"
                    data-placement="top" data-trigger="hover"></i> |
                   <i class="fa fa-trash text-danger" ng-click="deletePlayerFromScoreSheet(matchDetails.homeTeam, stats)" tooltip
@@ -419,7 +419,7 @@
               <td>{{stats.fours}}</td>
               <td>{{stats.sixes}}</td>
               <td>{{stats.strikeRate | number:2 || 0}}</td>
-              <td><i class="fa fa-pencil" ng-click="editPlayerBattingScoreSheet(matchDetails.visitingTeam, stats)" tooltip
+              <td><i class="fa fa-pencil" ng-click="editPlayerBattingScoreSheet(matchDetails.visitingTeam, stats, 'visiting')" tooltip
                      data-original-title="Edit player score"
                      data-placement="top" data-trigger="hover"></i> |
                   <i class="fa fa-trash text-danger" ng-click="deletePlayerFromScoreSheet(matchDetails.visitingTeam, stats)" tooltip

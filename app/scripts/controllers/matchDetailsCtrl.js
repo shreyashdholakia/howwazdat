@@ -699,6 +699,9 @@ angular.module('howWasThat')
     var updateBattingScoreOfPlayer = [];
     function updatePlayerScores(newScore) {
       updateBattingScoreOfPlayer.push({
+        tournament: $scope.tournamentName,
+        matchNumber: $scope.matchNumber,
+        battingTeam: $scope.battingSide,
         new: newScore,
         old: $scope.playerPreviousScoreToEdit
       });
@@ -722,7 +725,8 @@ angular.module('howWasThat')
       });
     };
 
-    $scope.editPlayerBattingScoreSheet = function (team, player) {
+    $scope.editPlayerBattingScoreSheet = function (team, player, battingSide) {
+      $scope.battingSide = battingSide;
       $scope.editScreen = true;
       $scope.playerScoreToEdit = player;
       $scope.playerPreviousScoreToEdit = player;
