@@ -692,7 +692,7 @@ angular.module('howWasThat')
 
       $scope.playerScoreToEdit.outNotOut = createHowOut($scope.playerScoreToEdit.howOut.name, $scope.playerScoreToEdit.fielder.name, bowler),
       $scope.playerScoreToEdit.howOut = $scope.playerScoreToEdit.howOut.name;
-
+      $scope.playerScoreToEdit.strikeRate = calculateStrikeRate($scope.playerScoreToEdit.runs, $scope.playerScoreToEdit.balls)
       updatePlayerScores($scope.playerScoreToEdit);
     };
 
