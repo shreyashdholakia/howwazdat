@@ -265,6 +265,7 @@ angular.module('howWasThat')
         $scope.newBatterHomeTeam.push({
           player: $scope.visitingTeamPlayer.name,
           outNotOut: createHowOut($scope.howOut.name, $scope.visitingTeamFielder.name, $scope.visitingTeamBowler.name),
+          howOut: $scope.howOut.name,
           fielder: $scope.visitingTeamFielder.name || '--',
           bowler: $scope.visitingTeamBowler.name || '--',
           email: $scope.visitingTeamPlayer.email,
@@ -671,6 +672,8 @@ angular.module('howWasThat')
       });
     }
 
+
+
     $scope.submitMatchForApproval = function () {
       $scope.modalInstance = $modal.open({
         animation: $scope.animationsEnabled,
@@ -679,8 +682,39 @@ angular.module('howWasThat')
       });
     };
 
-    $scope.deletePlayerFromScoreSheet = function (player) {
+    $scope.editPlayerScore = function () {
+      var bowler;
+      if(!$scope.playerScoreToEdit.bowler.name) {
+         bowler = $scope.playerScoreToEdit.bowler;
+      } else {
+        bowler = $scope.playerScoreToEdit.bowler.name;
+      }
+
+      $scope.playerScoreToEdit.outNotOut = createHowOut($scope.playerScoreToEdit.howOut.name, $scope.playerScoreToEdit.fielder.name, bowler),
+      $scope.playerScoreToEdit.howOut = $scope.playerScoreToEdit.howOut.name;
+
+      updatePlayerScores($scope.playerScoreToEdit);
+    };
+
+    var updateBattingScoreOfPlayer = [];
+    function updatePlayerScores(newScore) {
+      updateBattingScoreOfPlayer.push({
+        new: newScore,
+        old: $scope.playerPreviousScoreToEdit
+      });
+
+      matchDetailsService.updatePlayerScore($scope.teamOfPlayerToEditBattingScore, updateBattingScoreOfPlayer).success(function (response) {
+        $scope.modalInstance.dismiss('cancel');
+        alertService.displaySaveMessage("Success");
+        getMatchDetails('update');
+      }).error(function (status, data) {
+        alertService.displayErrorMessage("There was an error! Please try again.");
+      });
+    }
+
+    $scope.deletePlayerFromScoreSheet = function (team, player) {
       $scope.playerToRemove = player;
+      $scope.teamOfPlayerToRemove = team;
       $scope.modalInstance = $modal.open({
         animation: $scope.animationsEnabled,
         templateUrl: 'deletePlayerFromScoreSheet.html',
@@ -688,14 +722,19 @@ angular.module('howWasThat')
       });
     };
 
-    $scope.editPlayerScoreSheet = function (player) {
+    $scope.editPlayerBattingScoreSheet = function (team, player) {
+      $scope.editScreen = true;
       $scope.playerScoreToEdit = player;
+      $scope.playerPreviousScoreToEdit = player;
+      var outValue = $scope.outs.map(function(x) {return x.name; }).indexOf($scope.playerScoreToEdit.howOut);
+      $scope.playerScoreToEdit.howOut = $scope.outs[outValue];
+      $scope.teamOfPlayerToEditBattingScore = team;
       $scope.modalInstance = $modal.open({
         animation: $scope.animationsEnabled,
         templateUrl: 'editPlayerFromScoreSheet.html',
         scope:$scope
       });
-    }
+    };
 
     $scope.close = function () {
       $scope.modalInstance.dismiss('cancel');
