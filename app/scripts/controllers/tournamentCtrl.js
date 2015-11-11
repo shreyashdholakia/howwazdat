@@ -126,11 +126,8 @@ angular.module('howWasThat')
 
     function calculatePlayerPoints(statistics) {
       statistics.forEach(function (playerInfo) {
-        playerInfo.points =  ((playerInfo.runs * 1) + (playerInfo.wickets * 10));
+        playerInfo.points =  ((playerInfo.runs * 1) + (playerInfo.wickets * 10) + (playerInfo.fifties * 50) + (playerInfo.hundreds * 100) );
       });
-
-
-
     }
 
     $scope.tournamentPage = ($routeParams.tournamentName) ? true : false;
