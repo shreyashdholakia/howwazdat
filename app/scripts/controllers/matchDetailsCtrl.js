@@ -672,8 +672,6 @@ angular.module('howWasThat')
       });
     }
 
-
-
     $scope.submitMatchForApproval = function () {
       $scope.modalInstance = $modal.open({
         animation: $scope.animationsEnabled,
@@ -696,8 +694,10 @@ angular.module('howWasThat')
       updatePlayerScores($scope.playerScoreToEdit);
     };
 
-    var updateBattingScoreOfPlayer = [];
+
     function updatePlayerScores(newScore) {
+      var updateBattingScoreOfPlayer = [];
+
       updateBattingScoreOfPlayer.push({
         tournament: $scope.tournamentName,
         matchNumber: $scope.matchNumber,
@@ -706,7 +706,7 @@ angular.module('howWasThat')
         old: $scope.playerPreviousScoreToEdit
       });
 
-      matchDetailsService.updatePlayerScore($scope.teamOfPlayerToEditBattingScore, updateBattingScoreOfPlayer).success(function (response) {
+      matchDetailsService.updatePlayerBatting($scope.teamOfPlayerToEditBattingScore, updateBattingScoreOfPlayer).success(function (response) {
         $scope.modalInstance.dismiss('cancel');
         alertService.displaySaveMessage("Success");
         getMatchDetails('update');
@@ -714,6 +714,26 @@ angular.module('howWasThat')
         alertService.displayErrorMessage("There was an error! Please try again.");
       });
     }
+
+    $scope.editPlayerBowling = function () {
+      var updateBowlingScoreOfPlayer = [];
+
+      updateBowlingScoreOfPlayer.push({
+        tournament: $scope.tournamentName,
+        matchNumber: $scope.matchNumber,
+        bowlingTeam: $scope.bowlingSide,
+        new: $scope.playerBowlingToEdit,
+        old: $scope.playerPreviousBowlingToEdit
+      });
+
+      matchDetailsService.updatePlayerBowling($scope.teamOfPlayerToEditBowlingScore, updateBowlingScoreOfPlayer).success(function (response) {
+        $scope.modalInstance.dismiss('cancel');
+        alertService.displaySaveMessage("Success");
+        getMatchDetails('update');
+      }).error(function (status, data) {
+        alertService.displayErrorMessage("There was an error! Please try again.");
+      });
+    };
 
     $scope.deletePlayerFromScoreSheet = function (team, player) {
       $scope.playerToRemove = player;
@@ -735,7 +755,20 @@ angular.module('howWasThat')
       $scope.teamOfPlayerToEditBattingScore = team;
       $scope.modalInstance = $modal.open({
         animation: $scope.animationsEnabled,
-        templateUrl: 'editPlayerFromScoreSheet.html',
+        templateUrl: 'editPlayerBattingFromScoreSheet.html',
+        scope:$scope
+      });
+    };
+
+    $scope.editPlayerBowlingScoreSheet = function (team, player, bowlingSide) {
+      $scope.bowlingSide = bowlingSide;
+      $scope.editScreen = true;
+      $scope.playerBowlingToEdit = player;
+      $scope.playerPreviousBowlingToEdit = player;
+      $scope.teamOfPlayerToEditBowlingScore = team;
+      $scope.modalInstance = $modal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: 'editPlayerBowlingFromScoreSheet.html',
         scope:$scope
       });
     };

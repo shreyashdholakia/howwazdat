@@ -153,7 +153,7 @@ angular.module('howWasThat')
           ballBowled: Number(0),
           fifties: Number(0),
           hundreds: Number(0),
-          fiveWicket: Number(0),
+          fiveFors: Number(0),
           newUser: $scope.newUser
         });
 

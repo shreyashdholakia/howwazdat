@@ -312,8 +312,8 @@
               <td>{{stats.runs}}</td>
               <td>{{stats.wickets}}</td>
               <td>{{stats.econ | number:2 || 0}}</td>
-              <td><i class="fa fa-pencil" ng-click="editPlayerBowlingScoreSheet(matchDetails.visitingTeam, stats)" tooltip
-                     data-original-title="Edit player score"
+              <td><i class="fa fa-pencil" ng-click="editPlayerBowlingScoreSheet(matchDetails.visitingTeam, stats, 'visiting')" tooltip
+                     data-original-title="Edit player bowling"
                      data-placement="top" data-trigger="hover"></i> |
                   <i class="fa fa-trash text-danger" ng-click="deletePlayerFromScoreSheet(matchDetails.visitingTeam, stats)" tooltip
                    data-original-title="Remove player score from match"
@@ -589,8 +589,8 @@
               <td>{{stats.runs}}</td>
               <td>{{stats.wickets}}</td>
               <td>{{stats.econ | number:2 || 0}}</td>
-              <td><i class="fa fa-pencil" ng-click="editPlayerBowlingScoreSheet(matchDetails.homeTeam, stats)" tooltip
-                     data-original-title="Edit player score"
+              <td><i class="fa fa-pencil" ng-click="editPlayerBowlingScoreSheet(matchDetails.homeTeam, stats, 'home')" tooltip
+                     data-original-title="Edit player bowling"
                      data-placement="top" data-trigger="hover"></i> |
                   <i class="fa fa-trash text-danger" ng-click="deletePlayerFromScoreSheet(matchDetails.homeTeam, stats)" tooltip
                    data-original-title="Remove player score from match"
@@ -708,12 +708,12 @@
   </div>
 </script>
 
-<script type="text/ng-template" id="editPlayerFromScoreSheet.html">
+<script type="text/ng-template" id="editPlayerBattingFromScoreSheet.html">
   <div class="modal-header modal-wide">
     <h3 class="modal-title">Edit {{playerScoreToEdit.player}} score <i class="fa fa-pencil"></i></h3>
   </div>
   <div class="modal-body">
-    <form class="form" >
+    <form class="form">
       <div class="form-group">
         <div class="col-xs-2">
           <label for="playerName"><h4>Player name</h4></label>
@@ -779,6 +779,54 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="editPlayerScore()"><i class="fa fa-pencil"></i> Edit</button>
+    <button class="btn btn-warning" type="button" ng-click="close()">Cancel</button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="editPlayerBowlingFromScoreSheet.html">
+  <div class="modal-header modal-wide">
+    <h3 class="modal-title">Edit {{playerBowlingToEdit.player}} bowling <i class="fa fa-pencil"></i></h3>
+  </div>
+  <div class="modal-body">
+    <form class="form">
+      <div class="form-group">
+        <div class="col-xs-3">
+          <label for="playerName"><h4>Player name</h4></label>
+          <input type="text" class="form-control" name="runs" ng-model="playerBowlingToEdit.player" ng-disabled="editScreen" title="runs">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-3">
+          <label><h4>Overs</h4></label>
+          <input type="text" class="form-control" ng-model="playerBowlingToEdit.overs"
+                 placeholder="Overs" title="enter total runs">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-2">
+          <label><h4>Maidens</h4></label>
+          <input type="text" class="form-control" ng-model="playerBowlingToEdit.maiden"
+                 placeholder="Maidens" title="enter total runs">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-2">
+          <label><h4>Runs</h4></label>
+          <input type="text" class="form-control" ng-model="playerBowlingToEdit.runs"
+                 placeholder="Runs" title="enter total runs">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-2">
+          <label><h4>Wickets</h4></label>
+          <input type="text" class="form-control" ng-model="playerBowlingToEdit.wickets"
+                 placeholder="Wickets" title="enter total runs">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="editPlayerBowling()"><i class="fa fa-pencil"></i> Edit</button>
     <button class="btn btn-warning" type="button" ng-click="close()">Cancel</button>
   </div>
 </script>

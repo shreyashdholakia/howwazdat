@@ -21,10 +21,11 @@ angular.module('howWasThat')
       submitMatch: function(tournamentName, matches) {
         return $http.post(options.api.base_url  + '/api/match/review/' + tournamentName, {'matches': matches});
       },
-      updatePlayerScore: function(team, scores) {
+      updatePlayerBatting: function(team, scores) {
         return $http.post(options.api.base_url  + '/api/match/update/batting/' + team, {'scores': scores});
+      },
+      updatePlayerBowling:  function(team, scores) {
+        return $http.post(options.api.base_url  + '/api/match/update/bowling/' + team, {'scores': scores});
       }
-
-
     };
   });
