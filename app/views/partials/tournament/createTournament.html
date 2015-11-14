@@ -85,13 +85,13 @@
         <div class="tab-pane" ng-class="{'active':isActiveTab('activity')}" id="home">
           <br>
           <button type="button" class="btn btn-default btn-success" ng-click="createMatch = !createMatch" type="submit"
-                  ng-disabled="tournamentTeams.length == 0"><i class="glyphicon glyphicon-plus"></i> Create Match
+                  ng-disabled="tournamentTeams.length == 0"><i class="fa fa-plus"></i> Create Match
           </button>
           <span class="col-md-3">
                  <input type="text" class="form-control ng-pristine ng-valid" placeholder="Search Game"
                     ng-model="searchTeam">
           </span>
-          <div class="row pull-right">
+          <div class="pull-right">
             <button type="button" class="btn btn-default" ng-click="clearFilter()">All</button>
             <button type="button" class="btn btn-default"
                     ng-class="{'btn-success lead fa fa-check': stageFilter.indexOf('League') > -1}"
@@ -212,8 +212,23 @@
         <div class="tab-pane" ng-class="{'active':isActiveTab('stats')}">
           <br>
           <div class="alert alert-info text-center">
-            <span class="fa fa-info-circle"></span><strong class="text-muted"><b> &nbsp;Points: 1 Run = 1Pt, 50 Runs: 50Pts, 100 Runs: 100Pts, 1 Wicket: 10Pts, 5 Wickets: 25Pts </b></strong>
-      </div>
+            <span class="fa fa-info-circle"></span><strong class="text-muted statsHighlight"><b> &nbsp;Points: 1 Run = 1Pt, 50 Runs: 50Pts, 100 Runs: 100Pts, 1 Wicket: 10Pts, 5 Wickets: 25Pts </b></strong>
+          </div>
+
+          <div class="pull-right">
+            <button type="button" class="btn btn-default text-center"
+                    ng-class="{'btn-success lead fa fa-check statsHighlight': sortType === 'runs'}"
+                    ng-click="filterStatistics('runs')"> Best Batsman
+            </button>
+            <button type="button" class="btn btn-default text-center"
+                    ng-class="{'btn-success lead fa fa-check statsHighlight': sortType === 'wickets'}"
+                    ng-click="filterStatistics('wickets')"> Best Bowler
+            </button>
+            <button type="button" class="btn btn-default text-center"
+                    ng-class="{'btn-success lead fa fa-check statsHighlight': sortType === 'points'}"
+                    ng-click="filterStatistics('points')"> MVP
+            </button>
+          </div>
           <div class="table-responsive">
             <table class="table table-hover table-striped">
               <thead>
@@ -234,22 +249,22 @@
                 <th ng-click="sortType='points'; sortReverse = !sortReverse">Points <i class="fa fa-sort"></i></th>
               </tr>
               </thead>
-              <tbody id="items" ng-repeat="stats in statistics | orderBy:sortType:sortReverse">
+              <tbody id="items" ng-repeat="stats in statistics | orderBy:sortType:sortReverse | filter:filteredStats">
               <tr>
                 <td>{{$index + 1}}</td>
                 <td>{{stats.player}}</td>
                 <td><a href="/team/{{stats.team}}">{{stats.team}}</a></td>
                 <td>{{stats.matches || 0}}</td>
                 <td>{{stats.innings || 0}}</td>
-                <td>{{stats.runs || 0}}</td>
+                <td ng-class="{'text-success statsHighlight': sortType === 'runs'}">{{stats.runs || 0}}</td>
                 <td>{{stats.ballFaced || 0}}</td>
                 <td>{{stats.highestScore || 0}}</td>
                 <td>{{stats.fifties || 0}}</td>
                 <td>{{stats.hundreds || 0}}</td>
-                <td>{{stats.wickets || 0}}</td>
+                <td ng-class="{'text-success statsHighlight': sortType === 'wickets'}">{{stats.wickets || 0}}</td>
                 <td>{{stats.fiveFors || 0}}</td>
                 <td>{{stats.bestBowling || 0}}</td>
-                <td>{{stats.points}}</td>
+                <td ng-class="{'text-success statsHighlight': sortType === 'points'}">{{stats.points}}</td>
               </tr>
               </tbody>
             </table>

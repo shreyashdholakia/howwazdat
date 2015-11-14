@@ -418,6 +418,11 @@ angular.module('howWasThat')
 
     };
 
+    $scope.filterStatistics = function (stats) {
+      $scope.sortType = stats;
+      $scope.sortReverse = true;
+    };
+
     function getStatisticsDetails () {
       var tournamentName = $routeParams.tournamentName;
       tournamentService.stats(tournamentName).success(function (response) {
