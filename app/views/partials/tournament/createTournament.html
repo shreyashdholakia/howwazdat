@@ -7,7 +7,6 @@
   <div class="row" ng-show="!tournamentPage">
     <form class="form" id="registrationForm" novalidate name="tournamentForm">
       <div class="form-group">
-
         <div class="col-xs-6">
           <label for="first_name"><h4>Tournament Name</h4></label>
           <input type="text" class="form-control" name="name" ng-model="tournament.name" id="name" placeholder="Tournament Name" title="enter your tournament name if any." required>
@@ -15,7 +14,6 @@
         </div>
       </div>
       <div class="form-group">
-
         <div class="col-xs-6">
           <label for="last_name"><h4>Organizer</h4></label>
           <input type="text" class="form-control" name="last_name" ng-model="organizer" placeholder="Organizer" title="enter organizer." ng-disabled="isOrganizer" required>
@@ -42,7 +40,6 @@
       </div>
     </div>
   </form>
-
   </div><!--/col-9-->
   <div class="row" ng-show="tournamentPage">
     <div class="col-sm-10"><h1>{{tournamentInfo.tournamentName}}</h1>
@@ -88,13 +85,13 @@
         <div class="tab-pane" ng-class="{'active':isActiveTab('activity')}" id="home">
           <br>
           <button type="button" class="btn btn-default btn-success" ng-click="createMatch = !createMatch" type="submit"
-                  ng-disabled="tournamentTeams.length == 0"><i class="glyphicon glyphicon-plus"></i> Create Match
+                  ng-disabled="tournamentTeams.length == 0"><i class="fa fa-plus"></i> Create Match
           </button>
           <span class="col-md-3">
                  <input type="text" class="form-control ng-pristine ng-valid" placeholder="Search Game"
                     ng-model="searchTeam">
           </span>
-          <div class="row pull-right">
+          <div class="pull-right">
             <button type="button" class="btn btn-default" ng-click="clearFilter()">All</button>
             <button type="button" class="btn btn-default"
                     ng-class="{'btn-success lead fa fa-check': stageFilter.indexOf('League') > -1}"
@@ -138,6 +135,9 @@
               </tr>
               </tbody>
             </table>
+            <div class="bs-callout bs-callout-info" ng-show="tournamentMatches.length == 0">
+              No matches scheduled. Please add teams and create a match.
+            </div>
             <nav>
               <ul class="pager">
                 <li class="previous" ng-hide="currentPage == 0"><a
@@ -212,8 +212,23 @@
         <div class="tab-pane" ng-class="{'active':isActiveTab('stats')}">
           <br>
           <div class="alert alert-info text-center">
-            <span class="fa fa-info-circle"></span><strong class="text-muted"><b> &nbsp;Points: 1 Run = 1Pt, 50 Runs: 50Pts, 100 Runs: 100Pts, 1 Wicket: 10Pts </b></strong>
-      </div>
+            <span class="fa fa-info-circle"></span><strong class="text-muted statsHighlight"><b> &nbsp;Points: 1 Run = 1Pt, 50 Runs: 50Pts, 100 Runs: 100Pts, 1 Wicket: 10Pts, 5 Wickets: 25Pts </b></strong>
+          </div>
+
+          <div class="pull-right">
+            <button type="button" class="btn btn-default text-center"
+                    ng-class="{'btn-success lead fa fa-check statsHighlight': sortType === 'runs'}"
+                    ng-click="filterStatistics('runs')"> Best Batsman
+            </button>
+            <button type="button" class="btn btn-default text-center"
+                    ng-class="{'btn-success lead fa fa-check statsHighlight': sortType === 'wickets'}"
+                    ng-click="filterStatistics('wickets')"> Best Bowler
+            </button>
+            <button type="button" class="btn btn-default text-center"
+                    ng-class="{'btn-success lead fa fa-check statsHighlight': sortType === 'points'}"
+                    ng-click="filterStatistics('points')"> MVP
+            </button>
+          </div>
           <div class="table-responsive">
             <table class="table table-hover table-striped">
               <thead>
@@ -229,25 +244,27 @@
                 <th>50's</th>
                 <th>100's</th>
                 <th>W</th>
+                <th>5's</th>
                 <th>BB</th>
-                <th>Points</th>
+                <th ng-click="sortType='points'; sortReverse = !sortReverse">Points <i class="fa fa-sort"></i></th>
               </tr>
               </thead>
-              <tbody id="items" ng-repeat="stats in statistics">
+              <tbody id="items" ng-repeat="stats in statistics | orderBy:sortType:sortReverse | filter:filteredStats">
               <tr>
                 <td>{{$index + 1}}</td>
                 <td>{{stats.player}}</td>
                 <td><a href="/team/{{stats.team}}">{{stats.team}}</a></td>
                 <td>{{stats.matches || 0}}</td>
                 <td>{{stats.innings || 0}}</td>
-                <td>{{stats.runs || 0}}</td>
-                <td>{{stats.ballsFaced || 0}}</td>
+                <td ng-class="{'text-success statsHighlight': sortType === 'runs'}">{{stats.runs || 0}}</td>
+                <td>{{stats.ballFaced || 0}}</td>
                 <td>{{stats.highestScore || 0}}</td>
                 <td>{{stats.fifties || 0}}</td>
                 <td>{{stats.hundreds || 0}}</td>
-                <td>{{stats.wickets || 0}}</td>
+                <td ng-class="{'text-success statsHighlight': sortType === 'wickets'}">{{stats.wickets || 0}}</td>
+                <td>{{stats.fiveFors || 0}}</td>
                 <td>{{stats.bestBowling || 0}}</td>
-                <td>{{stats.points}}</td>
+                <td ng-class="{'text-success statsHighlight': sortType === 'points'}">{{stats.points}}</td>
               </tr>
               </tbody>
             </table>
@@ -261,7 +278,6 @@
       <!--/tab-content-->
       <form class="form" id="matchForm" name="matchForm" ng-show="createMatch">
         <div class="form-group">
-
           <div class="col-xs-6">
             <label><h4>Home Team</h4></label>
             <input type="text" class="form-control" name="first_name" ng-model="homeTeam" id="first_name"
@@ -360,7 +376,6 @@
       </form>
     </div>
     <!--/col-9-->
-
   </div>
   <hr>
   <div class="row">
@@ -374,7 +389,7 @@
           <ul class="list-group" ng-repeat="player in statistics | orderBy:'runs':sortTopBatsman | limitTo:'3'">
             <li class="list-group-item">
               <span class="badge">{{player.runs}} Runs</span>
-              <strong class="text-info">{{player.player}} / <small>{{player.team}}</small></strong>
+              <strong class="text-info">{{player.player}} / <small class="text-muted"><em>{{player.team}}</em></small></strong>
             </li>
           </ul>
         </div>
@@ -387,7 +402,7 @@
           <ul class="list-group" ng-repeat="player in statistics | orderBy:'wickets':sortTopBowler | limitTo:'3'">
             <li class="list-group-item">
               <span class="badge">{{player.wickets}} Wickets</span>
-              <strong class="text-info">{{player.player}} / <small>{{player.team}}</small></strong>
+              <strong class="text-info">{{player.player}} / <small class="text-muted"><em>{{player.team}}</em></small></strong>
             </li>
           </ul>
         </div>
@@ -400,7 +415,7 @@
           <ul class="list-group" ng-repeat="player in statistics | orderBy:'points':sortMVP | limitTo:'3'">
             <li class="list-group-item">
               <span class="badge">{{player.points}} Points</span>
-              <strong class="text-info">{{player.player}} / <small><u>{{player.team}}</u></small></strong>
+              <strong class="text-info">{{player.player}} / <small class="text-muted"><em>{{player.team}}</em></small></strong>
             </li>
           </ul>
         </div>

@@ -126,11 +126,8 @@ angular.module('howWasThat')
 
     function calculatePlayerPoints(statistics) {
       statistics.forEach(function (playerInfo) {
-        playerInfo.points =  ((playerInfo.runs * 1) + (playerInfo.wickets * 10));
+        playerInfo.points =  ((playerInfo.runs * 1) + (playerInfo.wickets * 10) + (playerInfo.fifties * 50) + (playerInfo.hundreds * 100) + (playerInfo.fiveFors * 25));
       });
-
-
-
     }
 
     $scope.tournamentPage = ($routeParams.tournamentName) ? true : false;
@@ -304,15 +301,17 @@ angular.module('howWasThat')
     $('#calendar').fullCalendar('render');
 
     $scope.setTab = function (newTab) {
+      if(newTab === 'stats') {
+        $scope.sortType = 'points';
+      }
+
       $scope.tab = newTab;
       $('#calendar').fullCalendar('render');
-
     };
 
     $scope.isActiveTab = function (tab) {
       return $scope.tab === tab;
     };
-
 
     $scope.teamToDelete = [];
 
@@ -417,6 +416,11 @@ angular.module('howWasThat')
     $scope.clearFilter = function () {
       $scope.stageFilter = [];
 
+    };
+
+    $scope.filterStatistics = function (stats) {
+      $scope.sortType = stats;
+      $scope.sortReverse = true;
     };
 
     function getStatisticsDetails () {
