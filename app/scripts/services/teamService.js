@@ -21,6 +21,9 @@ angular.module('howWasThat')
     },
     clonePlayer: function (team, player) {
       return $http.post(options.api.base_url + '/api/team/clone/player/' + team, {'player': player});
+    },
+    teamMatches: function (team) {
+      return $http.get(options.api.base_url + '/api/team/matches/' + team);
     }
 	};
 });

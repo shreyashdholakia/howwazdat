@@ -9,6 +9,22 @@ angular.module('howWasThat')
       {name: 'Bowler'},
       {name: 'All Rounder'}];
 
+    $scope.tab = "players";
+
+    $scope.setTab = function (newTab) {
+      $scope.tab = newTab;
+    };
+
+    $scope.isActiveTab = function (tab) {
+       return $scope.tab === tab;
+    };
+
+    $scope.currentPage = 0;
+    $scope.pageSize = 5;
+    $scope.numberOfPages = function () {
+       return Math.ceil($scope.matches.length / $scope.pageSize);
+    };
+
     $scope.roleSelected = $scope.roles[0];
 
     $scope.confirmModal = false;
@@ -30,6 +46,18 @@ angular.module('howWasThat')
     };
 
     $scope.checkProfileCreated();
+
+    function getTeamMatches() {
+      var teamName = $routeParams.teamName;
+      teamService.teamMatches(teamName).success(function (response) {
+          $location.path("/team/" + teamName);
+          $scope.teamMatches = response.data;
+        }).error(function (status, data) {
+          alertService.displayErrorMessage("There was an error! Please try again");
+      });
+    }
+
+    getTeamMatches();
 
     $(function () {
       $('[data-toggle="tooltip"]').tooltip()

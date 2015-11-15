@@ -17,6 +17,7 @@ angular.module('howWasThat')
         $scope.userProfile = true;
         $scope.user = response.data;
         $scope.fullName = $scope.user.firstname + ' ' + $scope.user.lastname;
+        $scope.email = $rootScope.currentUser.email;
         getMatches($scope.fullName);
         getUserStatistics($scope.fullName);
         getUserTeams($scope.user.email);
