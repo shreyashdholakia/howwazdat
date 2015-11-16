@@ -34,6 +34,15 @@ angular.module('howWasThat')
       });
     }
 
+    $scope.getTeamCaptain = function (team) {
+      team.players.forEach(function (player) {
+        if(player.captain === "C") {
+          $scope.captain =  player.firstName + ' ' + player.lastName;
+        }
+      });
+      return $scope.captain;
+    };
+
     checkProfileCreated();
     getAllTeams();
     getTournamentList();
