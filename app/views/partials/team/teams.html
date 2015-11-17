@@ -19,19 +19,25 @@
       </div>
     </div><!--/col-3-->
     <div class="col-sm-9">
+      <span class="col-md-4">
+        <input type="text" class="form-control ng-pristine ng-valid" placeholder="Search your team"
+                        ng-model="searchTeam">
+      </span>
       <div class="table-responsive">
         <table class="table table-hover">
           <thead>
           <tr>
             <th>#</th>
             <th ng-click="sortType='teamName'; sortReverse = !sortReverse">Team <i class="fa fa-sort"></i></th>
-            <th ng-click="sortType='joiningDate'; sortReverse = !sortReverse">Start Date <i class="fa fa-sort"></i></th>
+            <th>Captain </th>
+            <th ng-click="sortType='joiningDate'; sortReverse = !sortReverse">Joining Date <i class="fa fa-sort"></i></th>
           </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="team in allTeams | orderBy:sortType:sortReverse | startFrom:currentPage*pageSize | limitTo:pageSize">
+            <tr ng-repeat="team in allTeams | orderBy:sortType:sortReverse | filter: searchTeam | startFrom:currentPage*pageSize | limitTo:pageSize">
               <td>{{$index + 1}}</td>
               <td><a href="/team/{{team.teamName}}">{{team.teamName}}</a></td>
+              <td>{{getTeamCaptain(team)}}</td>
               <td>{{team.joiningDate | date:'MMM d, y'}}</td>
             </tr>
           </tbody>

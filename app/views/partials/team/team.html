@@ -46,7 +46,14 @@
       </div>
       <!--/col-3-->
       <div class="col-sm-9">
-        <div class="table-responsive table-striped">
+        <ul class="nav nav-tabs" id="myTab">
+          <li ng-class="{'active':isActiveTab('players')}"><a href ng-click="setTab('players')">Players</a></li>
+          <li ng-class="{'active':isActiveTab('matches')}"><a href ng-click="setTab('matches')">Recent Matches</a></li>
+        </ul>
+        <br>
+        <div class="tab-content">
+          <div class="tab-pane" ng-class="{'active':isActiveTab('players')}">
+            <div class="table-responsive table-striped">
           <table class="table table-hover">
             <thead>
             <tr class="text-center">
@@ -71,7 +78,7 @@
                 <i class="fa fa-files-o" ng-click="clone(players)" tooltip
                    data-original-title="Add player to a different team"
                    data-placement="top" data-trigger="hover"></i> |
-                <i class="fa fa-files-o" ng-click="profile(players)"
+                <i class="fa fa-user" ng-click="profile(players)"
                    data-original-title="Player Profile" tooltip
                    data-placement="top" data-trigger="hover"></i>
               </td>
@@ -83,7 +90,53 @@
           </div>
 
         </div>
-
+          </div>
+        </div>
+        <div class="tab-content">
+          <div class="tab-pane" ng-class="{'active':isActiveTab('matches')}">
+          <br>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped">
+                <thead>
+                <tr>
+                  <th>#</th>
+                  <th ng-click="sortType='matchDate'; sortReverse = !sortReverse">Date <i class="fa fa-sort"></i></th>
+                  <th ng-click="sortType='homeTeam'; sortReverse = !sortReverse">Home <i class="fa fa-sort"></i></th>
+                  <th ng-click="sortType='visitingTeam'; sortReverse = !sortReverse">Visiting <i class="fa fa-sort"></i>
+                  </th>
+                  <th ng-click="sortType='matchDate'; sortReverse = !sortReverse">Winner</th>
+                  <th ng-click="sortType='roundType'; sortReverse = !sortReverse">Stage <i class="fa fa-sort"></i></th>
+                  <th><i class="fa fa-cog"></i></th>
+                </tr>
+                </thead>
+                <tbody ng-repeat="match in teamMatches | orderBy:sortType:sortReverse | startFrom:currentPage*pageSize | limitTo:pageSize">
+                <tr>
+                  <td>{{$index + 1}}</td>
+                  <td>{{match.matchDate | date:'MM/dd/yyyy @ h:mma'}}</td>
+                  <td>{{match.homeTeam}}</td>
+                  <td>{{match.visitingTeam}}</td>
+                  <td>{{match.winningTeam}}</td>
+                  <td>{{match.roundType}}</td>
+                  <td><a href="/tournament/{{match.tournament}}/{{match.matchNumber}}"><i class="fa fa-list-ol"></i></a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <hr>
+              <nav>
+                <ul class="pager">
+                  <li class="previous" ng-hide="currentPage == 0"><a
+                    ng-click="currentPage=currentPage-1"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                  <li class="next" ng-hide="currentPage >= (teamMatches.length/pageSize - 1) || matches.length == 5"><a
+                    ng-click="currentPage=currentPage+1">Next <span aria-hidden="true">&rarr;</span></a></li>
+                </ul>
+              </nav>
+              <div class="bs-callout bs-callout-info" ng-show="teamMatches.length == 0">
+                No Games played yet.
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>

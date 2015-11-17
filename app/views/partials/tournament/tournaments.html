@@ -19,24 +19,28 @@
       </div>
     </div><!--/col-3-->
     <div class="col-sm-9">
+      <span class="col-md-4">
+        <input type="text" class="form-control ng-pristine ng-valid" placeholder="Search your tournament"
+               ng-model="searchTournaments">
+      </span>
       <div class="table-responsive">
         <table class="table table-hover">
           <thead>
             <tr>
-                  <th>#</th>
-                  <th ng-click="sortType='tournamentName'; sortReverse = !sortReverse">Tournament <i class="fa fa-sort"></i></th>
-                  <th ng-click="sortType='createdDate'; sortReverse = !sortReverse">Start Date <i class="fa fa-sort"></i></th>
-                  <th ng-click="sortType='organizer'; sortReverse = !sortReverse">Owner <i class="fa fa-sort"></i></th>
+              <th>#</th>
+              <th ng-click="sortType='tournamentName'; sortReverse = !sortReverse">Tournament <i class="fa fa-sort"></i></th>
+              <th ng-click="sortType='createdDate'; sortReverse = !sortReverse">Start Date <i class="fa fa-sort"></i></th>
+              <th ng-click="sortType='organizer'; sortReverse = !sortReverse">Owner <i class="fa fa-sort"></i></th>
             </tr>
           </thead>
           <tbody>
-                <tr ng-repeat="tournament in tournamentList | orderBy:sortType:sortReverse | startFrom:currentPage*pageSize | limitTo:pageSize">
-                  <td>{{$index + 1}}</td>
-                  <td><a href="/tournament/{{tournament.tournamentName}}">{{tournament.tournamentName}}</a></td>
-                  <td>{{tournament.createdDate | date:'MMM d, y'}}</td>
-                  <td>{{tournament.organizer | date:'MMM d, y'}}</td>
-                </tr>
-              </tbody>
+            <tr ng-repeat="tournament in tournamentList | orderBy:sortType:sortReverse | filter:searchTournaments | startFrom:currentPage*pageSize | limitTo:pageSize">
+              <td>{{$index + 1}}</td>
+              <td><a href="/tournament/{{tournament.tournamentName}}">{{tournament.tournamentName}}</a></td>
+              <td>{{tournament.createdDate | date:'MMM d, y'}}</td>
+              <td>{{tournament.organizer}}</td>
+            </tr>
+          </tbody>
         </table>
         <nav>
           <ul class="pager">
