@@ -27,10 +27,10 @@
         <table class="table table-hover">
           <thead>
             <tr>
-                  <th>#</th>
-                  <th ng-click="sortType='tournamentName'; sortReverse = !sortReverse">Tournament <i class="fa fa-sort"></i></th>
-                  <th ng-click="sortType='createdDate'; sortReverse = !sortReverse">Start Date <i class="fa fa-sort"></i></th>
-                  <th ng-click="sortType='organizer'; sortReverse = !sortReverse">Owner <i class="fa fa-sort"></i></th>
+              <th>#</th>
+              <th ng-click="sortType='tournamentName'; sortReverse = !sortReverse">Tournament <i class="fa fa-sort"></i></th>
+              <th ng-click="sortType='createdDate'; sortReverse = !sortReverse">Start Date <i class="fa fa-sort"></i></th>
+              <th ng-click="sortType='organizer'; sortReverse = !sortReverse">Owner <i class="fa fa-sort"></i></th>
             </tr>
           </thead>
           <tbody>
@@ -38,7 +38,7 @@
               <td>{{$index + 1}}</td>
               <td><a href="/tournament/{{tournament.tournamentName}}">{{tournament.tournamentName}}</a></td>
               <td>{{tournament.createdDate | date:'MMM d, y'}}</td>
-              <td>{{tournament.organizer | date:'MMM d, y'}}</td>
+              <td>{{tournament.organizer}}</td>
             </tr>
           </tbody>
         </table>
