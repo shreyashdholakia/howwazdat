@@ -84,6 +84,6 @@
   },
   "scripts": {
     "start": "node server.js",
-    "postinstall": "bower install; grunt concat; grunt compass:dist"
+    "postinstall": "bower install; grunt clean:dist; grunt concat; grunt compass:dist"
   }
 }
