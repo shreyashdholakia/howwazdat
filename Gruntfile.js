@@ -452,7 +452,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'useminPrepare',
-    'concurrent:dist',
+    //'concurrent:dist',
     'autoprefixer',
     'concat',
     'ngmin',
@@ -461,7 +461,13 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
-    'usemin'
+    'usemin',
+    'coffee',
+    'compass:dist',
+    'copy:styles',
+    'imagemin',
+    'svgmin',
+    'htmlmin'
   ]);
 
   grunt.registerTask('heroku', [
