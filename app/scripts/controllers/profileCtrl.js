@@ -18,8 +18,10 @@ angular.module('howWasThat')
         $scope.user = response.data;
         $scope.fullName = $scope.user.firstname + ' ' + $scope.user.lastname;
         $scope.email = $rootScope.currentUser.email;
+        $scope.image = response.data.avatar.data;
+        console.log($scope.image);
         getMatches($scope.fullName);
-        getUserStatistics($scope.fullName);
+        getUserStatistics($scope.user.email);
         getUserTeams($scope.user.email);
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.");
@@ -111,9 +113,11 @@ angular.module('howWasThat')
       $scope.playerGames = 0;
 
       _.each(statistics, function (item) {
-        $scope.playerRuns += Number(item['runs']);
-        $scope.playerWickets += Number(item['wickets']);
-        $scope.playerGames += Number(item['matches']);
+        if(item) {
+          $scope.playerRuns += Number(item['runs']);
+          $scope.playerWickets += Number(item['wickets']);
+          $scope.playerGames += Number(item['matches']);
+        }
       });
     }
 
@@ -151,35 +155,25 @@ angular.module('howWasThat')
 
     uploader.bind('success', function (event, xhr, item, response) {
       alertService.clearLastToast();
+      uploader.clearQueue();
       if(response.message) {
         alertService.displayErrorMessage(response.message);
       } else {
+
+        $scope.image = '<img src="data:image/png;base64,' + $.base64.encode(response.data.avatar.data) + '" />';
+        console.log($scope.image);
         alertService.displaySaveMessage("Profile Successfully created");
         getProfile();
       }
     });
 
-    uploader.onAfterAddingFile = function(fileItem) {
-      console.log("here" + fileItem);
+    uploader.onCompleteItem  = function(item, response, status, headers) {
+      uploader.clearQueue();
     };
 
     uploader.bind('beforeupload', function (event, item) {
        return true;
     });
-
-    function checkFile (file) {
-      var extension = file.substring(
-        file.lastIndexOf('.') + 1).toLowerCase();
-      if (extension == "gif" || extension == "png" || extension == "bmp"
-        || extension == "jpeg" || extension == "jpg") {
-         uploader.uploadItem();
-         return true;
-      } else {
-        uploader.cancelAll();
-        alertService.displayErrorMessage("File should be an image");
-        return false;
-      }
-    }
 
     $scope.updateImage = function () {
       if (uploader.queue.length === 1) {
