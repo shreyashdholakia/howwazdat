@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('howWasThat')
-  .controller('ProfileCtrl', function ($scope, ProfileService, $location, $routeParams, $rootScope, $http, $cookieStore, matchDetailsService, alertService, statisticService) {
+  .controller('ProfileCtrl', function ($scope, ProfileService, $location, $routeParams, $rootScope, $http, $cookieStore, matchDetailsService, alertService, statisticService, $fileUploader) {
 
     $scope.isProfileCreated = false;
     $scope.currentPage = 0;
@@ -11,7 +11,7 @@ angular.module('howWasThat')
     };
     $scope.userProfile = false;
 
-    function checkProfileCreated() {
+    function checkProfileCreated(user) {
       ProfileService.findProfile($rootScope.currentUser.email).success(function (response) {
         $scope.profileExists = response.exists;
         $scope.userProfile = true;
@@ -124,6 +124,69 @@ angular.module('howWasThat')
         alertService.displayErrorMessage("There was an error! Please try again.");
       });
     }
+
+    var imageURL = '/api/profile/image/'+ $rootScope.currentUser.email;
+    // create a uploader with options
+    var uploader = $scope.uploader = $fileUploader.create({
+      scope: $scope,                          // to automatically update the html. Default: $rootScope
+      url: imageURL ,
+      formData: [
+        { file: null }
+      ],
+      removeAfterUpload: true,
+      queueLimit: 1,
+      filters: [
+        function (item) {                    // first user filter
+          return true;
+        }
+      ]
+    });
+
+    uploader.allowNewFiles = true;
+
+    // FILTERS
+    uploader.filters.push(function() {
+      return uploader.queue.length !== 1; // only one file in the queue
+    });
+
+    uploader.bind('success', function (event, xhr, item, response) {
+      alertService.clearLastToast();
+      if(response.message) {
+        alertService.displayErrorMessage(response.message);
+      } else {
+        alertService.displaySaveMessage("Profile Successfully created");
+        getProfile();
+      }
+    });
+
+    uploader.onAfterAddingFile = function(fileItem) {
+      console.log("here" + fileItem);
+    };
+
+    uploader.bind('beforeupload', function (event, item) {
+       return true;
+    });
+
+    function checkFile (file) {
+      var extension = file.substring(
+        file.lastIndexOf('.') + 1).toLowerCase();
+      if (extension == "gif" || extension == "png" || extension == "bmp"
+        || extension == "jpeg" || extension == "jpg") {
+         uploader.uploadItem();
+         return true;
+      } else {
+        uploader.cancelAll();
+        alertService.displayErrorMessage("File should be an image");
+        return false;
+      }
+    }
+
+    $scope.updateImage = function () {
+      if (uploader.queue.length === 1) {
+        alertService.displayLoadingMessage('Adding attachment...');
+        uploader.uploadAll();
+      }
+    };
 
   });
 

@@ -7,7 +7,8 @@ var app = angular.module('howWasThat', [
   'ngRoute',
   'http-auth-interceptor',
   'ui.bootstrap',
-  'ui.calendar'
+  'ui.calendar',
+  'angularFileUpload'
 ]);
 
 var options = {};
