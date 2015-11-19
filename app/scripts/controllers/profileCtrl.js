@@ -16,10 +16,10 @@ angular.module('howWasThat')
         $scope.profileExists = response.exists;
         $scope.userProfile = true;
         $scope.user = response.data;
+        console.log($scope.user);
         $scope.fullName = $scope.user.firstname + ' ' + $scope.user.lastname;
         $scope.email = $rootScope.currentUser.email;
-        $scope.image = response.data.avatar.data;
-        console.log($scope.image);
+        $scope.image = response.image;
         getMatches($scope.fullName);
         getUserStatistics($scope.user.email);
         getUserTeams($scope.user.email);

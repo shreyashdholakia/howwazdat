@@ -325,5 +325,21 @@
     font-weight: 700;
   }
 
+  .picUpload {
+    position:absolute;
+    z-index:2;
+    top:0;
+    left:0;
+    filter: alpha(opacity=0);
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    opacity:0;
+    background-color:transparent;
+    color:transparent;
+  }
+
+  .filePath {
+    font-size: 13px;
+  }
+
 
 

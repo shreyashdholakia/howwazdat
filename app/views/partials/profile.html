@@ -6,8 +6,7 @@
           Please update your profile!
         </div>
       </div>
-      <div class="col-sm-2"><a href="/users" class="pull-right"><img src="data:image/png;base64,' + $.base64.encode(image) + '" /></a>
-        <input class="fa fa-pencil" ng-file-select uploader="uploader" type="file"> <i class="fa fa-floppy-o" ng-click="updateImage()"></i>
+      <div class="col-sm-2"><img class="img-circle" style="width: 75px; height: 75px;" ng-src="data:image/jpg;base64,{{image}}">
       </div>
     </div>
     <hr>
@@ -94,7 +93,18 @@
                 </div>
               </div>
               <div class="form-group">
-
+                <div class="col-xs-6">
+                  <label for="location"><h4>Profile Picture</h4></label>
+                  <br>
+                  <img class="img-circle" style="width: 75px; height: 75px;" ng-src="data:image/jpg;base64,{{image}}">
+                  <label class="btn btn-primary" for="my-file-selector">
+                    <i class="fa fa-file"> Choose File..</i>
+                    <input id="my-file-selector" class="picUpload" ng-file-select uploader="uploader" type="file" onchange='$("#upload-file-info").html($(this).val());'>
+                  </label>
+                  <span class='label label-info filePath' id="upload-file-info"></span>
+                </div>
+              </div>
+              <div class="form-group">
                 <div class="col-xs-6">
                   <label><h4>Email</h4></label>
                   <input type="email" class="form-control" ng-model="email" placeholder="somewhere"
