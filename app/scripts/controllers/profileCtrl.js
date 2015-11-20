@@ -51,10 +51,6 @@ angular.module('howWasThat')
     }
 
     $scope.updateProfile = function (user) {
-      if(uploader.queue.length === 1) {
-        alertService.displayLoadingMessage('Adding attachment...');
-        uploader.uploadAll();
-      } else {
         if ($scope.profileExists) {
           user.username = $rootScope.currentUser.username;
           user.updatedDate = new Date();
@@ -68,7 +64,6 @@ angular.module('howWasThat')
         } else {
           $scope.create(user);
         }
-      }
     };
 
     $scope.create = function (user) {
