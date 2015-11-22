@@ -164,7 +164,7 @@ angular.module('howWasThat')
             }
             $scope.tournamentInfo = response.data;
             $scope.image = response.image;
-            $scope.imageContentType = response.data.tournamentPicture.contentType;
+            //$scope.imageContentType = response.data.tournamentPicture.contentType;
             loadGoogleMap($scope.tournamentInfo);
           } else {
             $location.path("/createTournament");
