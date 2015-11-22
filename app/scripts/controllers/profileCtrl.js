@@ -19,6 +19,7 @@ angular.module('howWasThat')
         $scope.fullName = $scope.user.firstname + ' ' + $scope.user.lastname;
         $scope.email = $rootScope.currentUser.email;
         $scope.image = response.image;
+        $scope.imageContentType = response.data.avatar.contentType;
         getMatches($scope.fullName);
         getUserStatistics($scope.user.email);
         getUserTeams($scope.user.email);

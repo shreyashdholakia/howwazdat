@@ -6,7 +6,7 @@
           Please update your profile!
         </div>
       </div>
-      <div class="col-sm-2 pull-left"><img ng-hide="!image" class="img-circle" style="width: 75px; height: 75px;" ng-src="data:image/jpg;base64,{{image}}">
+      <div class="col-sm-2 pull-left"><img ng-hide="!image" class="img-circle" style="width: 75px; height: 75px;" ng-src="data:{{imageContentType}};base64,{{image}}">
         <img src="../../img/user.png" ng-show="!image" class="img-circle" style="width: 75px; height: 75px;">
       </div>
     </div>
@@ -98,7 +98,7 @@
                   <label for="location"><h4>Profile Picture</h4></label>
                   <br>
                   <div>
-                    <img ng-hide="!image" class="img-circle" style="width: 75px; height: 75px;" ng-src="data:image/jpg;base64,{{image}}">
+                    <img ng-hide="!image" class="img-circle" style="width: 75px; height: 75px;" ng-src="data:{{imageContentType}};base64,{{image}}">
                     <img src="../../img/user.png" ng-show="!image" class="img-circle" style="width: 75px; height: 75px;">
                     <label class="btn btn-primary" for="my-file-selector">
                       <i class="fa fa-file"> Choose File..</i>
