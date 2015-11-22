@@ -13,7 +13,7 @@ var app = angular.module('howWasThat', [
 
 var options = {};
 options.api = {};
-options.api.base_url = "https://how-waz-that.herokuapp.com/";
+options.api.base_url = "https://how-waz-that.herokuapp.com";
 
 
 
