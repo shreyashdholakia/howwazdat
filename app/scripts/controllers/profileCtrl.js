@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('howWasThat')
-  .controller('ProfileCtrl', function ($scope, ProfileService, $location, $routeParams, $rootScope, $http, $cookieStore, matchDetailsService, alertService, statisticService) {
+  .controller('ProfileCtrl', function ($scope, ProfileService, $location, $routeParams, $rootScope, $http, $cookieStore, matchDetailsService, alertService, statisticService, $fileUploader) {
 
     $scope.isProfileCreated = false;
     $scope.currentPage = 0;
@@ -11,15 +11,17 @@ angular.module('howWasThat')
     };
     $scope.userProfile = false;
 
-    function checkProfileCreated() {
+    function checkProfileCreated(user) {
       ProfileService.findProfile($rootScope.currentUser.email).success(function (response) {
         $scope.profileExists = response.exists;
         $scope.userProfile = true;
         $scope.user = response.data;
         $scope.fullName = $scope.user.firstname + ' ' + $scope.user.lastname;
         $scope.email = $rootScope.currentUser.email;
+        $scope.image = response.image;
+        $scope.imageContentType = response.data.avatar.contentType;
         getMatches($scope.fullName);
-        getUserStatistics($scope.fullName);
+        getUserStatistics($scope.user.email);
         getUserTeams($scope.user.email);
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.");
@@ -50,19 +52,19 @@ angular.module('howWasThat')
     }
 
     $scope.updateProfile = function (user) {
-      if ($scope.profileExists) {
-        user.username = $rootScope.currentUser.username;
-        user.updatedDate = new Date();
-        ProfileService.update(user).success(function (data) {
-          $scope.userProfile = true;
-          alertService.displaySaveMessage("Profile Successfully updated");
-          $location.path("/profile");
-        }).error(function (status, data) {
-          alertService.displayErrorMessage("There was an error! Please try again.");
-        });
-      } else {
-        $scope.create(user);
-      }
+        if ($scope.profileExists) {
+          user.username = $rootScope.currentUser.username;
+          user.updatedDate = new Date();
+          ProfileService.update(user).success(function (data) {
+            $scope.userProfile = true;
+            alertService.displaySaveMessage("Profile Successfully updated");
+            $location.path("/profile");
+          }).error(function (status, data) {
+            alertService.displayErrorMessage("There was an error! Please try again.");
+          });
+        } else {
+          $scope.create(user);
+        }
     };
 
     $scope.create = function (user) {
@@ -111,9 +113,11 @@ angular.module('howWasThat')
       $scope.playerGames = 0;
 
       _.each(statistics, function (item) {
-        $scope.playerRuns += Number(item['runs']);
-        $scope.playerWickets += Number(item['wickets']);
-        $scope.playerGames += Number(item['matches']);
+        if(item) {
+          $scope.playerRuns += Number(item['runs']);
+          $scope.playerWickets += Number(item['wickets']);
+          $scope.playerGames += Number(item['matches']);
+        }
       });
     }
 
@@ -124,6 +128,58 @@ angular.module('howWasThat')
         alertService.displayErrorMessage("There was an error! Please try again.");
       });
     }
+
+    var imageURL = '/api/profile/image/'+ $rootScope.currentUser.email;
+    // create a uploader with options
+    var uploader = $scope.uploader = $fileUploader.create({
+      scope: $scope,                          // to automatically update the html. Default: $rootScope
+      url: imageURL ,
+      formData: [
+        { file: null }
+      ],
+      removeAfterUpload: true,
+      queueLimit: 1,
+      filters: [
+        function (item) {                    // first user filter
+          return true;
+        }
+      ]
+    });
+
+    uploader.allowNewFiles = true;
+
+    // FILTERS
+    uploader.filters.push(function() {
+      return uploader.queue.length !== 1; // only one file in the queue
+    });
+
+    uploader.bind('success', function (event, xhr, item, response) {
+      alertService.clearLastToast();
+      uploader.clearQueue();
+      if(response.message) {
+        alertService.displayErrorMessage(response.message);
+      } else {
+        alertService.displaySaveMessage("Profile Successfully created");
+        $("#upload-file-info").value = null;
+        getProfile();
+
+      }
+    });
+
+    uploader.onCompleteItem  = function(item, response, status, headers) {
+      uploader.clearQueue();
+    };
+
+    uploader.bind('beforeupload', function (event, item) {
+       return true;
+    });
+
+    $scope.updateImage = function () {
+      if (uploader.queue.length === 1) {
+        alertService.displayLoadingMessage('Adding attachment...');
+        uploader.uploadAll();
+      }
+    };
 
   });
 

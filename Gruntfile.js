@@ -58,7 +58,9 @@ module.exports = function (grunt) {
         BOWER_DIR + "/underscore/underscore.js",
     ].concat(BOOTSTRAP_JS_FILES),
     EXTERNAL_CSS_FILES = [
+      BOWER_DIR + "/bootstrap/dist/css/bootstrap.css",
       BOWER_DIR + "/fullcalendar/dist/fullcalendar.css",
+      BOWER_DIR + "/fontawesome/css/font-awesome.css",
       BOWER_DIR + "/toastr/toastr.css"
     ];
 
@@ -124,7 +126,7 @@ module.exports = function (grunt) {
           }
       },
       styles: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
+        files: ['<%= yeoman.app %>/built/css/internal/{,*/}*.css'],
         tasks: ['copy:styles', 'autoprefixer']
       },
       gruntfile: {
@@ -451,20 +453,10 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'useminPrepare',
-    //'concurrent:dist',
-    'autoprefixer',
     'concat',
     'ngmin',
-    'copy:dist',
-    'cdnify',
-    'cssmin',
-    'uglify',
-    'rev',
-    'usemin',
-    'coffee',
-    'compass:dist',
     'copy:styles',
+    'copy:font-awesome-files',
     'imagemin',
     'svgmin',
     'htmlmin'

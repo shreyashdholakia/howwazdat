@@ -1,21 +1,11 @@
-  $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
-
-  $fa-font-path: "/bower_components/fontawesome/fonts/";
-
-
-  @import 'sass-bootstrap/lib/bootstrap';
-  @import 'toastr/toastr.scss';
-  @import 'fontawesome/scss/font-awesome.scss';
-
-
-
-  .browsehappy {
+.browsehappy {
   margin: 0.2em 0;
   background: #ccc;
   color: #000;
   padding: 0.2em 0;
   }
 
+$fa-font-path: "/bower_components/fontawesome/fonts/";
 
   body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -23,6 +13,8 @@
     background: #f7f7f7;
     box-sizing: border-box;
   }
+
+  .font-awesome-font{font-family:FontAwesome;font-style:normal;font-weight:normal;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
 
 
   .signup-well {
@@ -340,6 +332,3 @@
   .filePath {
     font-size: 13px;
   }
-
-
-

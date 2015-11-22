@@ -7,12 +7,13 @@ var app = angular.module('howWasThat', [
   'ngRoute',
   'http-auth-interceptor',
   'ui.bootstrap',
-  'ui.calendar'
+  'ui.calendar',
+  'angularFileUpload'
 ]);
 
 var options = {};
 options.api = {};
-options.api.base_url = "http://localhost:3000";
+options.api.base_url = "https://how-waz-that.herokuapp.com";
 
 
 

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('howWasThat')
-  .controller('tournamentCtrl', function ($scope, tournamentService, teamService, ProfileService, $location, $routeParams, $rootScope, $http, $cookieStore, alertService, $modal, uiCalendarConfig, $filter, $compile, $timeout, pointService) {
+  .controller('tournamentCtrl', function ($scope, tournamentService, teamService, ProfileService, $location, $routeParams, $rootScope, $http, $cookieStore, alertService, $modal, uiCalendarConfig, $filter, $compile, $timeout, pointService, $fileUploader) {
 
     $scope.isProfileCreated = false;
     $scope.eventSources = [];
@@ -163,6 +163,8 @@ angular.module('howWasThat')
               $scope.addEvent($scope.tournamentMatches);
             }
             $scope.tournamentInfo = response.data;
+            $scope.image = response.image;
+            //$scope.imageContentType = response.data.tournamentPicture.contentType;
             loadGoogleMap($scope.tournamentInfo);
           } else {
             $location.path("/createTournament");
@@ -203,6 +205,7 @@ angular.module('howWasThat')
 
     // get all the details
     function getAllDetails() {
+      $scope.getTournamentDetails();
       getPointsTable();
       getTournamentList();
       getTeamList();
@@ -257,7 +260,7 @@ angular.module('howWasThat')
 
     };
 
-    $scope.getTournamentDetails();
+
 
     $scope.createTournament = function (tournament) {
       var tournamentExists = false;
@@ -520,6 +523,59 @@ angular.module('howWasThat')
         alertService.displayErrorMessage("Selected Team are not part of the tournament. Please correct the error and try again!");
       }
     };
+
+    var imageURL = '/api/tournament/image/'+ $routeParams.tournamentName;
+        // create a uploader with options
+        var uploader = $scope.uploader = $fileUploader.create({
+          scope: $scope,                          // to automatically update the html. Default: $rootScope
+          url: imageURL ,
+          formData: [
+            { file: null }
+          ],
+          removeAfterUpload: true,
+          queueLimit: 1,
+          filters: [
+            function (item) {                    // first user filter
+              return true;
+            }
+          ]
+        });
+
+        uploader.allowNewFiles = true;
+
+        // FILTERS
+        uploader.filters.push(function() {
+          return uploader.queue.length !== 1; // only one file in the queue
+        });
+
+        uploader.bind('success', function (event, xhr, item, response) {
+          alertService.clearLastToast();
+          uploader.clearQueue();
+          if(response.message) {
+            alertService.displayErrorMessage(response.message);
+          } else {
+            alertService.displaySaveMessage("Profile Successfully created");
+            $("#upload-file-info").value = null;
+            getAllDetails();
+
+          }
+        });
+
+        uploader.onCompleteItem  = function(item, response, status, headers) {
+          uploader.clearQueue();
+        };
+
+        uploader.bind('beforeupload', function (event, item) {
+           return true;
+        });
+
+        $scope.updateImage = function () {
+          if (uploader.queue.length === 1) {
+            alertService.displayLoadingMessage('Adding attachment...');
+            uploader.uploadAll();
+          }
+        };
+
   });
 
 

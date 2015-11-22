@@ -57,7 +57,7 @@ angular.module('howWasThat')
       });
     }
 
-    getTeamMatches();
+
 
     $(function () {
       $('[data-toggle="tooltip"]').tooltip()
@@ -208,7 +208,9 @@ angular.module('howWasThat')
 
     $scope.getTeamDetails = function () {
       var teamName = $routeParams.teamName;
+
       if (teamName) {
+        getTeamMatches();
         teamService.teamDetails(teamName).success(function (response) {
           $scope.players = response.exists;
           $scope.teamName = response.data.teamName;
@@ -222,6 +224,8 @@ angular.module('howWasThat')
         }).error(function (status, data) {
           alertService.displayErrorMessage("There was an error! Please try again");
         });
+      } else {
+        $location.path('/createTeam');
       }
     };
 

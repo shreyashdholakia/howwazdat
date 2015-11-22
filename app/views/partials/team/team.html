@@ -1,6 +1,17 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-10"><h1><strong>{{teamName}}</strong></h1>
+    <div class="col-sm-8"><h1><strong>{{teamName}}</strong></h1>
+    </div>
+    <div class="col-sm-4">
+      <img ng-hide="!image" class="img-circle" style="width: 75px; height: 75px;" ng-src="data:image/jpg;base64,{{image}}">
+      <img src="../../img/team.png" ng-show="!image" class="img-circle" style="width: 90px; height: 90px;">
+      <label class="btn btn-primary pull" for="my-file-selector">
+        <i class="fa fa-file"> Choose File..</i>
+        <input id="my-file-selector" class="picUpload" ng-file-select uploader="uploader" type="file" onchange='$("#upload-file-info").html($(this).val());'>
+      </label>
+      <button class="btn btn-success" ng-click="updateImage()" type="submit"><i
+        class="fa fa-floppy-o"></i> Update</button>
+      <span class='label label-info filePath' id="upload-file-info"></span>
     </div>
     <br>
     <br>
