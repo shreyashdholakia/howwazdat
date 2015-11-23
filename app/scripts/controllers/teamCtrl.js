@@ -5,6 +5,7 @@ angular.module('howWasThat')
 
     $scope.player = [];
     $scope.profileExists = false;
+    $scope.teamsLoaded = false;
     $scope.roles = [{name: 'Batsmen'},
       {name: 'Bowler'},
       {name: 'All Rounder'}];
@@ -38,6 +39,7 @@ angular.module('howWasThat')
       ProfileService.findProfile($rootScope.currentUser.email).success(function (response) {
         $scope.profileExists = response.exists;
         $scope.user = response.data;
+        $scope.teamsLoaded = true;
         $scope.organizer = $scope.user.firstname + ' ' + $scope.user.lastname;
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error getting user details! Please try again.");
