@@ -19,7 +19,6 @@ angular.module('howWasThat')
         $scope.user = response.data;
         $scope.userLoaded = true;
         if(response.data) {
-          console.log("here");
           $scope.userProfile = (response.data.firstname && response.data.lastname) ? true : false;
           $scope.fullName = $scope.user.firstname + ' ' + $scope.user.lastname;
           $scope.userLoaded = true;
