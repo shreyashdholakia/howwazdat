@@ -345,6 +345,16 @@ module.exports = function (grunt) {
           }
         ]
       },
+      "bootstrap-font": {
+        files: [
+          {
+            cwd: BOWER_DIR + "/bootstrap/fonts/",
+            src: ['**'],
+            dest: "app/built/fonts/",
+            expand: true
+          }
+        ]
+      },
       heroku: {
         files: [{
           expand: true,
@@ -457,6 +467,7 @@ module.exports = function (grunt) {
     'ngmin',
     'copy:styles',
     'copy:font-awesome-files',
+    'copy:bootstrap-font',
     'imagemin',
     'svgmin',
     'htmlmin'
