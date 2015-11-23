@@ -10,16 +10,21 @@ angular.module('howWasThat')
       return Math.ceil($scope.matches.length / $scope.pageSize);
     };
     $scope.userProfile = false;
+    $scope.userLoaded = false;
+
 
     function checkProfileCreated(user) {
       ProfileService.findProfile($rootScope.currentUser.email).success(function (response) {
         $scope.profileExists = response.exists;
-        $scope.userProfile = true;
         $scope.user = response.data;
+        $scope.userProfile = (response.data.firstname && response.data.lastname)? true: false;
+        $scope.userLoaded = true;
         $scope.fullName = $scope.user.firstname + ' ' + $scope.user.lastname;
         $scope.email = $rootScope.currentUser.email;
-        $scope.image = response.image;
-        $scope.imageContentType = response.data.avatar.contentType;
+        if(response.image) {
+          $scope.image = response.image;
+          $scope.imageContentType = response.data.avatar.contentType || 'image/jpeg';
+        }
         getMatches($scope.fullName);
         getUserStatistics($scope.user.email);
         getUserTeams($scope.user.email);
@@ -56,7 +61,6 @@ angular.module('howWasThat')
           user.username = $rootScope.currentUser.username;
           user.updatedDate = new Date();
           ProfileService.update(user).success(function (data) {
-            $scope.userProfile = true;
             alertService.displaySaveMessage("Profile Successfully updated");
             $location.path("/profile");
           }).error(function (status, data) {
