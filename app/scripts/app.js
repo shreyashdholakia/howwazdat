@@ -13,7 +13,7 @@ var app = angular.module('howWasThat', [
 
 var options = {};
 options.api = {};
-options.api.base_url = "http://localhost:3000";
+options.api.base_url = "http://how-waz-that.herokuapp.com";
 
 
 
