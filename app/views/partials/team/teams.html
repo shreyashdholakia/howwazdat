@@ -1,61 +1,69 @@
 <div class="container">
-  <div class="row">
-    <div class="col-sm-8"><h1>{{user.firstname}} {{user.lastname}}</h1></div>
-    <div class="col-sm-2"><br><a href="/createTournament" class="btn btn-success"><i class="fa fa-plus"></i> Create Tournament</a></div>
-    <div class="col-sm-2"><br><a href="/createTeam" class="btn btn-success"><i class="fa fa-plus"></i> Create Team</a></div>
+  <div class="col-sm-6 pull-right" ng-show="!teamsLoaded">
+    <i class="fa fa-spinner fa-spin fa-5x"></i>
   </div>
-  <hr>
-  <div class="row">
-    <div class="col-sm-3"><!--left col-->
-      <div class="panel panel-primary">
-        <div class="panel-heading text-center">Profile <i class="fa fa-user fa-1x"></i></div>
-        <ul class="list-group">
-          <li class="list-group-item text-right"><span class="pull-left"><strong>Full name</strong></span> {{user.firstname}} {{user.lastname}}</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong>Joined</strong></span> {{user.joiningDate | date:'mediumDate'}}</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong>My Teams</strong></span> <i class="fa fa-users"></i></li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong>My Tournaments</strong></span> <i class="fa fa-trophy"></i></li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong>Statistics</strong></span> <i class="fa fa-bar-chart"></i></li>
-        </ul>
-      </div>
-    </div><!--/col-3-->
-    <div class="col-sm-9">
-      <span class="col-md-4">
-        <input type="text" class="form-control ng-pristine ng-valid" placeholder="Search your team"
-                        ng-model="searchTeam">
-      </span>
-      <div class="table table-responsive">
-        <table class="table table-hover">
-          <thead>
-          <tr>
-            <th>#</th>
-            <th ng-click="sortType='teamName'; sortReverse = !sortReverse">Team <i class="fa fa-sort"></i></th>
-            <th>Captain </th>
-            <th ng-click="sortType='joiningDate'; sortReverse = !sortReverse">Joining Date <i class="fa fa-sort"></i></th>
-          </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="team in allTeams | orderBy:sortType:sortReverse | filter: searchTeam | startFrom:currentPage*pageSize | limitTo:pageSize">
-              <td>{{$index + 1}}</td>
-              <td><a href="/team/{{team.teamName}}">{{team.teamName}}</a></td>
-              <td>{{getTeamCaptain(team)}}</td>
-              <td>{{team.joiningDate | date:'MMM d, y'}}</td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="bs-callout bs-callout-info" ng-show="allTeams.length == 0">
-          No Teams Created!
-        </div>
-        <hr>
-        <nav>
-          <ul class="pager">
-            <li class="previous" ng-hide="currentPage == 0"><a
-              ng-click="currentPage=currentPage-1"><span aria-hidden="true">&larr;</span> Previous</a></li>
-            <li class="next" ng-hide="currentPage >= (allTeams.length/pageSize - 1) || allTeams.length == 5"><a
-              ng-click="currentPage=currentPage+1">Next <span aria-hidden="true">&rarr;</span></a></li>
+  <div class="row" ng-show="teamsLoaded">
+    <div class="row">
+      <div class="col-sm-8"><h1>{{user.firstname}} {{user.lastname}}</h1></div>
+      <div class="col-sm-2"><br><a href="/createTournament" class="btn btn-success"><i class="fa fa-plus"></i> Create Tournament</a></div>
+      <div class="col-sm-2"><br><a href="/createTeam" class="btn btn-success"><i class="fa fa-plus"></i> Create Team</a></div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-3"><!--left col-->
+        <div class="panel panel-primary">
+          <div class="panel-heading text-center">Profile <i class="fa fa-user fa-1x"></i></div>
+          <ul class="list-group">
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Full name</strong></span> {{user.firstname}} {{user.lastname}}</li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Joined</strong></span> {{user.joiningDate | date:'mediumDate'}}</li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>My Teams</strong></span> <i class="fa fa-users"></i></li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>My Tournaments</strong></span> <i class="fa fa-trophy"></i></li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Statistics</strong></span> <i class="fa fa-bar-chart"></i></li>
           </ul>
-        </nav>
-      </div><!--/table-resp-->
-    </div><!--/column-->
+        </div>
+      </div><!--/col-3-->
+      <div class="col-sm-9">
+        <span class="col-md-4">
+          <input type="text" class="form-control ng-pristine ng-valid" placeholder="Search your team"
+                          ng-model="searchTeam">
+        </span>
+        <div class="table table-responsive">
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th ng-click="sortType='teamName'; sortReverse = !sortReverse">Team <i class="fa fa-sort"></i></th>
+              <th>Captain </th>
+              <th ng-click="sortType='joiningDate'; sortReverse = !sortReverse">Joining Date <i class="fa fa-sort"></i></th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="team in allTeams | orderBy:sortType:sortReverse | filter: searchTeam | startFrom:currentPage*pageSize | limitTo:pageSize">
+                <td>{{$index + 1}}</td>
+                <td><a href="/team/{{team.teamName}}">{{team.teamName}}</a></td>
+                <td>{{getTeamCaptain(team)}}</td>
+                <td>{{team.joiningDate | date:'MMM d, y'}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="bs-callout bs-callout-info" ng-show="allTeams.length == 0">
+            No Teams Created!
+          </div>
+          <div class="col-sm-6 pull-right" ng-show="!allTeamsLoaded">
+            <i class="fa fa-spinner fa-spin fa-2x"></i>
+          </div>
+          <hr>
+          <nav>
+            <ul class="pager">
+              <li class="previous" ng-hide="currentPage == 0"><a
+                ng-click="currentPage=currentPage-1"><span aria-hidden="true">&larr;</span> Previous</a></li>
+              <li class="next" ng-hide="currentPage >= (allTeams.length/pageSize - 1) || allTeams.length == 5"><a
+                ng-click="currentPage=currentPage+1">Next <span aria-hidden="true">&rarr;</span></a></li>
+            </ul>
+          </nav>
+        </div><!--/table-resp-->
+      </div><!--/column-->
+    </div>
   </div>
 </div><!--/container-->
 

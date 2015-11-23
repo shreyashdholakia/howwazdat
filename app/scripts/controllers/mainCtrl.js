@@ -5,6 +5,10 @@ angular.module('howWasThat')
 
     $scope.currentPage = 0;
     $scope.pageSize = 5;
+    $scope.teamsLoaded = false;
+    $scope.tournamentsLoaded = false;
+    $scope.allTeamsLoaded = false;
+    $scope.allTournamentsLoaded = false;
     $scope.numberOfPages = function () {
       return Math.ceil($scope.tournamentList.length / $scope.pageSize);
     };
@@ -13,6 +17,8 @@ angular.module('howWasThat')
       ProfileService.findProfile($rootScope.currentUser.email).success(function(response) {
         $scope.profileExists = response.exists;
         $scope.user = response.data;
+        $scope.teamsLoaded = true;
+        $scope.tournamentsLoaded = true;
       }).error(function(status, data) {
         console.log(status);
       });
@@ -21,6 +27,7 @@ angular.module('howWasThat')
     function getTournamentList() {
       tournamentService.all().success(function (response) {
         $scope.tournamentList = response.data;
+        $scope.allTournamentsLoaded = true;
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.n");
       });
@@ -29,6 +36,7 @@ angular.module('howWasThat')
     function getAllTeams() {
       teamService.getTeams().success(function (response) {
         $scope.allTeams = response.data;
+        $scope.allTeamsLoaded = true;
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again");
       });
