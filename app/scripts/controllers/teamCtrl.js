@@ -49,12 +49,12 @@ angular.module('howWasThat')
 
     function getTeamMatches() {
       var teamName = $routeParams.teamName;
-      $scope.getTeamGames = teamService.teamMatches(teamName).success(function (response) {
-                                $location.path("/team/" + teamName);
-                                $scope.teamMatches = response.data;
-                              }).error(function (status, data) {
-                                alertService.displayErrorMessage("There was an error! Please try again");
-                            });
+      teamService.teamMatches(teamName).success(function (response) {
+          $location.path("/team/" + teamName);
+          $scope.teamMatches = response.data;
+        }).error(function (status, data) {
+          alertService.displayErrorMessage("There was an error! Please try again");
+      });
     }
 
 
