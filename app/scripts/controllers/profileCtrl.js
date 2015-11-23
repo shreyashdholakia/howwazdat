@@ -17,6 +17,7 @@ angular.module('howWasThat')
       ProfileService.findProfile($rootScope.currentUser.email).success(function (response) {
         $scope.profileExists = response.exists;
         $scope.user = response.data;
+        $scope.userLoaded = true;
         if(response.data) {
           console.log("here");
           $scope.userProfile = (response.data.firstname && response.data.lastname) ? true : false;
@@ -25,8 +26,6 @@ angular.module('howWasThat')
           getMatches($scope.fullName);
           getUserStatistics($scope.user.email);
           getUserTeams($scope.user.email);
-        } else {
-          $scope.userLoaded = false;
         }
         $scope.email = $rootScope.currentUser.email;
         if(response.image) {
@@ -68,7 +67,8 @@ angular.module('howWasThat')
           user.updatedDate = new Date();
           ProfileService.update(user).success(function (data) {
             alertService.displaySaveMessage("Profile Successfully updated");
-            $location.path("/profile");
+            getProfile();
+           // $location.path("/profile");
           }).error(function (status, data) {
             alertService.displayErrorMessage("There was an error! Please try again.");
           });
