@@ -17,17 +17,23 @@ angular.module('howWasThat')
       ProfileService.findProfile($rootScope.currentUser.email).success(function (response) {
         $scope.profileExists = response.exists;
         $scope.user = response.data;
-        $scope.userProfile = (response.data.firstname && response.data.lastname)? true: false;
-        $scope.userLoaded = true;
-        $scope.fullName = $scope.user.firstname + ' ' + $scope.user.lastname;
+        if(response.data) {
+          console.log("here");
+          $scope.userProfile = (response.data.firstname && response.data.lastname) ? true : false;
+          $scope.fullName = $scope.user.firstname + ' ' + $scope.user.lastname;
+          $scope.userLoaded = true;
+          getMatches($scope.fullName);
+          getUserStatistics($scope.user.email);
+          getUserTeams($scope.user.email);
+        } else {
+          $scope.userLoaded = false;
+        }
         $scope.email = $rootScope.currentUser.email;
         if(response.image) {
           $scope.image = response.image;
           $scope.imageContentType = response.data.avatar.contentType || 'image/jpeg';
         }
-        getMatches($scope.fullName);
-        getUserStatistics($scope.user.email);
-        getUserTeams($scope.user.email);
+
       }).error(function (status, data) {
         alertService.displayErrorMessage("There was an error! Please try again.");
       });
