@@ -7,8 +7,8 @@ angular.module('howWasThat')
 		create: function(tournamentDetails) {
 			return $http.post(options.api.base_url + '/api/tournament', {'tournament': tournamentDetails});
 		},
-		tournamentDetails: function(tournamentName) {
-			return $http.get(options.api.base_url  + '/api/tournament/' + tournamentName);
+		tournamentDetails: function(tournament) {
+			return $http.get(options.api.base_url  + '/api/tournament/' + tournament);
 		},
 		update: function(teamName,teamList) {
 			return $http.put(options.api.base_url  + '/api/team/' + teamName, {'team': teamList});

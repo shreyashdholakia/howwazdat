@@ -13,9 +13,7 @@ var app = angular.module('howWasThat', [
 
 var options = {};
 options.api = {};
-options.api.base_url = "http://how-waz-that.herokuapp.com";
-
-
+options.api.base_url = "http://localhost:3000";
 
   app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
@@ -51,7 +49,7 @@ options.api.base_url = "http://how-waz-that.herokuapp.com";
         templateUrl: 'partials/tournament/createTournament.html',
         controller: 'tournamentCtrl'
       })
-      .when('/tournament/:tournamentName', {
+      .when('/tournament/:tournament', {
         templateUrl: 'partials/tournament/createTournament.html',
         controller: 'tournamentCtrl'
       })
