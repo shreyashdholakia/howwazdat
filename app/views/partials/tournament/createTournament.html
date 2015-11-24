@@ -41,12 +41,12 @@
     </div>
   </form>
   </div><!--/col-9-->
-  <div class="row" ng-show="tournamentPage">
+  <div class="row" ng-show="tournamentPage" ng-cloak>
     <div class="col-sm-8"><h1>{{tournamentInfo.tournamentName}}</h1>
     <p> Last updated: {{tournamentInfo.lastUpdated | date: 'medium'}}</p></div>
     <div class="col-sm-4">
       <img ng-hide="!image" class="img-circle" style="width: 75px; height: 75px;" ng-src="data:image/jpg;base64,{{image}}">
-      <img src="../../img/tournament.png" ng-show="!image" class="img-circle" style="width: 75px; height: 75px;">
+      <img src="../../img/tournament.png" ng-show="!image" class="img-circle pic" >
       <label class="btn btn-primary pull" for="my-file-selector">
         <i class="fa fa-file"> Choose File..</i>
         <input id="my-file-selector" class="picUpload" ng-file-select uploader="uploader" type="file" onchange='$("#upload-file-info").html($(this).val());'>
