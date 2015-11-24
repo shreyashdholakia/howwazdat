@@ -94,7 +94,7 @@
       <div class="tab-content" ng-hide="createMatch">
         <div class="tab-pane" ng-class="{'active':isActiveTab('activity')}" id="home">
           <br>
-          <button type="button" class="btn btn-default btn-success" ng-click="createMatch = !createMatch" type="submit"
+          <button type="button" class="btn btn-default btn-success" ng-click="createMatch = !createMatch" type="button"
                   ng-disabled="tournamentTeams.length == 0"><i class="fa fa-plus"></i> Create Match
           </button>
           <span class="col-md-3">
@@ -105,15 +105,15 @@
             <button type="button" class="btn btn-default" ng-click="clearFilter()">All</button>
             <button type="button" class="btn btn-default"
                     ng-class="{'btn-success lead fa fa-check': stageFilter.indexOf('League') > -1}"
-                    ng-click="filterStages('League')">League
+                    ng-click="filterStages('League')" type="button">League
             </button>
             <button type="button" class="btn btn-default"
                     ng-class="{'btn-success lead fa fa-check': stageFilter.indexOf('PlayOffs') > -1}"
-                    ng-click="filterStages('PlayOffs')">PlayOffs
+                    ng-click="filterStages('PlayOffs')" type="button">PlayOffs
             </button>
             <button type="button" class="btn btn-default"
                     ng-class="{'btn-success lead fa fa-check': stageFilter.indexOf('Final') > -1}"
-                    ng-click="filterStages('Final')">Final
+                    ng-click="filterStages('Final')" type="button">Final
             </button>
           </div>
           <br>
@@ -228,15 +228,15 @@
           <div class="pull-right">
             <button type="button" class="btn btn-default text-center"
                     ng-class="{'btn-success lead fa fa-check statsHighlight': sortType === 'runs'}"
-                    ng-click="filterStatistics('runs')"> Best Batsman
+                    ng-click="filterStatistics('runs')" type="button"> Best Batsman
             </button>
             <button type="button" class="btn btn-default text-center"
                     ng-class="{'btn-success lead fa fa-check statsHighlight': sortType === 'wickets'}"
-                    ng-click="filterStatistics('wickets')"> Best Bowler
+                    ng-click="filterStatistics('wickets')" type="button"> Best Bowler
             </button>
             <button type="button" class="btn btn-default text-center"
                     ng-class="{'btn-success lead fa fa-check statsHighlight': sortType === 'points'}"
-                    ng-click="filterStatistics('points')"> MVP
+                    ng-click="filterStatistics('points')" type="button"> MVP
             </button>
           </div>
           <div class="table table-responsive">
@@ -370,7 +370,7 @@
         <div class="form-group pull-right">
           <div class="col-xs-12">
             <br><br>
-            <button class="btn btn-default btn-default" ng-click="createMatch = !createMatch" type="submit"><i
+            <button class="btn btn-default btn-default" ng-click="createMatch = !createMatch" type="button"><i
               class="fa fa-reply"></i> Cancel
             </button>
           </div>
