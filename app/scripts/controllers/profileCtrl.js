@@ -14,7 +14,7 @@ angular.module('howWasThat')
 
 
     function checkProfileCreated(user) {
-      ProfileService.findProfile($rootScope.currentUser.email).success(function (response) {
+      ProfileService.findProfile(user).success(function (response) {
         $scope.profileExists = response.exists;
         $scope.user = response.data;
         $scope.userLoaded = true;
@@ -39,17 +39,22 @@ angular.module('howWasThat')
 
     function getProfile() {
       if($routeParams.player) {
-        getPlayerUserName($routeParams.player);
+        getPlayerEmail($routeParams.player);
       } else {
-        checkProfileCreated($rootScope.currentUser.username)
+        checkProfileCreated($rootScope.currentUser.email)
       }
     }
 
     getProfile();
-    //checkProfileCreated();
 
-    function getPlayerUserName(name) {
-      console.log("hre" + name);
+    function getPlayerEmail(userID) {
+      ProfileService.getUserEmail(userID).success(function (response) {
+        if(response.data) {
+          checkProfileCreated(response.data);
+        } else {
+          alertService.displayErrorMessage("There was an error! Please try again.");
+        }
+      });
     }
 
     function getMatches(fullName) {
@@ -67,7 +72,6 @@ angular.module('howWasThat')
           ProfileService.update(user).success(function (data) {
             alertService.displaySaveMessage("Profile Successfully updated");
             getProfile();
-           // $location.path("/profile");
           }).error(function (status, data) {
             alertService.displayErrorMessage("There was an error! Please try again.");
           });

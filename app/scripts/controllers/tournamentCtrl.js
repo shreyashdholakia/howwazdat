@@ -5,6 +5,7 @@ angular.module('howWasThat')
 
     $scope.isProfileCreated = false;
     $scope.eventSources = [];
+    $scope.user = [];
     $scope.umpires = [{name: 'Self'},
       {name: 'Neutral'}];
     $scope.umpireType = $scope.umpires[0];
@@ -112,12 +113,17 @@ angular.module('howWasThat')
     $scope.checkProfileCreated = function () {
       ProfileService.findProfile($rootScope.currentUser.email).success(function (response) {
         $scope.profileExists = response.exists;
-        $scope.user = response.data;
-        $scope.organizer = $scope.user.firstname + ' ' + $scope.user.lastname;
-      }).error(function (status, data) {
-        alertService.displayErrorMessage("There was an error! Please try again.");
-      });
-
+        if($scope.profileExists) {
+            $scope.user = response.data;
+            $scope.organizer = $scope.user.firstname + ' ' + $scope.user.lastname;
+          } else {
+            $scope.user.firstname = "-";
+            $scope.user.lastname = "-";
+            $scope.user.joiningDate = new Date();
+          }
+        }).error(function (status, data) {
+          alertService.displayErrorMessage("There was an error! Please try again.");
+        });
     };
 
     $scope.getPoints = function (stats) {
@@ -130,7 +136,7 @@ angular.module('howWasThat')
       });
     }
 
-    $scope.tournamentPage = ($routeParams.tournamentName) ? true : false;
+    $scope.tournamentPage = ($routeParams.tournament) ? true : false;
     $scope.checkProfileCreated();
     $scope.tournamentDetails = [];
 
@@ -150,9 +156,10 @@ angular.module('howWasThat')
     };
 
     $scope.getTournamentDetails = function () {
-      var tournamentName = $routeParams.tournamentName;
-      if (tournamentName) {
-        tournamentService.tournamentDetails(tournamentName).success(function (response) {
+      var tournament = $routeParams.tournament;
+      console.log(tournament);
+      if (tournament) {
+        tournamentService.tournamentDetails(tournament).success(function (response) {
           if (response.exists) {
             $scope.tournamentExists = response.exists;
             if (response.data.teams) {
@@ -163,8 +170,11 @@ angular.module('howWasThat')
               $scope.addEvent($scope.tournamentMatches);
             }
             $scope.tournamentInfo = response.data;
-            $scope.image = response.image;
+            //$scope.image = response.image;
             //$scope.imageContentType = response.data.tournamentPicture.contentType;
+            $scope.tournamentInfoLoaded = true;
+            getPointsTable(response.data.tournamentName);
+            getStatisticsDetails(response.data.tournamentName);
             loadGoogleMap($scope.tournamentInfo);
           } else {
             $location.path("/createTournament");
@@ -193,23 +203,19 @@ angular.module('howWasThat')
       });
     }
 
-    function getPointsTable() {
-      if ($routeParams.tournamentName) {
-        pointService.pointsTable($routeParams.tournamentName).success(function (response) {
-          $scope.pointTable = response.data.teamStats;
-        }).error(function (status, data) {
-          alertService.displayErrorMessage("There was an error! Please try again.");
-        });
-      }
+    function getPointsTable(tournamentName) {
+      pointService.pointsTable(tournamentName).success(function (response) {
+        $scope.pointTable = response.data.teamStats;
+      }).error(function (status, data) {
+        alertService.displayErrorMessage("There was an error! Please try again.");
+      });
     }
 
     // get all the details
     function getAllDetails() {
       $scope.getTournamentDetails();
-      getPointsTable();
       getTournamentList();
       getTeamList();
-      getStatisticsDetails();
     }
 
     getAllDetails();
@@ -426,8 +432,7 @@ angular.module('howWasThat')
       $scope.sortReverse = true;
     };
 
-    function getStatisticsDetails () {
-      var tournamentName = $routeParams.tournamentName;
+    function getStatisticsDetails (tournamentName) {
       tournamentService.stats(tournamentName).success(function (response) {
         if(response.data.teams && response.data.teams.length > 0) {
           $scope.statistics = response.data.teams;

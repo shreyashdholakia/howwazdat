@@ -3,8 +3,8 @@
     <div class="col-sm-8"><h1><strong>{{teamName}}</strong></h1>
     </div>
     <div class="col-sm-4">
-      <img ng-hide="!image" class="img-circle" style="width: 75px; height: 75px;" ng-src="data:image/jpg;base64,{{image}}">
-      <img src="../../img/team.png" ng-show="!image" class="img-circle" style="width: 90px; height: 90px;">
+      <img ng-hide="!image" class="img-circle pic" ng-src="data:image/jpg;base64,{{image}}">
+      <img src="../../img/team.png" ng-show="!image" class="img-circle pic">
       <label class="btn btn-primary pull" for="my-file-selector">
         <i class="fa fa-file"> Choose File..</i>
         <input id="my-file-selector" class="picUpload" ng-file-select uploader="uploader" type="file" onchange='$("#upload-file-info").html($(this).val());'>
@@ -54,6 +54,7 @@
               <th>Last Name</th>
               <th>Role</th>
               <th>Captain</th>
+              <th>Profile</th>
               <th><i class="fa fa-cog"></i></th>
             </tr>
             </thead>
@@ -64,21 +65,22 @@
               <td>{{players.lastName}}</td>
               <td>{{players.role}}</td>
               <td>{{players.captain}}</td>
+              <td><a href="/profile/{{players.userNumber}}"><i class="fa fa-user"></i></a></td>
               <td><i class="fa fa-trash text-danger" ng-click="open(players)" tooltip
                      data-original-title="Remove player from team"
                      data-placement="top" data-trigger="hover"></i> |
                 <i class="fa fa-files-o" ng-click="clone(players)" tooltip
                    data-original-title="Add player to a different team"
-                   data-placement="top" data-trigger="hover"></i> |
-                <i class="fa fa-user" ng-click="profile(players)"
-                   data-original-title="Player Profile" tooltip
                    data-placement="top" data-trigger="hover"></i>
               </td>
             </tr>
             </tbody>
           </table>
-          <div class="bs-callout bs-callout-info" ng-show="playerList.length == 0">
+          <div class="bs-callout bs-callout-info" ng-show="playerList.length == 0 && playersLoaded">
             Your team has no players added. Please add players.
+          </div>
+          <div class="col-sm-7 pull-right" ng-show="!playersLoaded">
+            <i class="fa fa-spinner fa-spin fa-2x"></i>
           </div>
         </div>
           </div>

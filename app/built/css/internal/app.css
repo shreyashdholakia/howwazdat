@@ -5,8 +5,6 @@
   padding: 0.2em 0;
   }
 
-$fa-font-path: "/bower_components/fontawesome/fonts/";
-
   body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
@@ -331,4 +329,9 @@ $fa-font-path: "/bower_components/fontawesome/fonts/";
 
   .filePath {
     font-size: 13px;
+  }
+
+  .pic {
+    width: 75px;
+    height: 75px;
   }
