@@ -5,6 +5,7 @@ angular.module('howWasThat')
 
     $scope.isProfileCreated = false;
     $scope.eventSources = [];
+    $scope.user = [];
     $scope.umpires = [{name: 'Self'},
       {name: 'Neutral'}];
     $scope.umpireType = $scope.umpires[0];
@@ -112,12 +113,17 @@ angular.module('howWasThat')
     $scope.checkProfileCreated = function () {
       ProfileService.findProfile($rootScope.currentUser.email).success(function (response) {
         $scope.profileExists = response.exists;
-        $scope.user = response.data;
-        $scope.organizer = $scope.user.firstname + ' ' + $scope.user.lastname;
-      }).error(function (status, data) {
-        alertService.displayErrorMessage("There was an error! Please try again.");
-      });
-
+        if($scope.profileExists) {
+            $scope.user = response.data;
+            $scope.organizer = $scope.user.firstname + ' ' + $scope.user.lastname;
+          } else {
+            $scope.user.firstname = "-";
+            $scope.user.lastname = "-";
+            $scope.user.joiningDate = new Date();
+          }
+        }).error(function (status, data) {
+          alertService.displayErrorMessage("There was an error! Please try again.");
+        });
     };
 
     $scope.getPoints = function (stats) {
@@ -166,6 +172,7 @@ angular.module('howWasThat')
             $scope.tournamentInfo = response.data;
             //$scope.image = response.image;
             //$scope.imageContentType = response.data.tournamentPicture.contentType;
+            $scope.tournamentInfoLoaded = true;
             getPointsTable(response.data.tournamentName);
             getStatisticsDetails(response.data.tournamentName);
             loadGoogleMap($scope.tournamentInfo);

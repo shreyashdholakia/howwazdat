@@ -208,6 +208,8 @@ angular.module('howWasThat')
       return ($scope.firstName.length > 1 && $scope.lastName.length > 1);
     };
 
+    $scope.playersLoaded = false;
+
     $scope.getTeamDetails = function () {
       var teamName = $routeParams.teamName;
 
@@ -217,6 +219,7 @@ angular.module('howWasThat')
           $scope.players = response.exists;
           $scope.teamName = response.data.teamName;
           $scope.playerList = response.data.players;
+          $scope.playersLoaded = true;
           $scope.bestBatsman = _.max($scope.playerList, function(player){ return player.runs; });
           $scope.bestBowler = _.max($scope.playerList, function(player){ return player.wickets; });
           $scope.teamWins = response.data.won;

@@ -9,6 +9,7 @@ angular.module('howWasThat')
     $scope.tournamentsLoaded = false;
     $scope.allTeamsLoaded = false;
     $scope.allTournamentsLoaded = false;
+    $scope.user = [];
     $scope.numberOfPages = function () {
       return Math.ceil($scope.tournamentList.length / $scope.pageSize);
     };
@@ -16,7 +17,14 @@ angular.module('howWasThat')
     function checkProfileCreated () {
       ProfileService.findProfile($rootScope.currentUser.email).success(function(response) {
         $scope.profileExists = response.exists;
-        $scope.user = response.data;
+        if($scope.profileExists)
+        {
+          $scope.user = response.data;
+        } else {
+          $scope.user.firstname = "-";
+          $scope.user.lastname = "-";
+          $scope.user.joiningDate = new Date();
+        }
         $scope.teamsLoaded = true;
         $scope.tournamentsLoaded = true;
       }).error(function(status, data) {

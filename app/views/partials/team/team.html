@@ -54,6 +54,7 @@
               <th>Last Name</th>
               <th>Role</th>
               <th>Captain</th>
+              <th>Profile</th>
               <th><i class="fa fa-cog"></i></th>
             </tr>
             </thead>
@@ -64,21 +65,22 @@
               <td>{{players.lastName}}</td>
               <td>{{players.role}}</td>
               <td>{{players.captain}}</td>
+              <td><a href="/profile/{{players.userNumber}}"><i class="fa fa-user"></i></a></td>
               <td><i class="fa fa-trash text-danger" ng-click="open(players)" tooltip
                      data-original-title="Remove player from team"
                      data-placement="top" data-trigger="hover"></i> |
                 <i class="fa fa-files-o" ng-click="clone(players)" tooltip
                    data-original-title="Add player to a different team"
-                   data-placement="top" data-trigger="hover"></i> |
-                <i class="fa fa-user" ng-click="profile(players)"
-                   data-original-title="Player Profile" tooltip
                    data-placement="top" data-trigger="hover"></i>
               </td>
             </tr>
             </tbody>
           </table>
-          <div class="bs-callout bs-callout-info" ng-show="playerList.length == 0">
+          <div class="bs-callout bs-callout-info" ng-show="playerList.length == 0 && playersLoaded">
             Your team has no players added. Please add players.
+          </div>
+          <div class="col-sm-7 pull-right" ng-show="!playersLoaded">
+            <i class="fa fa-spinner fa-spin fa-2x"></i>
           </div>
         </div>
           </div>
