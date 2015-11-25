@@ -9,8 +9,8 @@
           Please update your profile!
         </div>
       </div>
-      <div class="col-sm-2 pull-left"><img ng-hide="!image" class="img-circle" style="width: 75px; height: 75px;" ng-src="data:{{imageContentType}};base64,{{image}}">
-        <img src="../../img/user.png" ng-show="!image" class="img-circle" style="width: 75px; height: 75px;">
+      <div class="col-sm-2 pull-left"><img ng-hide="!image" class="img-circle pic" ng-src="data:{{imageContentType}};base64,{{image}}">
+        <img src="../../img/user.png" ng-show="!image" class="img-circle pic">
       </div>
     </div>
     <hr>
@@ -101,8 +101,8 @@
                   <label for="location"><h4>Profile Picture</h4></label>
                   <br>
                   <div>
-                    <img ng-hide="!image" class="img-circle" style="width: 75px; height: 75px;" ng-src="data:{{imageContentType}};base64,{{image}}">
-                    <img src="../../img/user.png" ng-show="!image" class="img-circle" style="width: 75px; height: 75px;">
+                    <img ng-hide="!image" class="img-circle pic" ng-src="data:{{imageContentType}};base64,{{image}}">
+                    <img src="../../img/user.png" ng-show="!image" class="img-circle pic">
                     <label class="btn btn-primary" for="my-file-selector">
                       <i class="fa fa-file"> Choose File..</i>
                       <input id="my-file-selector" class="picUpload" ng-file-select uploader="uploader" type="file" onchange='$("#upload-file-info").html($(this).val());'>

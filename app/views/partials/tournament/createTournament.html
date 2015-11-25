@@ -1,5 +1,8 @@
 <div class="container">
-  <div class="row" ng-show="!tournamentPage">
+  <div class="col-sm-6 pull-right" ng-show="!tournamentInfoLoaded">
+    <i class="fa fa-spinner fa-spin fa-5x"></i>
+  </div>
+  <div class="row" ng-show="!tournamentPage && tournamentInfoLoaded">
     <div class="col-sm-10"><h1>Create a new tournament </h1></div>
     <div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="http://www.gravatar.com/avatar/28fd20ccec6865e2d5f0e1f4446eb7bf?s=100"></a></div>
   </div>
@@ -41,12 +44,12 @@
     </div>
   </form>
   </div><!--/col-9-->
-  <div class="row" ng-show="tournamentPage">
+  <div class="row" ng-show="tournamentPage && tournamentInfoLoaded" ng-cloak>
     <div class="col-sm-8"><h1>{{tournamentInfo.tournamentName}}</h1>
     <p> Last updated: {{tournamentInfo.lastUpdated | date: 'medium'}}</p></div>
     <div class="col-sm-4">
       <img ng-hide="!image" class="img-circle" style="width: 75px; height: 75px;" ng-src="data:image/jpg;base64,{{image}}">
-      <img src="../../img/tournament.png" ng-show="!image" class="img-circle" style="width: 75px; height: 75px;">
+      <img src="../../img/tournament.png" ng-show="!image" class="img-circle pic" >
       <label class="btn btn-primary pull" for="my-file-selector">
         <i class="fa fa-file"> Choose File..</i>
         <input id="my-file-selector" class="picUpload" ng-file-select uploader="uploader" type="file" onchange='$("#upload-file-info").html($(this).val());'>
@@ -59,7 +62,7 @@
   <br>
 
   <div class="row" ng-show="tournamentPage">
-   <div class="row">
+   <div class="row" ng-cloak>
     <div class="col-sm-4"><!--left col-->
       <div class="panel panel-primary">
         <div class="panel-heading text-center"><i class="fa fa-trophy fa-1x"></i> Tournament Details</div>
@@ -388,7 +391,7 @@
     <!--/col-9-->
   </div>
   <hr>
-  <div class="row">
+  <div class="row" ng-cloak>
     <div class="col-sm-4">
       <div class="panel panel-primary">
         <div class="panel-heading text-center text-info"><i class="fa fa-trophy fa-1x"></i> Batsman - Top 3</div>

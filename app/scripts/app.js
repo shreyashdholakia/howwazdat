@@ -15,8 +15,6 @@ var options = {};
 options.api = {};
 options.api.base_url = "http://how-waz-that.herokuapp.com";
 
-
-
   app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', {
@@ -51,7 +49,7 @@ options.api.base_url = "http://how-waz-that.herokuapp.com";
         templateUrl: 'partials/tournament/createTournament.html',
         controller: 'tournamentCtrl'
       })
-      .when('/tournament/:tournamentName', {
+      .when('/tournament/:tournament', {
         templateUrl: 'partials/tournament/createTournament.html',
         controller: 'tournamentCtrl'
       })
