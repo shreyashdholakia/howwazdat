@@ -292,7 +292,7 @@ angular.module('howWasThat')
         });
 
         tournamentService.create($scope.tournamentDetails).success(function (data) {
-          $location.path("/tournament/" + data.data.tournamentName);
+          $location.path("/tournament/" + data.data.tournamentNumber);
           $scope.tournamentName = data.data.tournamentName;
           $scope.tournamentPage = true;
           $scope.tournamentInfo = data.data;
