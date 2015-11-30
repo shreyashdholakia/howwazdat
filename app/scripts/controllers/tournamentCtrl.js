@@ -157,7 +157,6 @@ angular.module('howWasThat')
 
     $scope.getTournamentDetails = function () {
       var tournament = $routeParams.tournament;
-      console.log(tournament);
       if (tournament) {
         tournamentService.tournamentDetails(tournament).success(function (response) {
           if (response.exists) {
