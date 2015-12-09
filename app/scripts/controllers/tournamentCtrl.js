@@ -252,7 +252,7 @@ angular.module('howWasThat')
 
     $scope.saveTeams = function (teams) {
       tournamentService.addTeams(teams, $scope.tournamentInfo.tournamentName).success(function (response) {
-        $location.path("/tournament/" + response.data.tournamentName);
+        $location.path("/tournament/" + response.data.tournamentNumber);
         $scope.tournamentName = response.data.tournamentName;
         $scope.tournamentTeams = response.data.teams;
         $scope.tournamentPage = true;
