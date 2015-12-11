@@ -1,11 +1,11 @@
 <div class="container">
   <ol class="breadcrumb">
     <li><a href="/">Home</a></li>
-    <li><a href="/tournament/{{tournamentName}}">{{tournamentName}}</a></li>
+    <li><a href="/tournament/{{tournamentName}}">{{matchDetails.tournament}}</a></li>
   </ol>
   <div class="row">
     <div class="col-md-6">
-      <h3>{{tournamentName}} tournament</h3>
+      <h3>{{matchDetails.tournament}} tournament</h3>
 
       <h2 class="text-info"><a href="/team/{{matchDetails.homeTeam}}">{{matchDetails.homeTeam}}</a> Vs <a
         href="/team/{{matchDetails.visitingTeam}}">{{matchDetails.visitingTeam}}</a></h2>
