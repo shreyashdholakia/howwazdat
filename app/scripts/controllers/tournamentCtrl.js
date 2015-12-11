@@ -485,8 +485,10 @@ angular.module('howWasThat')
             matchNumber: matchNumber
           });
 
+          console.log($scope.tournamentInfo.tournamentNumber);
           $scope.match.push({
             tournament: $scope.tournamentInfo.tournamentName,
+            tournamentNumber: $scope.tournamentInfo.tournamentNumber,
             homeTeam: $scope.homeTeam.teamName,
             visitingTeam: $scope.visitingTeam.teamName,
             matchDate: $scope.matchDate,
@@ -508,7 +510,7 @@ angular.module('howWasThat')
           );
 
           tournamentService.createMatch($scope.tournamentInfo.tournamentName, $scope.matches).success(function (data) {
-            $location.path("/tournament/" + data.data.tournamentName);
+            $location.path("/tournament/" + data.data.tournamentNumber);
             $scope.tournamentName = data.data.tournamentName;
             $scope.tournamentPage = true;
             $scope.tournamentInfo = data.data;
